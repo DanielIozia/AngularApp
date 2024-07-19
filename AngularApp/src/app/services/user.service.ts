@@ -17,5 +17,10 @@ export class UserService {
     return this.http.get<User[]>(url);
   }
 
+  addUser(url:string, body:User):Observable<User[]>{
+    return this.http.post<User[]>(url,body);
+  }
+
+
 
 }

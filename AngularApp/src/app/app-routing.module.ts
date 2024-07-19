@@ -7,8 +7,10 @@ import { UserDetailComponent } from './components/user-detail/user-detail.compon
 import { PostsComponent } from './components/posts/posts.component';
 import { PostDetailComponent } from './components/post-detail/post-detail.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { AddUserComponent } from './components/add-user/add-user.component';
 //guard
 import { authGuard } from './services/auth/auth.guard';
+
 
 
 export const routes: Routes = [
@@ -21,6 +23,7 @@ export const routes: Routes = [
       {path: 'users/:id', component: UserDetailComponent },
       {path: 'posts', component: PostsComponent },
       {path: 'posts/:id', component: PostDetailComponent },
+      {path: 'addUser', component: AddUserComponent },
     ] 
   },
   {path: '404', component: PageNotFoundComponent },

@@ -43,6 +43,11 @@ import {MatListModule} from '@angular/material/list';
 //tabella
 import {MatTableModule} from '@angular/material/table';
 import {MatDividerModule} from '@angular/material/divider';
+import { AddUserComponent } from './components/add-user/add-user.component';
+
+//card
+import {MatCard, MatCardHeader, MatCardModule} from '@angular/material/card';
+
 
 
 @NgModule({
@@ -55,6 +60,7 @@ import {MatDividerModule} from '@angular/material/divider';
     PostDetailComponent,
     HomeComponent,
     PageNotFoundComponent,
+    AddUserComponent,
   ],
   imports: [
     BrowserModule,
@@ -78,7 +84,11 @@ import {MatDividerModule} from '@angular/material/divider';
     MatToolbarModule,
     MatIconModule,
     MatSidenavModule,
-    MatListModule
+    MatListModule,
+    //Card
+    MatCardModule,
+    MatCardHeader,
+
   ],
   providers: [
     AuthService,

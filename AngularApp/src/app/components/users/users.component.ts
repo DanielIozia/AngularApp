@@ -3,6 +3,9 @@ import { Component, OnInit } from '@angular/core';
 //services
 import { UserService } from '../../services/user.service';
 
+//interaces
+import { User } from '../../interfaces/User-interface';
+
 
 
 interface Element{
@@ -12,6 +15,7 @@ interface Element{
   weight:number,
   symbol:string
 }
+
 const ELEMENT_DATA:Element[] = [
   {position: 1, name: 'Hydrogen', surname:"filippo", weight: 1.0079, symbol: 'H'},
   {position: 2, name: 'Helium', surname:"filippo", weight: 4.0026, symbol: 'He'},
@@ -34,12 +38,17 @@ export class UsersComponent implements OnInit {
 
   constructor(private user:UserService){}
 
-  ngOnInit(): void {}
+  private UserAPI = 'https://gorest.co.in/public/v2/users';
+  private _addUser:boolean = false;
+  displayedColumns: string[] = ['id','name','email','gender','status'];
+  users:User[] = [];
 
-  _addUser:boolean = false;
-
-  displayedColumns: string[] = ['position', 'name','surname', 'weight', 'symbol'];
-  dataSource:Element[] = ELEMENT_DATA;
+  //chiamata al back per prendere gli utenti e mostrarli nella tabella
+  ngOnInit(): void {
+    this.user.getUsers(this.UserAPI).subscribe( (data:User[]) => {
+      this.users = data;
+    })
+  }
 
   addUser(){
     this._addUser = true;

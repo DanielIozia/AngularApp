@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -5,6 +6,12 @@ import { Injectable } from '@angular/core';
 })
 export class LoginService {
 
-  constructor() { }
+  private endPoint = " https://gorest.co.in/public/v2/users?access-token=";
+
+  constructor(private http:HttpClient) { }
+
+  login(token:string){
+    
+  }
 
 }

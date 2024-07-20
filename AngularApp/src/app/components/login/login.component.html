@@ -1,5 +1,6 @@
 <h1>Login</h1>
-<form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
+<form class="form-container" #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
+    
     <mat-form-field>
         <mat-label>Email</mat-label>
         <input matInput type="email" name="email" required ngModel placeholder="Email"/>
@@ -10,7 +11,9 @@
         <input matInput type="password" placeholder="Password" name="password" required ngModel/>
         <mat-hint align="end"></mat-hint>
     </mat-form-field>
-    <div class="example-button-row">
-        <button mat-raised-button type="submit" [disabled]="!loginForm.valid">Invia</button>
+    <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
     </div>
+        <button mat-flat-button color="accent" type="submit" [disabled]="!loginForm.valid">Submit</button>
 </form>
+  

@@ -1,1 +1,35 @@
-<p>posts works!</p>
+
+    <section>
+        <!-- Icona di caricamento -->
+    <div *ngIf="isLoading" class="loading-container">
+        <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+    
+    <div class="card-container">
+        <div class="row">
+        <div class="col-lg-3 col-md-4 col-sm-12" *ngFor="let p of posts">
+            <mat-card class="example-card" appearance="outlined">
+            <mat-card-header>
+                <mat-card-title>{{p.title}}</mat-card-title>
+            </mat-card-header>
+            <mat-card-content >
+                <div class="text">
+                <h3>ID: {{p.id}}</h3>
+                <h3>User ID: {{p.user_id}}</h3>
+                <p>{{p.body}}</p>
+                </div>
+
+            </mat-card-content>
+            <mat-card-footer class="mat-card-footer">
+                <mat-chip-set aria-label="footer">
+                <mat-chip>view comment</mat-chip>
+                </mat-chip-set>
+            </mat-card-footer>
+            </mat-card>
+        </div>
+        </div>
+    </div>
+    </section>
+    

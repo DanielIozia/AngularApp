@@ -11,9 +11,16 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private login: LoginService, private auth: AuthService, private router: Router) {}
+    showErrorMessage: boolean; 
+    errorMessage:string|null = null;
 
-  ngOnInit(): void {}
+  constructor(private login: LoginService, private auth: AuthService, private router: Router) {
+    this.showErrorMessage = false; //serve per mostrare "Nome utenti o password errati"
+  }
+
+  ngOnInit(): void {
+    
+  }
 
   onSubmit(form: NgForm) {
     const email = form.value.email;

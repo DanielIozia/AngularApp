@@ -1,41 +1,48 @@
 <div class="container">
-    <mat-card>
-      <mat-card-header>
-        <mat-card-title>Add User</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <form #addForm="ngForm" (ngSubmit)="onSubmit(addForm)" class="add-user-form">
-          <mat-form-field appearance="fill">
-            <mat-label>Id</mat-label>
-            <input matInput type="text" name="ID" required ngModel/>
-          </mat-form-field>
-          
-          <mat-form-field appearance="fill">
-            <mat-label>Name</mat-label>
-            <input matInput type="text" name="Name" required ngModel/>
-          </mat-form-field>
-          
-          <mat-form-field appearance="fill">
-            <mat-label>Email</mat-label>
-            <input matInput type="email" name="Email" required ngModel/>
-          </mat-form-field>
-          
-          <mat-form-field appearance="fill">
-            <mat-label>Gender</mat-label>
-            <input matInput type="text" name="Gender" required ngModel />
-          </mat-form-field>
-          
-          <mat-form-field appearance="fill">
-            <mat-label>Status</mat-label>
-            <input matInput type="text" name="Status" required ngModel/>
-          </mat-form-field>
-          
-          <div class="button-row">
-            <button mat-raised-button color="primary" type="submit" [disabled]="!addForm.valid">Insert</button>
-            <button mat-raised-button (click)="cancelButton()">Cancel</button>
-          </div>
-        </form>
-      </mat-card-content>
-    </mat-card>
-  </div>
-  
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Add User</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form #addForm="ngForm" (ngSubmit)="onSubmit(addForm)" class="add-user-form">
+
+        <mat-form-field appearance="fill">
+          <mat-label>Id</mat-label>
+          <input matInput type="text" name="id" required ngModel/>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Name</mat-label>
+          <input matInput type="text" name="name" required ngModel/>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Email</mat-label>
+          <input matInput type="email" name="email" required ngModel/>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Gender</mat-label>
+          <mat-select name="gender" required ngModel>
+            <mat-option value="male">male</mat-option>
+            <mat-option value="female">female</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Status</mat-label>
+          <mat-select name="status" required ngModel>
+            <mat-option value="active">active</mat-option>
+            <mat-option value="inactive">inactive</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <div class="button-row">
+          <button mat-raised-button color="primary" type="submit" [disabled]="!addForm.valid">Insert</button>
+          <button mat-raised-button (click)="cancelButton()">Cancel</button>
+        </div>
+
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

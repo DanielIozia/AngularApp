@@ -6,7 +6,7 @@ table {
     width: 100%;
   }
 
-  .container {
+  .containers {
     margin-top:1%;
     display: table;
   }
@@ -31,4 +31,14 @@ table {
     justify-content: center;
     width: 120px;
   }
+
+  /* users.component.scss */
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height:50vh;
+  width: 100%;
+}
+
   

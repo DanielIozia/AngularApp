@@ -12,6 +12,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 
+
 // Componenti
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
@@ -47,6 +48,12 @@ import { AddUserComponent } from './components/add-user/add-user.component';
 
 //card
 import {MatCard, MatCardHeader, MatCardModule} from '@angular/material/card';
+import { DataService } from './services/data-service.service';
+import { PostService } from './services/post.service';
+
+//card
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {MatChipsModule} from '@angular/material/chips';
 
 
 
@@ -88,12 +95,16 @@ import {MatCard, MatCardHeader, MatCardModule} from '@angular/material/card';
     //Card
     MatCardModule,
     MatCardHeader,
+    MatProgressBarModule,
+    MatChipsModule
 
   ],
   providers: [
     AuthService,
     UserService,
     LoginService,
+    DataService,
+    PostService,
   ],
   bootstrap: [AppComponent]
 })

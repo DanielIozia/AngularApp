@@ -7,15 +7,6 @@
     </mat-sidenav>
     <mat-sidenav-content>
       <mat-toolbar>
-        <form class="number-form" #numberForm="ngForm" (submit)="formValue()">
-          <mat-form-field class="number-form-field" appearance="fill">
-            <mat-label>how many?</mat-label>
-            <input matInput type="number" min="1" [max]="max" [(ngModel)]="number" name="number"> <!-- Aggiungi max -->
-          </mat-form-field>
-          <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon" type="submit">
-            <mat-icon>send</mat-icon>
-          </button>
-        </form>
         <span class="example-spacer"></span>
         <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon" (click)="navigateToLogin()">
           <mat-icon>logout</mat-icon>

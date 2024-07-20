@@ -5,6 +5,11 @@ section{
 table {
     width: 100%;
   }
+  .user-row:hover {
+    background-color: #f1f1f1; // Cambia questo colore secondo le tue preferenze
+    cursor: pointer;
+  }
+
 
   .containers {
     margin-top:1%;
@@ -40,5 +45,36 @@ table {
   height:50vh;
   width: 100%;
 }
+
+.filter-form {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Spazio tra il campo input e l'icona */
+
+  mat-form-field {
+    flex: 1; /* Fa sì che il campo input occupi tutto lo spazio disponibile */
+    margin-right: 8px; /* Spazio tra il campo input e l'icona */
+  }
+
+  mat-icon {
+    cursor: pointer;
+    font-size:x-large; /* Cambia il colore dell'icona se necessario */
+  }
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+    align-items: stretch;
+
+    mat-form-field {
+      margin-right: 0;
+      margin-bottom: 8px; /* Spazio tra il campo input e l'icona */
+    }
+
+    mat-icon {
+      align-self: flex-end;
+    }
+  }
+}
+
 
   

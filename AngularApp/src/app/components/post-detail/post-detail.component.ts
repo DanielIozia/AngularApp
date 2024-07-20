@@ -7,4 +7,6 @@ import { Component } from '@angular/core';
 })
 export class PostDetailComponent {
 
+
+  private commentApi:string = "https://gorest.co.in/public/v2/comments";
 }

@@ -1,1 +1,55 @@
-<p>user-detail works!</p>
+    <!-- Icona di caricamento -->
+    <div *ngIf="isLoading" class="loading-container">
+        <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+    
+    <div *ngIf="!isLoading && user">
+        <section>
+        <div class="card-container">
+            <div class="row">
+            <div class="col-lg-3 col-md-4 col-sm-12" *ngFor="let p of posts">
+                <mat-card class="example-card" [ngClass]="{'expanded': selectedPostId === p.id}" appearance="outlined">
+                <mat-card-header>
+                    <mat-card-title>{{ p.title }}</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <div class="text">
+                    <h3>Post ID: {{ p.id }}</h3>
+                    <h3>User ID: {{ p.user_id }}</h3>
+                    <p>{{ p.body }}</p>
+                    </div>
+                </mat-card-content>
+                <mat-card-footer class="mat-card-footer">
+                    <mat-chip-set aria-label="footer">
+                    <mat-chip (click)="toggleComments(p.id)" class="view-comments-chip">
+                        {{ selectedPostId === p.id ? 'Hide comments' : 'View comments' }}
+                    </mat-chip>
+                    </mat-chip-set>
+    
+                    <!-- Vedo i commenti solo dopo aver premuto view comments -->
+                    <div *ngIf="selectedPostId === p.id" class="comments-section">
+                    <div *ngFor="let comment of p.comments" class="comment">
+                        <div class="comment-header">
+                        <span class="comment-author">{{ comment.name }}</span>
+                        </div>
+                        <p>{{ comment.body }}</p>
+                    </div>
+    
+                    <textarea #commentContent class="comment-textarea" placeholder="Write your comment..."></textarea>
+                    <button (click)="addComment(p.id, commentContent.value)" class="add-comment-button">Add Comment</button>
+                    </div>
+                </mat-card-footer>
+                </mat-card>
+            </div>
+            </div>
+        </div>
+        </section>
+    </div>
+    
+    <!-- No Posts -->
+    <div *ngIf="!isLoading && posts.length == 0">
+        <p>Nessun post per quest'utente</p>
+    </div>
+    

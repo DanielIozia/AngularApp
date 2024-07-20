@@ -48,7 +48,7 @@ import { AddUserComponent } from './components/add-user/add-user.component';
 
 //card
 import {MatCard, MatCardHeader, MatCardModule} from '@angular/material/card';
-import { DataService } from './services/data-service.service';
+
 import { PostService } from './services/post.service';
 
 //card
@@ -103,7 +103,6 @@ import {MatChipsModule} from '@angular/material/chips';
     AuthService,
     UserService,
     LoginService,
-    DataService,
     PostService,
   ],
   bootstrap: [AppComponent]

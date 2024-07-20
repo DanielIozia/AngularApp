@@ -1,10 +1,8 @@
-// users.component.ts
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { User } from '../../interfaces/User-interface';
 import { DataService } from '../../services/data-service.service';
-
 
 @Component({
   selector: 'app-users',
@@ -17,7 +15,7 @@ export class UsersComponent implements OnInit {
   _addUser: boolean = false;
   quanti: number = 0;
   selectedNumber: number = 0;
-  isLoading: boolean = true; // Nuova variabile per lo stato di caricamento
+  isLoading: boolean = true;
 
   private UserAPI = 'https://gorest.co.in/public/v2/users';
 
@@ -25,8 +23,7 @@ export class UsersComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadUsers();
-
-    this.dataService.currentNumber.subscribe(number => {
+    this.dataService.currentNumber.subscribe( number => {
       this.selectedNumber = number;
       this.updateDisplayedUsers();
     });
@@ -48,19 +45,24 @@ export class UsersComponent implements OnInit {
     console.log(e);
   }
 
+  
+
   private updateDisplayedUsers() {
-    if (this.selectedNumber > 0) {
+    if (this.selectedNumber >= 0) {
       this.quanti = Math.min(this.selectedNumber, this.users.length);
-    } else {
+    } 
+    else {
       this.quanti = this.users.length;
     }
   }
 
   private loadUsers() {
-    this.userService.getUsers(this.UserAPI).subscribe((data: User[]) => {
+    this.userService.getUsers(this.UserAPI).subscribe( (data: User[]) => {
       this.users = data;
       this.updateDisplayedUsers();
-      this.isLoading = false; // Nasconde l'icona di caricamento una volta completato il caricamento
+      this.isLoading = false;
+      this.dataService.changeUsersLength(this.users.length); // Aggiorna la lunghezza dell'array users
+      this.dataService.changeNumber(this.users.length); // Imposta il numero di utenti di default
     });
   }
 }

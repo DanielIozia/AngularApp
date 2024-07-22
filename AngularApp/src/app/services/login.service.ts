@@ -10,8 +10,6 @@ export class LoginService {
 
   constructor(private http:HttpClient) { }
 
-  login(token:string){
-    
-  }
+  
 
 }

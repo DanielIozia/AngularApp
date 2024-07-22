@@ -23,9 +23,8 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
-    const email = form.value.email;
-    const password = form.value.password;
-    const user = { email: email, password: password, returnSecureToken: true };
+    
+    const token = form.value.token;
 
     if (form.valid) {
       this.auth.isLoggedIn = true;

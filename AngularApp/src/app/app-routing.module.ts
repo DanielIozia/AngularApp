@@ -10,12 +10,14 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { AddUserComponent } from './components/add-user/add-user.component';
 //guard
 import { authGuard } from './services/auth/auth.guard';
+import { RegisterComponent } from './components/register/register.component';
 
 
 
 export const routes: Routes = [
   {path: 'login', component: LoginComponent },
   {path: '', redirectTo: 'login', pathMatch:'full' },
+  {path: 'register', component:RegisterComponent},
   {path: 'home', component:HomeComponent, canActivate:[authGuard],
     children:[
       {path: '', redirectTo: 'users', pathMatch:'full' },

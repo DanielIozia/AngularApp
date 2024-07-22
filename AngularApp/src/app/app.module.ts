@@ -16,6 +16,7 @@ import { MatSelectModule } from '@angular/material/select';
 // Componenti
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './components/register/register.component';
 import { UsersComponent } from './components/users/users.component';
 import { UserDetailComponent } from './components/user-detail/user-detail.component';
 import { PostsComponent } from './components/posts/posts.component';
@@ -57,6 +58,7 @@ import {MatChipsModule} from '@angular/material/chips';
 
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -68,6 +70,7 @@ import {MatChipsModule} from '@angular/material/chips';
     HomeComponent,
     PageNotFoundComponent,
     AddUserComponent,
+    RegisterComponent,
   ],
   imports: [
     BrowserModule,

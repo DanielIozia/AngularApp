@@ -11,7 +11,7 @@ import { User } from '../../interfaces/User-interface';
 export class UsersComponent implements OnInit {
   users: User[] = [];
   filteredUsers: User[] = [];
-  displayedColumns: string[] = ['id', 'name', 'email', 'gender', 'status', 'delete'];
+  displayedColumns: string[] = ['id', 'name', 'email', 'gender', 'status'];
   _addUser: boolean = false;
   quanti: number = 0;
   selectedNumber: number = 0;
@@ -25,15 +25,9 @@ export class UsersComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadUsers();    
+    console.log(this.loadUsers());
   }
 
-  addUser() {
-    this.router.navigate(['/home/addUser']);
-  }
-
-  deleteUser() {
-    console.log('sto provando ad eliminare');
-  }
 
   applyFilter() {
     this.filteredUsers = this.users.filter(user => 
@@ -64,6 +58,7 @@ export class UsersComponent implements OnInit {
   }
 
   private loadUsers() {
+    const usersByDB:User[] = [];
     this.userService.getUsers(this.UserAPI).subscribe((data: User[]) => {
       this.users = data;
       this.filteredUsers = data;

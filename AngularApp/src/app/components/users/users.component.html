@@ -10,6 +10,7 @@
   <div *ngIf="!isLoading">
 
     <form class="filter-form">
+
       <!-- filtro per ricerca utente -->
       <mat-form-field appearance="fill">
         <mat-label>Filter by Name or Email</mat-label>
@@ -21,6 +22,7 @@
         <mat-label>Number of Users to Display</mat-label>
         <input matInput type="number" min="1" [max]="max" [(ngModel)]="selectedNumber" name="number" (input)="updateDisplayedUsers()" placeholder="Enter a number">
       </mat-form-field>
+      
     </form>
 
     <!-- Tabella utenti -->
@@ -51,36 +53,21 @@
 
       <!-- Status Column -->
       <ng-container matColumnDef="status">
-        <th mat-header-cell *matHeaderCellDef> Status </th>
-        <td mat-cell *matCellDef="let element" (click)="goToDetail(element.id)"> {{element.status}} </td>
-      </ng-container>
-
-      <!-- Delete Column -->
-      <ng-container matColumnDef="delete">
-        <th mat-header-cell *matHeaderCellDef></th>
-        <td mat-cell *matCellDef="let element">  
-          <mat-icon (click)="deleteUser()">delete</mat-icon> 
+        <th mat-header-cell *matHeaderCellDef style="text-align: center;"> Status </th>
+        <td mat-cell *matCellDef="let element" (click)="goToDetail(element.id)" style="text-align: center;">
+          <span [ngClass]="{'green-dot': element.status === 'active', 'red-dot': element.status === 'inactive'}"></span>
         </td>
       </ng-container>
+      
 
       <!-- Header Row -->
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <!-- Data Rows -->
       <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="user-row"></tr>
+
+
     </table>
 
-    <!-- Bottone per aggiungere utenti -->
-    <div class="containers">
-      <div class="example-button-row">
-        <div class="example-flex-container">
-          <div class="example-button-container">
-            <button mat-fab aria-label="Example icon button with a add icon" color="primary" (click)="addUser()">
-              <mat-icon>add</mat-icon>
-            </button>
-            <app-add-user *ngIf="_addUser"></app-add-user>
-          </div>
-        </div>
-      </div>
-    </div>
+
   </div>
 </section>

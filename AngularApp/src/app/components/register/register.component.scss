@@ -5,9 +5,13 @@ $link-hover-color: darken($link-color, 10%);
 $font-family: 'Arial, sans-serif';
 $padding: 1rem;
 
+.invalid {
+  border-color: red;
+}
+
 
 .form-container {
-    margin-top:10% !important;
+    margin-top:3% !important;
     display: flex;
     flex-direction: column;
     gap: 16px;
@@ -38,10 +42,14 @@ $padding: 1rem;
       }
 }
 
-h1{
-    
-    margin-top: 3%;
-    text-align: center;
+.register-title {
+  font-family: 'Arial', sans-serif;
+  font-size: 4rem;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 5%;
+  color: $primary-color;
+  margin-bottom: 20px;
 }
 
 .custom-paragraph {
@@ -60,4 +68,5 @@ body{
     text-align: center;
     color:red;
 }
+
 

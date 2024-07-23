@@ -1,4 +1,4 @@
-// user-detail.component.ts
+// user-detail.component.ts/
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UserService } from '../../services/user.service';
@@ -39,14 +39,14 @@ export class UserDetailComponent implements OnInit {
   }
 
   private loadUser(userId: number): void {
-    this.userService.getUserById(this.userAPI,userId).subscribe(user => {
+    this.userService.getUserById("",userId).subscribe(user => {
       this.user = user;
       this.isLoading = false;
     });
   }
 
   private loadUserPosts(userId: number): void {
-    this.userService.getUserPosts(this.userAPI, userId).subscribe(posts => {
+    this.userService.getUserPosts("",userId).subscribe(posts => {
 
       this.posts = posts;
       this.posts.forEach(post => {

@@ -5,12 +5,8 @@ $link-hover-color: darken($link-color, 10%);
 $font-family: 'Arial, sans-serif';
 $padding: 1rem;
 
-
-
-
-
 .form-container {
-    margin-top:10% !important;
+    margin-top: 10% !important;
     display: flex;
     flex-direction: column;
     gap: 16px;
@@ -28,23 +24,20 @@ $padding: 1rem;
         color: $secondary-color;
         padding: $padding;
         line-height: 1.5;
-    
+
         a {
-          color: $link-color;
-          text-decoration: none;
-    
-          &:hover {
-            color: $link-hover-color;
-            text-decoration: underline;
-          }
+            color: $link-color;
+            text-decoration: none;
+
+            &:hover {
+                color: $link-hover-color;
+                text-decoration: underline;
+            }
         }
-      }
+    }
 }
 
-
-
-h1{
-    
+h1 {
     margin-top: 3%;
     text-align: center;
 }
@@ -56,13 +49,16 @@ h1{
     text-align: center;
 }
 
-
-body{
-    background-color:orange;
+body {
+    background-color: orange;
 }
 
-.error-message{
+.register-title {
+    font-family: 'Arial', sans-serif;
+    font-size: 4rem;
+    font-weight: bold;
     text-align: center;
-    color:red;
+    margin-top: 5%;
+    color: $primary-color;
+    margin-bottom: 20px;
 }
-

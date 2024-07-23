@@ -51,8 +51,20 @@ table {
   align-items: center;
   gap: 8px; /* Spazio tra il campo input e l'icona */
 
+
+.clear-button {
+  z-index: 1;
+
+  &:hover {
+    mat-icon {
+      color: #ff6666; // Cambia colore al passaggio del mouse
+    }
+  }
+}
+
   mat-form-field {
-    flex: 1; /* Fa sì che il campo input occupi tutto lo spazio disponibile */
+    
+    flex: 0.5; /* Fa sì che il campo input occupi tutto lo spazio disponibile */
     margin-right: 8px; /* Spazio tra il campo input e l'icona */
   }
 
@@ -97,4 +109,30 @@ table {
 
 
 
-  
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+
+  button {
+    margin: 0 5px;
+    padding: 5px 10px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+
+    &:disabled {
+      background-color: #c0c0c0;
+      cursor: not-allowed;
+    }
+  }
+
+  span {
+    margin: 0 10px;
+    align-self: center;
+  }
+}
+
+

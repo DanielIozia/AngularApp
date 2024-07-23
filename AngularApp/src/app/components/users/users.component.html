@@ -10,23 +10,19 @@
   <div *ngIf="!isLoading">
 
     <form class="filter-form">
-
-      <!-- filtro per ricerca utente -->
+      <!-- Filtro per ricerca utente -->
       <mat-form-field appearance="fill">
         <mat-label>Filter by Name or Email</mat-label>
         <input matInput [(ngModel)]="filterValue" name="filter" (input)="applyFilter()" placeholder="Type a name or email">
       </mat-form-field>
-      
-      <!-- filtro per numero di utenti -->
-      <mat-form-field class="number-form-field" appearance="fill">
-        <mat-label>Number of Users to Display</mat-label>
-        <input matInput type="number" min="1" [max]="max" [(ngModel)]="selectedNumber" name="number" (input)="updateDisplayedUsers()" placeholder="Enter a number">
-      </mat-form-field>
-      
+      <!-- Bottone per pulire il filtro -->
+      <button mat-icon-button matSuffix  aria-label="Clear" class="clear-button" (click)="clearFilter()">
+        <mat-icon>close</mat-icon>
+      </button>
     </form>
 
     <!-- Tabella utenti -->
-    <table mat-table [dataSource]="filteredUsers.slice(0, quanti)" class="mat-elevation-z8 user-table">
+    <table mat-table [dataSource]="filteredUsers" class="mat-elevation-z8 user-table">
       <!-- ID Column -->
       <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef> ID </th>
@@ -59,15 +55,18 @@
         </td>
       </ng-container>
       
-
       <!-- Header Row -->
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <!-- Data Rows -->
       <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="user-row"></tr>
-
-
     </table>
 
+    <!-- Paginatore -->
+    <div class="pagination-controls">
+      <button (click)="previousPage()" [disabled]="primaPagina"> < </button> <!-- back -->
+      <span>Page {{currentPage}}</span>
+      <button (click)="nextPage()" [disabled]="!oltre" > > </button> <!-- next -->
+    </div>
 
   </div>
 </section>

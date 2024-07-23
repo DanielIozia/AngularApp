@@ -1,3 +1,18 @@
+.custom-title {
+    font-family: 'Arial', sans-serif;
+    font-size: 1.5em;
+    font-weight: normal;
+    color: #7b8cb9; /* Colore grigio scuro per un aspetto pulito e minimalista */
+    margin: 0;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+
+  }
+
+  
 .example-container {
     position: absolute;
     top:0;
@@ -5,7 +20,16 @@
     left:0;
     bottom:0;
     background: #eee;
-   }
+}
+
+.list{
+  text-align: center;
+
+  &:hover{
+    background-color: rgba(67, 173, 255, 0.168);
+    cursor:pointer;
+  }
+}
  
    .active{
     background-color: rgba(67, 173, 255, 0.168);

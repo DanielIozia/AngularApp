@@ -3,6 +3,8 @@ import { LoginService } from '../../services/login.service';
 import { NgForm } from '@angular/forms';
 import { AuthService } from '../../services/auth/auth.service';
 import { Router } from '@angular/router';
+import { UserService } from '../../services/user.service';
+import { User } from '../../interfaces/User-interface';
 
 @Component({
   selector: 'app-login',
@@ -13,23 +15,45 @@ export class LoginComponent implements OnInit {
 
     showErrorMessage: boolean; 
     errorMessage:string|null = null;
+    users:User[] = [];
 
-  constructor(private login: LoginService, private auth: AuthService, private router: Router) {
-    this.showErrorMessage = false; //serve per mostrare "Nome utenti o password errati"
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private userService: UserService
+  ) {
+    this.showErrorMessage = false;
   }
 
-  ngOnInit(): void {
-    
-  }
+  ngOnInit(): void {}
 
   onSubmit(form: NgForm) {
-    
     const token = form.value.token;
 
     if (form.valid) {
-      this.auth.isLoggedIn = true;
-      this.router.navigate(['/home/users']);
-      form.reset();
-    }    
+      this.userService.getUsers(token)
+        .subscribe(
+          (data: User[]) => {
+            this.users = data;
+            console.log("Users: ", this.users);
+
+            // Se l'autenticazione ha successo
+            this.authService.isLoggedIn = true;
+            localStorage.setItem('authToken', token);
+            this.router.navigate(['/home/users']);
+          },
+          error => {
+            console.error('Errore durante il login:', error);
+            this.showErrorMessage = true;
+            this.errorMessage = "Invalid Token";
+            form.reset();
+          }
+        );
+
+      
+    } else {
+      this.showErrorMessage = true;
+      this.errorMessage = "Form non valido";
+    }
   }
 }

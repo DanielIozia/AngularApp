@@ -1,35 +1,27 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService implements OnInit {
+export class AuthService {
+  isLoggedIn = false;
 
-  private url_base:string = ""
+  constructor() {
+    const token = localStorage.getItem('authToken');
+    this.isLoggedIn = !!token;
+  }
 
-  isLoggedIn:boolean;
-  _isSubscribed:boolean = false;
-
-  constructor() { 
+  login(token: string) {
+    localStorage.setItem('authToken', token);
     this.isLoggedIn = true;
   }
 
-  ngOnInit(): void {}
-
-  isAuthenticated(){
-    return this.isLoggedIn;
+  logout() {
+    localStorage.removeItem('authToken');
+    this.isLoggedIn = false;
   }
 
-  //signUp methods
-  get isSubscribed():boolean{
-    return this._isSubscribed;
+  getToken() {
+    return localStorage.getItem('authToken');
   }
-
-  checkAuth(){
-    
-  }
-
- 
-
-
 }

@@ -52,7 +52,7 @@ export class UserService {
       'Accept': 'application/json'
     });
 
-    return this.http.post<User>(`${this.BASE_URL}${this.USER_SEGMENT}${this.access_token+token}`, user, {headers});
+    return this.http.post<User>(`${this.BASE_URL}${this.USER_SEGMENT}${this.access_token}${token}`, user, {headers});
   }
 
   getUserById(url:string,id: number): Observable<User> {
@@ -61,10 +61,6 @@ export class UserService {
 
   getUserPosts(url:string, userId: number): Observable<Post[]> {
     return this.http.get<Post[]>(`${url}/${userId}/posts`);
-  }
-
-  changeNumber(number: number) {
-    this.numberSource.next(number);
   }
 
   addUser(url:string, user: User): Observable<User> {

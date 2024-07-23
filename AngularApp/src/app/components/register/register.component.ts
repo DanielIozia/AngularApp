@@ -12,8 +12,6 @@ import { User } from '../../interfaces/User-interface';
 })
 export class RegisterComponent implements OnInit {
   users: User[] = [];
-  private usersApi = 'https://gorest.co.in/public/v2/users';
-  private accessToken = '?access-token=';
   tokenError: string | null = null;
   emailError: string | null = null;
 
@@ -23,31 +21,22 @@ export class RegisterComponent implements OnInit {
     private router: Router
   ) {}
 
-  ngOnInit(): void {
-    this.loadUsers();
-  }
+  ngOnInit(): void {}
 
-  private loadUsers(): void {
-    this.userService.getUsers(this.usersApi).subscribe(
-      (data: User[]) => this.users = data,
-      error => console.error('Error fetching users:', error)
-    );
-  }
 
   onSubmit(form: NgForm): void {
-
     const { name, email, gender, token } = form.value;
-    this.resetErrors();
 
+    this.resetErrors();
     const newUser: User = { name, email, gender, status: 'active' };
 
     this.userService.createUser(newUser, token).subscribe(
       response => {
         console.log('User created:', response);
         this.updateLocalStorage(response);
-        this.auth.isLoggedIn = true;
+        this.auth.login(token);
         this.router.navigate(['/home/users']);
-        this.loadUsersAfterCreation(token);
+        
       },
       error => this.handleError(error, form)
     );
@@ -64,9 +53,8 @@ export class RegisterComponent implements OnInit {
     localStorage.setItem('users', JSON.stringify(users));
   }
 
-  //get users with token 
-  private loadUsersAfterCreation(token: string): void {
-    this.userService.getUsers(`${this.usersApi}${this.accessToken}${token}`).subscribe(
+  private loadUsersAfterCreation(): void {
+    this.userService.getUsers(this.auth.getToken()).subscribe(
       (data: User[]) => this.users = data,
       error => console.error('Error fetching users after creation:', error)
     );

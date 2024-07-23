@@ -19,7 +19,7 @@ export class HomeComponent implements OnInit {
   }
 
   navigateToLogin(): void {
-    this.auth.isLoggedIn = false;
+    this.auth.logout();
     this.router.navigate(['/login']);
   }
 

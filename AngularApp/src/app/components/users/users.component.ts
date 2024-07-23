@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { User } from '../../interfaces/User-interface';
+import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-users',
@@ -17,12 +18,11 @@ export class UsersComponent implements OnInit {
   filterValue: string = '';
   isLoading: boolean = true;
   currentPage: number = 1; // Pagina corrente
-  pageSize: number = 100; // Numero di risultati per pagina
   totalPages: number = 0; // Numero totale di pagine
   oltre:boolean = true;
   primaPagina:boolean;
 
-  constructor(private userService: UserService, private router: Router) {
+  constructor(private userService: UserService, private router: Router, private auth:AuthService) {
     this.currentPage = 1;
     this.primaPagina = true;
   }
@@ -49,16 +49,11 @@ export class UsersComponent implements OnInit {
   }
 
   private loadUsers() {
-    const token = localStorage.getItem('authToken');
+    
 
-    this.userService.getUsers(token, this.currentPage).subscribe( (data: User[]) => {
+    this.userService.getUsers(this.auth.getToken(), this.currentPage).subscribe( (data: User[]) => {
       this.users = data;
-      this.filteredUsers = data;
-      
-      // Calcolo del numero totale di pagine
-      //this.totalPages = Math.ceil(this.users.length / this.pageSize);z
-
-      
+      this.filteredUsers = data;  
       this.isLoading = false;
     });
   }
@@ -98,11 +93,16 @@ export class UsersComponent implements OnInit {
         this.currentPage++;
         this.filteredUsers = data;
         this.isLoading = false;
-        
         }
         else
         this.oltre = false; 
     })
+    /* devo vedere come sistemare l'ultima pagina
+    this.userService.getUsers(token,this.currentPage+1).subscribe ( (data:User[]) => {
+      this.oltre = (data.length == 0);
+      console.log("oltre: ",this.oltre);
+    })*/
+  
     
     
   }

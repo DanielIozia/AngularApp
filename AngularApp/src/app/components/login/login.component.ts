@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { LoginService } from '../../services/login.service';
 import { NgForm } from '@angular/forms';
 import { AuthService } from '../../services/auth/auth.service';
 import { Router } from '@angular/router';
@@ -13,9 +12,9 @@ import { User } from '../../interfaces/User-interface';
 })
 export class LoginComponent implements OnInit {
 
-    showErrorMessage: boolean; 
-    errorMessage:string|null = null;
-    users:User[] = [];
+  showErrorMessage: boolean; 
+  errorMessage:string|null = null;
+  users:User[] = [];
 
   constructor(
     private authService: AuthService,
@@ -38,8 +37,7 @@ export class LoginComponent implements OnInit {
             console.log("Users: ", this.users);
 
             // Se l'autenticazione ha successo
-            this.authService.isLoggedIn = true;
-            localStorage.setItem('authToken', token);
+            this.authService.login(token);
             this.router.navigate(['/home/users']);
           },
           error => {
@@ -49,11 +47,9 @@ export class LoginComponent implements OnInit {
             form.reset();
           }
         );
-
-      
     } else {
       this.showErrorMessage = true;
-      this.errorMessage = "Form non valido";
+      this.errorMessage = "Invalid Form";
     }
   }
 }

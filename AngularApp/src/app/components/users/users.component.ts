@@ -3,6 +3,10 @@ import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { User } from '../../interfaces/User-interface';
 import { AuthService } from '../../services/auth/auth.service';
+//componente di dialogo (delete confirm)
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDeleteDialogComponent } from '../confirm-delete-dialog/confirm-delete-dialog.component';
+
 
 @Component({
   selector: 'app-users',
@@ -12,17 +16,17 @@ import { AuthService } from '../../services/auth/auth.service';
 export class UsersComponent implements OnInit {
   users: User[] = [];
   filteredUsers: User[] = [];
-  displayedColumns: string[] = ['id', 'name', 'email', 'gender', 'status'];
-  _addUser: boolean = false;
-  quanti: number = 0;
+  displayedColumns: string[] = ['id', 'name', 'email', 'gender', 'status','delete'];
   filterValue: string = '';
   isLoading: boolean = true;
   currentPage: number = 1; // Pagina corrente
-  totalPages: number = 0; // Numero totale di pagine
   oltre:boolean = true;
   primaPagina:boolean;
+  deletingUserId: number | null = null;
 
-  constructor(private userService: UserService, private router: Router, private auth:AuthService) {
+
+
+  constructor(private userService: UserService, private router: Router, private auth:AuthService, public dialog: MatDialog) {
     this.currentPage = 1;
     this.primaPagina = true;
   }
@@ -30,7 +34,7 @@ export class UsersComponent implements OnInit {
   ngOnInit(): void {
     this.loadUsers();
   }
-   
+
   applyFilter() {
     this.filteredUsers = this.users.filter(user => 
       user.name.toLowerCase().includes(this.filterValue.toLowerCase()) ||
@@ -49,14 +53,20 @@ export class UsersComponent implements OnInit {
   }
 
   private loadUsers() {
-    
-
-    this.userService.getUsers(this.auth.getToken(), this.currentPage).subscribe( (data: User[]) => {
-      this.users = data;
-      this.filteredUsers = data;  
-      this.isLoading = false;
-    });
+    this.isLoading = true;
+    this.userService.getUsers(this.auth.getToken(), this.currentPage).subscribe(
+      (data: User[]) => {
+        this.users = data;
+        this.filteredUsers = data;
+        this.isLoading = false;
+      },
+      error => {
+        console.error('Errore durante il caricamento degli utenti:', error);
+        this.isLoading = false;
+      }
+    );
   }
+  
 
   previousPage() {
     this.clearFilter();
@@ -73,9 +83,7 @@ export class UsersComponent implements OnInit {
         this.users = data;
         this.filteredUsers = data;
         this.isLoading = false;
-       
     })
-      
     }
     else{
       this.primaPagina = false;
@@ -97,13 +105,32 @@ export class UsersComponent implements OnInit {
         else
         this.oltre = false; 
     })
-    /* devo vedere come sistemare l'ultima pagina
-    this.userService.getUsers(token,this.currentPage+1).subscribe ( (data:User[]) => {
-      this.oltre = (data.length == 0);
-      console.log("oltre: ",this.oltre);
-    })*/
-  
-    
-    
   }
+
+
+  deleteUser(id: number, name: string) {
+    const dialogRef = this.dialog.open(ConfirmDeleteDialogComponent, {
+      width: '250px',
+      data: { name }
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.deletingUserId = id;
+        this.userService.deleteUser(id).subscribe(
+          () => {
+            this.loadUsers();
+            this.deletingUserId = null;
+          },
+          error => {
+            console.error('Errore durante l\'eliminazione:', error);
+            this.deletingUserId = null;
+          }
+        );
+      }
+    });
+  }
+  
+  
+  
 }

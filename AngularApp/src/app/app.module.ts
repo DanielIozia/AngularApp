@@ -32,7 +32,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 // Servizi
 import { UserService } from './services/user.service';
-import { LoginService } from './services/login.service';
+
 import { AuthService } from './services/auth/auth.service';
 
 
@@ -59,6 +59,9 @@ import { PostService } from './services/post.service';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatChipsModule} from '@angular/material/chips';
 import { ProfileComponent } from './components/profile/profile.component';
+import { ConfirmDeleteDialogComponent } from './components/confirm-delete-dialog/confirm-delete-dialog.component';
+
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 
@@ -75,6 +78,7 @@ import { ProfileComponent } from './components/profile/profile.component';
     PageNotFoundComponent,
     RegisterComponent,
     ProfileComponent,
+    ConfirmDeleteDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -106,13 +110,15 @@ import { ProfileComponent } from './components/profile/profile.component';
     MatProgressBarModule,
     MatChipsModule,
 
+    //modulo di dialogo
+    MatDialogModule,
+
     RouterOutlet
 
   ],
   providers: [
     AuthService,
     UserService,
-    LoginService,
     PostService,
   ],
   bootstrap: [AppComponent]

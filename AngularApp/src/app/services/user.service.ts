@@ -24,14 +24,13 @@ export class UserService {
   public PAGE:string = '?page=';
   public PER_PAGE:string = '&per_page=';
 
-
-
   private numberSource = new BehaviorSubject<number>(0);
   currentNumber = this.numberSource.asObservable();
 
 
   constructor(private http:HttpClient, private auth:AuthService){}
 
+ 
   
   getUsers(token:string|null,page:number = 1, userPerPage:number = 10): Observable<User[]> {
 
@@ -52,21 +51,20 @@ export class UserService {
       'Accept': 'application/json'
     });
 
-    return this.http.post<User>(`${this.BASE_URL}${this.USER_SEGMENT}${this.access_token}${token}`, user, {headers});
+    return this.http.post<User>(`${this.BASE_URL}${this.USER_SEGMENT}${this.access_token}${token}`, user, {headers} );
   }
 
-  getUserById(url:string,id: number): Observable<User> {
-    return this.http.get<User>(`${url}/${id}`);
+  getUserById(id: number): Observable<User> {
+    return this.http.get<User>(`${this.BASE_URL}${this.USER_SEGMENT}/${id}${this.access_token}${this.auth.getToken()}`);
   }
-
-  getUserPosts(url:string, userId: number): Observable<Post[]> {
-    return this.http.get<Post[]>(`${url}/${userId}/posts`);
-  }
-
-  addUser(url:string, user: User): Observable<User> {
-    return this.http.post<User>(url, user);
-  }
-
 
   
+  getUserPosts(userId: number): Observable<Post[]> {
+    return this.http.get<Post[]>(`${this.BASE_URL}${this.USER_SEGMENT}/${userId}${this.POSTS_SEGMENT}`);
+  }
+
+  deleteUser(user:number):Observable<User>{
+    return this.http.delete<User>(`${this.BASE_URL}${this.USER_SEGMENT}/${user}${this.access_token}${this.auth.getToken()}`);
+  }
+ 
 }

@@ -1,14 +1,27 @@
 <h1 class="register-title">Login</h1>
 <form class="form-container" #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
-    <p>To get your access token you must first authenticate on the <a href="https://gorest.co.in/" target="_blank">GoRest platform</a> </p>
-    
+    <!-- Indicatore di caricamento -->
+    <div *ngIf="isLoading" class="loading-container">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+
+    <p>To get your access token you must first authenticate on the <a href="https://gorest.co.in/" target="_blank">GoRest platform</a></p>
+
+    <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input matInput type="email" name="email" required ngModel placeholder="email"/>
+        <mat-error *ngIf="showErrorMessageEmail">{{ errorMessageEmail }}</mat-error>
+    </mat-form-field>
+   
     <mat-form-field>
         <mat-label>Token</mat-label>
         <input matInput type="text" name="token" required ngModel placeholder="token"/>
         <mat-hint align="end"></mat-hint>
         <mat-error *ngIf="showErrorMessage">{{ errorMessage }}</mat-error>
     </mat-form-field>
-
+    
     <button mat-flat-button color="primary" type="submit" [disabled]="!loginForm.valid">Submit</button>
     <button mat-flat-button color="accent" [routerLink]="['/register']">SignUp</button>
 </form>

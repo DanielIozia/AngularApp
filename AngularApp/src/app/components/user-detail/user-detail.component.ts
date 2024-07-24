@@ -20,9 +20,9 @@ export class UserDetailComponent implements OnInit {
   viewComment: boolean = false;
   selectedPostId: number | null = null;
 
-  private userAPI = 'https://gorest.co.in/public/v2/users';
+  
   private postAPI: string = "https://gorest.co.in/public/v2/posts";
-  private commentApi: string = "https://gorest.co.in/public/v2/comments";
+  
 
   constructor(
     private route: ActivatedRoute,
@@ -32,21 +32,19 @@ export class UserDetailComponent implements OnInit {
 
   ngOnInit(): void {
     const userId = Number(this.route.snapshot.paramMap.get('id'));
-    if (userId) {
-      this.loadUser(userId);
-      this.loadUserPosts(userId);
-    }
+    this.loadUser(userId);
+    this.loadUserPosts(userId);
   }
 
   private loadUser(userId: number): void {
-    this.userService.getUserById("",userId).subscribe(user => {
+    this.userService.getUserById(userId).subscribe(user => {
       this.user = user;
       this.isLoading = false;
     });
   }
 
   private loadUserPosts(userId: number): void {
-    this.userService.getUserPosts("",userId).subscribe(posts => {
+    this.userService.getUserPosts(userId).subscribe(posts => {
 
       this.posts = posts;
       this.posts.forEach(post => {

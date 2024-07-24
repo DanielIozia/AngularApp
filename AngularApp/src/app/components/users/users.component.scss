@@ -136,3 +136,10 @@ table {
 }
 
 
+.delete{
+  color:navy;
+
+  &:hover{
+    color:red;
+  }
+}

@@ -31,6 +31,14 @@
   </mat-form-field>
 
   <mat-form-field>
+    <mat-label>Status</mat-label>
+    <mat-select name="status" required ngModel>
+      <mat-option value="active">Active</mat-option>
+      <mat-option value="inactive">Inactive</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
     <mat-label>Token</mat-label>
     <input 
       matInput 
@@ -42,6 +50,7 @@
     />
     <mat-error *ngIf="tokenError">{{ tokenError }}</mat-error>
   </mat-form-field>
+
 
   <button mat-flat-button color="primary" type="submit" [disabled]="!registerForm.valid">Submit</button>
   <button mat-flat-button color="accent" [routerLink]="['/login']">Login</button>

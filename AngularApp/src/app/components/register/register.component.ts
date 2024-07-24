@@ -23,20 +23,18 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {}
 
-
   onSubmit(form: NgForm): void {
-    const { name, email, gender, token } = form.value;
+    const { name, email, gender, status, token } = form.value;
 
     this.resetErrors();
-    const newUser: User = { name, email, gender, status: 'active' };
+    const newUser: User = { name, email, gender, status };
 
     this.userService.createUser(newUser, token).subscribe(
-      response => {
-        console.log('User created:', response);
-        this.updateLocalStorage(response);
-        this.auth.login(token);
+      (response:User) => {
+        this.auth.login(token,email,response.id!.toString(),response.gender,response.status,response.name);
+        console.log("ID USER: ",this.auth.getId());
+
         this.router.navigate(['/home/users']);
-        
       },
       error => this.handleError(error, form)
     );
@@ -50,7 +48,7 @@ export class RegisterComponent implements OnInit {
   private updateLocalStorage(user: User): void {
     const users = JSON.parse(localStorage.getItem('users') || '[]');
     users.push(user);
-    localStorage.setItem('users', JSON.stringify(users));
+    localStorage.setItem('users', JSON.stringify(users.id));
   }
 
   private loadUsersAfterCreation(): void {
@@ -62,15 +60,27 @@ export class RegisterComponent implements OnInit {
 
   private handleError(error: any, form: NgForm): void {
     if (error.status === 401) {
+      // Gestione dell'errore di token non valido
       this.tokenError = 'Invalid Token';
       this.resetFormControl(form, 'token');
     } else if (error.status === 422) {
-      this.emailError = 'Email already exists or Email Invalid';
-      this.resetFormControl(form, 'email');
+      // Supponiamo che il corpo dell'errore sia un array di oggetti con i campi "field" e "message"
+      const errorMessages = error.error as { field: string; message: string }[];
+      
+      // Itera attraverso il array di messaggi di errore
+      errorMessages.forEach(err => {
+        if (err.field === 'email') {
+          this.emailError = "Email " + err.message; // Imposta il messaggio di errore per l'email
+          this.resetFormControl(form, 'email');
+        }
+        // Puoi aggiungere altre logiche per gestire altri campi se necessario
+      });
     } else {
+      // Gestione di altri tipi di errori
       console.error('Error creating user:', error);
     }
   }
+  
 
   private resetFormControl(form: NgForm, controlName: string): void {
     if (form.controls[controlName]) {

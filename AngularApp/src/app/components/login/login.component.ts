@@ -100,7 +100,7 @@ export class LoginComponent{
             if (u.email === email) {
               // Email trovata, eseguo il login
               u.status = "active";
-              this.authService.login(token,email,(u.id)!.toString(),u.gender,u.status,u.name);   
+              this.authService.login(token,email,(u.id)!.toString(),u.gender!,u.status,u.name);   
               resolve(true);
               return;
             }

@@ -62,6 +62,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { ConfirmDeleteDialogComponent } from './components/confirm-delete-dialog/confirm-delete-dialog.component';
 
 import { MatDialogModule } from '@angular/material/dialog';
+import { ProfileEditDialogComponent } from './components/profile-edit-dialog/profile-edit-dialog.component';
 
 
 
@@ -79,6 +80,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     RegisterComponent,
     ProfileComponent,
     ConfirmDeleteDialogComponent,
+    ProfileEditDialogComponent,
   ],
   imports: [
     BrowserModule,

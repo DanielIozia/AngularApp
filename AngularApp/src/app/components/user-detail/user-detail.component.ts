@@ -55,7 +55,6 @@ export class UserDetailComponent implements OnInit {
 
   private loadPostComments(post: Post): void {
     this.postService.getPostComments(post.id!).subscribe((comments: Comment[]) => {
-      console.log("post.id: ", post.id);
       post.comments = comments;
       this.loadCommentAuthors(post);
     });

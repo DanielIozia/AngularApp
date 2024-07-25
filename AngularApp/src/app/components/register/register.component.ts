@@ -31,9 +31,7 @@ export class RegisterComponent implements OnInit {
 
     this.userService.createUser(newUser, token).subscribe(
       (response:User) => {
-        this.auth.login(token,email,response.id!.toString(),response.gender,response.status,response.name);
-        console.log("ID USER: ",this.auth.getId());
-
+        this.auth.login(token,email,response.id!.toString(),response.gender!,response.status,response.name);
         this.router.navigate(['/home/users']);
       },
       error => this.handleError(error, form)

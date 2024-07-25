@@ -6,6 +6,10 @@ import { User } from '../../interfaces/User-interface';
 import { Post } from '../../interfaces/Post-interface';
 import { Comment } from '../../interfaces/Comment-interface';
 import { NgForm } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { ProfileEditDialogComponent } from '../profile-edit-dialog/profile-edit-dialog.component';
+import { Router } from '@angular/router';
+import { ConfirmDeleteDialogComponent } from '../confirm-delete-dialog/confirm-delete-dialog.component'; // Importa il dialogo di conferma
 
 @Component({
   selector: 'app-profile',
@@ -23,16 +27,15 @@ export class ProfileComponent implements OnInit {
   loadPosts: boolean = true;
   loadComments: boolean[] = [];
   loadDelete: boolean[] = []; // Aggiungi questa variabile
-
+  loadingDelete: boolean = false;
   commentForm!: NgForm;
   creatingPost: boolean = false;
   newPost: { title: string, body: string } = { title: '', body: '' };
 
-  constructor(private user: UserService, private auth: AuthService, private postService: PostService) {}
+  constructor(private user: UserService, private auth: AuthService, private postService: PostService,private dialog: MatDialog, private router:Router) {}
 
   ngOnInit(): void {
     this.loadUserPosts();
-    console.log("post nella OnInit: ",this.posts);
   }
 
   loadUserPosts(): void {
@@ -51,10 +54,27 @@ export class ProfileComponent implements OnInit {
     });
   }
 
-  statusOpposite() {
-    this.auth.setStatus();
-    this.status = this.auth.getStatus()!;
+  update() {
+    const dialogRef = this.dialog.open(ProfileEditDialogComponent, {
+      width: '300px',
+      data: { name: this.name, email: this.email, gender: this.gender, status: this.status }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.name = result.name;
+        this.email = result.email;
+        this.gender = result.gender;
+        this.status = result.status;
+        // Puoi aggiungere una chiamata al servizio utente per aggiornare le informazioni nel backend
+      }
+    });
   }
+
+  /*update() {
+    //this.auth.setStatus();
+    //this.status = this.auth.getStatus()!;
+  }*/
 
   toggleComments(index: number) {
     this.showComments[index] = !this.showComments[index];
@@ -112,9 +132,32 @@ export class ProfileComponent implements OnInit {
       this.creatingPost = false;
       form.reset();
       this.loadUserPosts();   
-      console.log("post nella NEWPOST: ",this.posts);
     });
   }
+
+  /*delete(){
+    this.user.deleteUser(this.auth.getId()).subscribe( () => {
+      this.auth.logout();
+      this.router.navigate(['/login']);
+    })
+  }*/
+
+    delete(): void {
+      const dialogRef = this.dialog.open(ConfirmDeleteDialogComponent, {
+        width: '300px',
+        data: { name: this.name } // Passa i dati necessari al dialogo
+      });
+  
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          // Questo viene eseguito solo se la conferma è stata data e l'utente è stato eliminato
+          this.auth.logout(); // Esegui il logout dell'utente
+          this.router.navigate(['/login']); // Reindirizza alla pagina di login
+        }
+      });
+    }
+  
+  
 
   cancelNewPost() {
     this.creatingPost = false;

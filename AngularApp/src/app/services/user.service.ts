@@ -63,7 +63,20 @@ export class UserService {
   }
 
   deleteUser(user:number):Observable<User>{
+    
     return this.http.delete<User>(`${this.BASE_URL}${this.USER_SEGMENT}/${user}${this.access_token}${this.auth.getToken()}`);
+  }
+
+  // /public/v2/users/6940396
+  updateUser(user:User):Observable<User>{
+    
+    const headers = new HttpHeaders({
+      'Authentication': `Bearer ${this.auth.getToken()}`,
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    });
+
+    return this.http.patch<User>(`${this.BASE_URL}${this.USER_SEGMENT}/${this.auth.getId()}${this.access_token}${this.auth.getToken()}`,user, {headers});
   }
 
  

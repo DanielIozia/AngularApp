@@ -16,19 +16,24 @@ import { ConfirmDeleteDialogComponent } from '../confirm-delete-dialog/confirm-d
 export class UsersComponent implements OnInit {
   users: User[] = [];
   filteredUsers: User[] = [];
-  displayedColumns: string[] = ['id', 'name', 'email', 'gender', 'status','delete'];
+  displayedColumns: string[] = ['name', 'email', 'status','delete'];
   filterValue: string = '';
   isLoading: boolean = true;
   currentPage: number = 1; // Pagina corrente
   oltre:boolean = true;
   primaPagina:boolean;
   deletingUserId: number | null = null;
+  userID:number = this.auth.getId();
 
 
 
   constructor(private userService: UserService, private router: Router, private auth:AuthService, public dialog: MatDialog) {
     this.currentPage = 1;
     this.primaPagina = true;
+  }
+
+  goToProfile(){
+    this,this.router.navigate(['/home/profile']);
   }
 
   ngOnInit(): void {

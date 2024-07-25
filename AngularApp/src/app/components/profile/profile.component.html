@@ -1,9 +1,18 @@
 <div class="profile-card">
-  <h1>{{name}}</h1>
-  <p>Email: {{email}}</p>
-  <p>Status: {{status}}</p>
-  <button (click)="statusOpposite()">Set Status</button>
-  <p>Gender: {{gender}}</p>
+    <div class="title">
+  <h1>Welcome <strong>{{name}}</strong>!</h1>
+  <h2><mat-icon>person</mat-icon></h2>
+</div>
+  
+    <p><strong>ID:</strong> {{id}}</p>
+    <p><strong>Email:</strong> {{email}}</p>
+  <p><strong>Status:</strong> {{status}}</p>
+  <p><strong>Gender:</strong> {{gender}}</p>
+  
+  <div class="container-fluid d-100 d-flex justify-content-between">
+    <button (click)="update()">UPDATE</button>
+    <button (click)="delete()" class="bg-danger">UNSUBSCRIBE</button>
+    </div>
 </div>
 
 <div class="posts-section">
@@ -69,4 +78,5 @@
           </div>
       </form>
   </div>
+  
 </div>

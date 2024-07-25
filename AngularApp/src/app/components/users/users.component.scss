@@ -143,3 +143,22 @@ table {
     color:red;
   }
 }
+
+.user-table {
+  .highlight-row {
+    background-color: #e9fecd; // Colore di sfondo leggermente più scuro per la riga
+  }
+}
+
+// Altri stili della tabella
+.user-table .mat-header-cell {
+  font-weight: bold;
+}
+
+.user-table .mat-cell {
+  padding: 16px;
+}
+
+.user-table .user-row {
+  cursor: pointer;
+}

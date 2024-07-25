@@ -3,7 +3,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { BehaviorSubject } from 'rxjs';
 
-
 //interfaces
 import { User } from '../interfaces/User-interface';
 import { Post } from '../interfaces/Post-interface';
@@ -66,5 +65,7 @@ export class UserService {
   deleteUser(user:number):Observable<User>{
     return this.http.delete<User>(`${this.BASE_URL}${this.USER_SEGMENT}/${user}${this.access_token}${this.auth.getToken()}`);
   }
+
+ 
  
 }

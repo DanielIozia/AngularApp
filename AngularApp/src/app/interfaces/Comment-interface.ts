@@ -1,6 +1,6 @@
 // comment.interface.ts
 export interface Comment {
-    id: number;
+    id?: number;
     postId: number;
     userId: number; // Aggiunto per identificare l'utente che ha scritto il commento
     name: string;

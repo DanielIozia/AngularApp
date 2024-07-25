@@ -1,3 +1,4 @@
+$primary-color:#0d6efd;
 .profile-card {
   margin: 20px auto;
   max-width: 500px;
@@ -121,7 +122,7 @@
 }
 
 .delete{
-  color:navy;
+  color:$primary-color;
 
   &:hover{
     color:red;
@@ -136,7 +137,6 @@
   form{
     display: flex;
     flex-direction: column;
-
   }
 
   h2 {
@@ -165,10 +165,54 @@
   margin: 20px auto;
 }
 
+.spinner-piccolo{
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-left-color: #007bff;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  animation: spin 1s linear infinite;
+}
+
 @keyframes spin {
   to {
     transform: rotate(360deg);
   }
 }
+
+.create-post-button {
+  display: flex;
+  align-items: center;
+  margin: 0 auto;
+  background-color: #ffffff; /* Cambia il colore di sfondo del bottone se necessario */
+  border: 1px solid #cccccc; /* Cambia il colore del bordo se necessario */
+  border-radius: 4px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  outline: none;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.create-post-button:hover {
+  background-color: #f0f0f0; /* Cambia il colore di sfondo al passaggio del mouse se necessario */
+}
+
+.icon-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: $primary-color; /* Colore del cerchio */
+  color: white; /* Colore dell'icona */
+  margin-right: 10px; /* Spazio tra l'icona e il testo */
+}
+
+.icon-container mat-icon {
+  font-size: 24px; /* Dimensione dell'icona */
+}
+
 
 

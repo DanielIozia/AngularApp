@@ -13,9 +13,6 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
-
-  constructor(private user: UserService, private auth: AuthService, private postService: PostService) {}
-
   id: number = this.auth.getId();
   email: string = this.auth.getEmail()!;
   name: string = this.auth.getName()!;
@@ -25,20 +22,30 @@ export class ProfileComponent implements OnInit {
   showComments: boolean[] = [];
   loadPosts: boolean = true;
   loadComments: boolean[] = [];
+  loadDelete: boolean[] = []; // Aggiungi questa variabile
 
   commentForm!: NgForm;
-  creatingPost: boolean = false; // Aggiungi questa variabile
-  newPost: { title: string, body: string } = { title: '', body: '' }; // Aggiungi questa variabile
-  
+  creatingPost: boolean = false;
+  newPost: { title: string, body: string } = { title: '', body: '' };
+
+  constructor(private user: UserService, private auth: AuthService, private postService: PostService) {}
+
   ngOnInit(): void {
     this.user.getUserPosts(this.auth.getId()).subscribe((data: Post[]) => {
       this.loadPosts = false;
       this.posts = data;
-      this.showComments = new Array(data.length).fill(false); // Initialize the showComments array
-      this.loadComments = new Array(data.length).fill(false); // Initialize the loadComments array
-      this.posts.forEach(post => post.comments = []); // Initialize comments as empty arrays
+      this.showComments = new Array(data.length).fill(false);
+      this.loadComments = new Array(data.length).fill(false);
+      this.loadDelete = new Array(data.length).fill(false);
+      // Inizializza 'comments' come array vuoto per ogni post
+      this.posts.forEach(post => {
+        if (!post.comments) {
+          post.comments = [];
+        }
+      });
     });
   }
+  
 
   statusOpposite() {
     this.auth.setStatus();
@@ -47,7 +54,8 @@ export class ProfileComponent implements OnInit {
 
   toggleComments(index: number) {
     this.showComments[index] = !this.showComments[index];
-    if (this.showComments[index] && this.posts[index].comments!.length === 0) {
+    // Verifica che 'comments' sia definito
+    if (this.showComments[index] && (!this.posts[index].comments || this.posts[index].comments!.length! === 0)) {
       this.loadComments[index] = true;
       this.postService.getPostComments(this.posts[index].id!).subscribe((comments: Comment[]) => {
         this.loadComments[index] = false;
@@ -55,6 +63,7 @@ export class ProfileComponent implements OnInit {
       });
     }
   }
+  
 
   addComment(form: NgForm, id_post: number) {
     let comment: Comment = {
@@ -79,11 +88,13 @@ export class ProfileComponent implements OnInit {
     this.creatingPost = true;
   }
 
-  deletePost(id:number){
-    this.postService.deletePost(id).subscribe( data => {
+  deletePost(id: number, index: number) {
+    this.loadDelete[index] = true;
+    this.postService.deletePost(id).subscribe(data => {
+      this.loadDelete[index] = false;
       this.ngOnInit();
-      console.log(data)
-    })
+      console.log(data);
+    });
   }
 
   submitNewPost(form: NgForm) {
@@ -94,14 +105,14 @@ export class ProfileComponent implements OnInit {
       comments: []
     };
 
-    this.postService.addUserPost(newPost).subscribe( (data: Post) => {
-      this.posts.unshift(data); // Aggiungi il nuovo post in cima all'elenco
+    this.postService.addUserPost(newPost).subscribe((data: Post) => {
+      this.posts.unshift(data);
       this.creatingPost = false;
       form.reset();
       console.log(data);
     });
 
-    this.ngOnInit()
+    this.ngOnInit();
   }
 
   cancelNewPost() {

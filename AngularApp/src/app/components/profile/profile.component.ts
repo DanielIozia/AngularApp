@@ -31,7 +31,12 @@ export class ProfileComponent implements OnInit {
   constructor(private user: UserService, private auth: AuthService, private postService: PostService) {}
 
   ngOnInit(): void {
-    this.user.getUserPosts(this.auth.getId()).subscribe((data: Post[]) => {
+    this.loadUserPosts();
+    console.log("post nella OnInit: ",this.posts);
+  }
+
+  loadUserPosts(): void {
+    this.user.getUserPosts(this.auth.getId()).subscribe( (data: Post[]) => {
       this.loadPosts = false;
       this.posts = data;
       this.showComments = new Array(data.length).fill(false);
@@ -45,7 +50,6 @@ export class ProfileComponent implements OnInit {
       });
     });
   }
-  
 
   statusOpposite() {
     this.auth.setStatus();
@@ -63,7 +67,6 @@ export class ProfileComponent implements OnInit {
       });
     }
   }
-  
 
   addComment(form: NgForm, id_post: number) {
     let comment: Comment = {
@@ -92,27 +95,25 @@ export class ProfileComponent implements OnInit {
     this.loadDelete[index] = true;
     this.postService.deletePost(id).subscribe(data => {
       this.loadDelete[index] = false;
-      this.ngOnInit();
-      console.log(data);
+      this.loadUserPosts(); // Carica i post nuovamente dopo la cancellazione
     });
   }
 
   submitNewPost(form: NgForm) {
+
     const newPost: Post = {
       user_id: this.auth.getId(),
       title: form.value.title,
       body: form.value.body,
-      comments: []
     };
 
-    this.postService.addUserPost(newPost).subscribe((data: Post) => {
-      this.posts.unshift(data);
+    this.postService.addUserPost(newPost).subscribe( (data: Post) => {
+      this.posts.unshift(data);// Carica i post nuovamente dopo la creazione di un nuovo post
       this.creatingPost = false;
       form.reset();
-      console.log(data);
+      this.loadUserPosts();   
+      console.log("post nella NEWPOST: ",this.posts);
     });
-
-    this.ngOnInit();
   }
 
   cancelNewPost() {

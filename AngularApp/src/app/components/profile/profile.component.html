@@ -56,11 +56,11 @@
       <form #newPostForm="ngForm" (ngSubmit)="submitNewPost(newPostForm)">
           <h2>Create New Post</h2>
           <mat-form-field appearance="fill">
-              <mat-label>Post Title</mat-label>
+              <mat-label>Title</mat-label>
               <input matInput type="text" name="title" required ngModel>
           </mat-form-field>
           <mat-form-field appearance="fill">
-              <mat-label>Post Body</mat-label>
+              <mat-label>Text</mat-label>
               <textarea matInput name="body" required ngModel></textarea>
           </mat-form-field>
           <div class="new-post-actions">

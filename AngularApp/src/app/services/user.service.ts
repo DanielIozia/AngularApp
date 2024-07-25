@@ -59,7 +59,7 @@ export class UserService {
 
   
   getUserPosts(userId: number): Observable<Post[]> {
-    return this.http.get<Post[]>(`${this.BASE_URL}${this.USER_SEGMENT}/${userId}${this.POSTS_SEGMENT}`);
+    return this.http.get<Post[]>(`${this.BASE_URL}${this.USER_SEGMENT}/${userId}${this.POSTS_SEGMENT}${this.access_token}${this.auth.getToken()}`);
   }
 
   deleteUser(user:number):Observable<User>{

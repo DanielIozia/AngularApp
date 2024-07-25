@@ -31,6 +31,7 @@ export class PostService {
     return this.http.get<Comment[]>(`${this.BASE_URL}${this.POSTS_SEGMENT}/${id_post}${this.COMMENT_SEGMENT}${this.access_token}${this.auth.getToken()}`);
   }
 
+
   ///public/v2/posts/6940392/comments
   addPostComment(id_post:number, comment:Comment):Observable<Comment>{
 
@@ -43,6 +44,7 @@ export class PostService {
     return this.http.post<Comment>(`${this.BASE_URL}${this.POSTS_SEGMENT}/${id_post}${this.COMMENT_SEGMENT}${this.access_token}${this.auth.getToken()}`,comment, {headers})
   }
   ///public/v2/users/6940392/posts
+  
   addUserPost(post:Post):Observable<Post>{
 
     const headers = new HttpHeaders({

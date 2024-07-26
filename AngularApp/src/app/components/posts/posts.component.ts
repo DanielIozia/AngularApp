@@ -196,6 +196,7 @@ export class PostsComponent implements OnInit {
   }
 
   nextPage() {
+    this.isLoading = true;
     this.clearFilter();
     this.postService.getPosts(this.currentPage + 1, this.postsPerPage).subscribe((data: Post[]) => {
       if (data.length != 0) {
@@ -205,7 +206,8 @@ export class PostsComponent implements OnInit {
         this.currentPage++;
         this.filteredPosts = data;
         this.isLoading = false;
-      } else {
+      } 
+      else {
         this.oltre = false;
       }
     });

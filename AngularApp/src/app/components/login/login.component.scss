@@ -6,18 +6,21 @@ $font-family: 'Arial, sans-serif';
 $padding: 1rem;
 
 .form-container {
-    margin-top: 10% !important;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    max-width: 400px;
-    margin: 0 auto;
-    padding: 16px;
-    background-color: #f5f5f5;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 3% !important;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 100%;
+  width:50%;
+  margin: 0 auto;
+  padding: 16px;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 
     p {
+        margin:0 auto;
+        width: 80%;
         text-align: center;
         font-family: $font-family;
         font-size: 1rem;
@@ -34,6 +37,10 @@ $padding: 1rem;
                 text-decoration: underline;
             }
         }
+    }
+
+    mat-form-field {
+        width: 100%;
     }
 }
 
@@ -55,7 +62,7 @@ body {
 
 .register-title {
     font-family: 'Arial', sans-serif;
-    font-size: 4rem;
+    font-size: 2.5rem;
     font-weight: bold;
     text-align: center;
     margin-top: 5%;
@@ -63,19 +70,19 @@ body {
     margin-bottom: 20px;
 }
 
-  .error-message, .error-message-email {
+.error-message, .error-message-email {
     color: red;
     margin-top: 10px;
-  }
+}
 
-  .loading-container {
+.loading-container {
     display: flex;
     justify-content: center;
     align-items: center;
     margin-top: 20px;
-  }
-  
-  .spinner-border {
+}
+
+.spinner-border {
     width: 3rem;
     height: 3rem;
     border-width: 0.25em;
@@ -83,13 +90,13 @@ body {
     border-color: currentColor transparent transparent transparent;
     border-radius: 50%;
     animation: spinner-border 0.75s linear infinite;
-  
+
     &.text-primary {
-      color: #0d6efd; // Puoi personalizzare il colore primario
+        color: #0d6efd; // Puoi personalizzare il colore primario
     }
-  }
-  
-  .visually-hidden {
+}
+
+.visually-hidden {
     position: absolute;
     width: 1px;
     height: 1px;
@@ -98,12 +105,58 @@ body {
     overflow: hidden;
     clip: rect(0, 0, 0, 0);
     border: 0;
-  }
-  
-  @keyframes spinner-border {
+}
+
+@keyframes spinner-border {
     to {
-      transform: rotate(360deg);
+        transform: rotate(360deg);
     }
-  }
-  
-  
+}
+
+/* Media Queries per la Responsività */
+@media (max-width: 768px) {
+    .register-title {
+        font-size: 2rem;
+    }
+
+    .form-container {
+      max-width:80%;
+      padding: 12px;
+        
+    }
+
+    .spinner-border {
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .register-title {
+        font-size: 1.5rem;
+        margin-top: 2%;
+    }
+
+    .form-container {
+        width:90%;
+        padding: 8px;
+    }
+
+    .spinner-border {
+        width: 2rem;
+        height: 2rem;
+    }
+
+    p {
+        font-size: 0.875rem;
+        padding: 0.5rem;
+    }
+
+    .error-message, .error-message-email {
+        font-size: 0.875rem;
+    }
+
+    button {
+        font-size: 0.875rem;
+    }
+}

@@ -1,5 +1,5 @@
 <mat-sidenav-container class="example-container">
-  <mat-sidenav mode="side" opened>
+  <mat-sidenav #sidenav mode="side" class="side-nav">
     <mat-list role="list">
       <mat-list-item role="listitem" routerLink="profile" [routerLinkActive]="'active'" class="list">
         <mat-icon>account_circle</mat-icon>
@@ -10,7 +10,10 @@
   </mat-sidenav>
   <mat-sidenav-content>
     <mat-toolbar>
-      <h3 class="custom-title" routerLink="users">
+      <button mat-icon-button (click)="sidenav.toggle()" class="menu-icon">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <h3 class="custom-title">
         UrbanConnect
       </h3>
       <span class="example-spacer"></span>

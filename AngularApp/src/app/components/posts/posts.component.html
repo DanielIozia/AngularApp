@@ -1,4 +1,10 @@
 <!-- POST SECTION -->
+
+<div *ngIf="isLoading" class="loading-container">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
  <!-- Filtro per ricerca post -->
  <form class="filter-form" *ngIf="!isLoading">
     <mat-form-field appearance="fill">
@@ -123,5 +129,5 @@
 
     <button class="scroll-to-bottom-btn" (click)="scrollToBottom()">
         <mat-icon>arrow_downward</mat-icon>
-      </button>
+    </button>
     

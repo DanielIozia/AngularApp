@@ -57,11 +57,13 @@
 <!-- Paginatore -->
  <!-- Lo vedo solo quando non sto inserendo niente nel form e quando non sta caricando nulla -->
  <div class="pagination-controls" *ngIf="!isLoading && filterValue == '' ">
+
   <div class="paginator">
     <button (click)="previousPage()" [disabled]="primaPagina"> < </button> <!-- back -->
     <span>Page </span> {{ currentPage }}
     <button (click)="nextPage()" [disabled]="!oltre"> > </button> <!-- next -->
   </div>
+  
   <div class="select-users-per-page">
     <!-- Selezionatore per il numero di utenti da mostrare -->
     <mat-form-field appearance="fill">

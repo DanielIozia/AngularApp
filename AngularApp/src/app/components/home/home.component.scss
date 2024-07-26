@@ -19,7 +19,121 @@
     right:0;
     left:0;
     bottom:0;
-    background: #eee;
+    background: #eee;.custom-title {
+      font-family: 'Arial', sans-serif;
+      font-size: 1.5em;
+      font-weight: normal;
+      color: #7b8cb9;
+      margin: 0;
+    
+      &:hover {
+        cursor: pointer;
+      }
+    }
+    
+    .example-container {
+      position: absolute;
+      top: 0;
+      right: 0;
+      left: 0;
+      bottom: 0;
+      background: #eee;
+      display: flex;
+      flex-direction: row;
+    }
+    
+    mat-sidenav {
+      width: 250px; // Larghezza predefinita per schermi più grandi
+    }
+    
+    mat-sidenav-content {
+      flex: 1;
+    }
+    
+    .list {
+      text-align: center;
+    
+      &:hover {
+        background-color: rgba(67, 173, 255, 0.168);
+        cursor: pointer;
+      }
+    }
+    
+    .active {
+      background-color: rgba(67, 173, 255, 0.168);
+    }
+    
+    .example-spacer {
+      flex: 1 1 auto;
+    }
+    
+    .number-form {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      width: 200px;
+    }
+    
+    .number-form-field {
+      width: 100%;
+    }
+    
+    .submit-button {
+      width: 100%;
+    }
+    
+    // Media Queries
+    @media (max-width: 1024px) {
+      .custom-title {
+        font-size: 1.25em; // Ridotto per schermi più piccoli
+      }
+    
+      mat-sidenav {
+        width: 200px; // Ridotto per schermi medi
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .custom-title {
+        font-size: 1.1em; // Ulteriore riduzione per dispositivi mobili
+      }
+    
+      mat-sidenav {
+        width: 180px; // Ulteriore riduzione per dispositivi mobili
+      }
+    
+      mat-sidenav-content {
+        padding: 16px; // Aggiungi padding per contenuti più piccoli
+      }
+    
+      .example-container {
+        flex-direction: column; // Cambia la direzione del flex per schermi ristretti
+      }
+    
+      .number-form {
+        width: 100%; // Adatta il form alla larghezza dello schermo
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .custom-title {
+        font-size: 1em; // Dimensione del font più piccola per schermi molto piccoli
+      }
+    
+      mat-sidenav {
+        width: 150px; // Ancora più piccolo per schermi molto piccoli
+      }
+    
+      mat-sidenav-content {
+        padding: 8px; // Riduci il padding per schermi molto piccoli
+      }
+    
+      .number-form {
+        width: 100%;
+      }
+    }
+    
+    
 }
 
 .list{

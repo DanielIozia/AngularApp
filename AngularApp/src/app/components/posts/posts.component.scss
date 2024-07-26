@@ -1,5 +1,13 @@
 $primary-color: #0d6efd;
 
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+  width: 100%;
+}
+
 .profile-card {
   display: flex;
   flex-direction: column;

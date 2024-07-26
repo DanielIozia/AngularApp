@@ -1,4 +1,4 @@
-<section>
+<section [ngClass]="{'section-small': usersPerPage === 10}">
   <!-- Icona di caricamento -->
   <div *ngIf="isLoading" class="loading-container">
     <div class="spinner-border text-primary" role="status">
@@ -21,14 +21,15 @@
     </form>
 
     <!-- Cards utenti -->
-    <div class="cards-container" >
-      <div *ngFor="let user of filteredUsers; let i = index" class="card" [ngClass]="{'highlight-card': user.id === userID}" (click)="user.id === userID ? goToProfile() : goToDetail(user.id!)">
-        <div class="card-content">
+    
+    <div class="cards-container">
+      <div *ngFor="let user of filteredUsers; let i = index" class="card" [ngClass]="{'highlight-card': user.id === userID}">
+        <div class="card-content" (click)="user.id === userID ? goToProfile() : goToDetail(user.id!)">
           <h3>{{i + 1}}. {{user.name}} <span [ngClass]="{'green-dot': user.status === 'active', 'red-dot': user.status === 'inactive'}"></span> </h3> 
           <p><strong>Email:</strong> {{user.email}} </p>
         </div>
         <div class="card-actions">
-          <ng-container *ngIf="deletingUserId === user.id; else deleteIcon">
+          <ng-container *ngIf="deletingUserId === user.id; else deleteIcon" (click)="user.id === userID ? goToProfile() : goToDetail(user.id!)">
             <div class="spinner-border text-primary" role="status" style="width: 1rem; height: 1rem;">
               <span class="visually-hidden">Deleting...</span>
             </div>
@@ -41,23 +42,25 @@
         </div>
       </div>
     </div>
-
-    <!-- Paginatore -->
-    <div class="pagination-controls">
-      <div class="paginator">
-        <button (click)="previousPage()" [disabled]="primaPagina"> < </button> <!-- back -->
-        <span>Page {{currentPage}}</span>
-        <button (click)="nextPage()" [disabled]="!oltre"> > </button> <!-- next -->
-      </div>
-      <div class="select-users-per-page">
-        <!-- Selezionatore per il numero di utenti da mostrare -->
-        <mat-form-field appearance="fill">
-          <mat-label>user</mat-label>
-          <mat-select [(ngModel)]="usersPerPage" (selectionChange)="onUsersPerPageChange($event)">
-            <mat-option *ngFor="let option of usersPerPageOptions" [value]="option">{{option}}</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-    </div>
   </div>
 </section>
+
+<!-- Paginatore -->
+ <!-- Lo vedo solo quando non sto inserendo niente nel form e quando non sta caricando nulla -->
+ <div class="pagination-controls" *ngIf="!isLoading && filterValue == '' ">
+  <div class="paginator">
+    <button (click)="previousPage()" [disabled]="primaPagina"> < </button> <!-- back -->
+    <span>Page </span> {{ currentPage }}
+    <button (click)="nextPage()" [disabled]="!oltre"> > </button> <!-- next -->
+  </div>
+  <div class="select-users-per-page">
+    <!-- Selezionatore per il numero di utenti da mostrare -->
+    <mat-form-field appearance="fill">
+      <mat-label>user</mat-label>
+      <mat-select [(ngModel)]="usersPerPage" (selectionChange)="onUsersPerPageChange($event)">
+        <mat-option *ngFor="let option of usersPerPageOptions" [value]="option">{{option}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</div>
+

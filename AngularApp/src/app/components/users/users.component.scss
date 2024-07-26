@@ -1,5 +1,15 @@
 section {
   padding: 20px; /* Ridotto il padding per schermi più piccoli */
+  &.section-small {
+    height: 80vh; /* Imposta altezza a 80vh quando la classe è attiva */
+  }
+  // Gestisci altezza per schermi piccoli
+  @media (max-width: 600px) {
+    &.section-small {
+      height: auto; /* Resetta l'altezza a auto per schermi piccoli */
+    }
+  }
+
 }
 
 .loading-container {
@@ -127,10 +137,12 @@ section {
 }
 
 .pagination-controls {
+  max-width: 50%;
+  margin: 0 auto;
+  margin-top:2%;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 10px;
 
   .paginator {
     display: flex;
@@ -148,6 +160,13 @@ section {
       &:disabled {
         background-color: #c0c0c0;
         cursor: not-allowed;
+      }
+    }
+
+    span {
+      // Aggiungi visibilità condizionale per "Page"
+      @media (max-width: 600px) {
+        display: none; // Nasconde la scritta "Page" sui dispositivi mobili
       }
     }
   }
@@ -180,7 +199,6 @@ section {
     }
 
     @media (max-width: 600px) {
-    
       max-width: 85px;
     }
   }

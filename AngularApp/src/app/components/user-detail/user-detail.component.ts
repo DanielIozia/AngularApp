@@ -1,11 +1,15 @@
   // user-detail.component.ts/
   import { Component, OnInit } from '@angular/core';
-  import { ActivatedRoute } from '@angular/router';
+  import { ActivatedRoute, Router } from '@angular/router';
   import { UserService } from '../../services/user.service';
   import { PostService } from '../../services/post.service';
   import { User } from '../../interfaces/User-interface';
   import { Post } from '../../interfaces/Post-interface';
   import { Comment } from '../../interfaces/Comment-interface';
+  import { NgForm } from '@angular/forms';
+import { AuthService } from '../../services/auth/auth.service';
+import { ConfirmDeleteDialogComponent } from '../confirm-delete-dialog/confirm-delete-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 
   @Component({
@@ -17,17 +21,26 @@
     user: User | null = null;
     posts: Post[] = [];
     isLoading: boolean = true;
+    loadPosts:boolean = false;
     viewComment: boolean = false;
     selectedPostId: number | null = null;
 
+    showComments: boolean[] = [];
+    loadDelete: boolean[] = []; 
+    loadComments: boolean[] = [];
+    loadingCreatingComment:boolean = false;
+    commentForm!: NgForm; 
+
     
-    private postAPI: string = "https://gorest.co.in/public/v2/posts";
-    
+
 
     constructor(
       private route: ActivatedRoute,
       private userService: UserService,
-      private postService: PostService
+      private postService: PostService,
+      private auth:AuthService,
+      private router:Router,
+      private dialog: MatDialog
     ) {}
 
     ngOnInit(): void {
@@ -43,12 +56,18 @@
       });
     }
 
-    private loadUserPosts(userId: number): void {
-      this.userService.getUserPosts(userId).subscribe(posts => {
-
-        this.posts = posts;
+    loadUserPosts(id:number): void {
+      this.userService.getUserPosts(id).subscribe( (data: Post[]) => {
+        this.loadPosts = false;
+        this.posts = data;
+        this.showComments = new Array(data.length).fill(false);
+        this.loadComments = new Array(data.length).fill(false);
+        this.loadDelete = new Array(data.length).fill(false);
+        // Inizializza 'comments' come array vuoto per ogni post
         this.posts.forEach(post => {
-          this.loadPostComments(post);
+          if (!post.comments) {
+            post.comments = [];
+          }
         });
       });
     }
@@ -56,62 +75,43 @@
     private loadPostComments(post: Post): void {
       this.postService.getPostComments(post.id!).subscribe((comments: Comment[]) => {
         post.comments = comments;
-        this.loadCommentAuthors(post);
       });
     }
 
-    private loadCommentAuthors(post: Post): void {
-      
-      /*if (post.comments) { 
-        console.log("post.commmets: ",post.comments);
-        // Verifica se post.comments è definito
-        post.comments.forEach( (comment:Comment) => {
-          if (comment.userId) { // Verifica se comment.userId è definito
-            this.userService.getUserById(this.userAPI, comment.userId).subscribe(
-              (user:User) => {
-                comment.name = user.name; // Assumendo che l'oggetto Comment ha il campo 'name' per il nome dell'utente
-              }
-            )
-          } 
-          else {
-            console.error('Comment userId is undefined:', comment);
-          }
+   
+    
+    
+
+    addComment(form: NgForm, id_post: number) {
+      this.loadingCreatingComment = true;
+      let comment: Comment = {
+        id: this.auth.getId(),
+        userId: this.auth.getId(),
+        name: this.auth.getName()!,
+        email: this.auth.getEmail()!,
+        body: form.value.comment,
+        postId: id_post,
+      }
+  
+      this.postService.addPostComment(id_post, comment).subscribe((data: Comment) => {
+        this.loadingCreatingComment = false;
+        const postIndex = this.posts.findIndex(post => post.id === id_post);
+        if (postIndex !== -1) {
+          this.posts[postIndex].comments?.push(data);
+        }
+        form.reset();
+      });
+    }
+
+    toggleComments(index: number) {
+      this.showComments[index] = !this.showComments[index];
+      // Verifica che 'comments' sia definito
+      if (this.showComments[index] && (!this.posts[index].comments || this.posts[index].comments!.length! === 0)) {
+        this.loadComments[index] = true;
+        this.postService.getPostComments(this.posts[index].id!).subscribe((comments: Comment[]) => {
+          this.loadComments[index] = false;
+          this.posts[index].comments = comments;
         });
-      } else {
-        console.error('Post comments are undefined:', post);
-      }*/
-    }
-    
-    toggleComments(postId: number): void {
-      if (this.selectedPostId === postId) {
-        this.selectedPostId = null;
-      } else {
-        this.selectedPostId = postId;
       }
-    }
-
-    
-
-    
-
-    addComment(postId: number, content: string): void {
-      
-      if (!postId) {
-        console.error('Post ID is undefined or invalid');
-        return;
-      }
-    
-      const newComment: Comment = {
-        postId,
-        id: Date.now(), // Genera un ID temporaneo per il commento
-        userId: 1, // Modifica questo ID per rappresentare l'utente attualmente loggato
-        body: content,
-        name: 'Your Name', // Modifica questo valore per rappresentare il nome dell'utente loggato
-        email: 'your.email@example.com'
-      };
-    
-      
-    
-    
-  }
+    }  
   }

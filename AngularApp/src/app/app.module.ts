@@ -22,7 +22,6 @@ import { RegisterComponent } from './components/register/register.component';
 import { UsersComponent } from './components/users/users.component';
 import { UserDetailComponent } from './components/user-detail/user-detail.component';
 import { PostsComponent } from './components/posts/posts.component';
-import { PostDetailComponent } from './components/post-detail/post-detail.component';
 import { HomeComponent } from './components/home/home.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 
@@ -74,7 +73,6 @@ import { ProfileEditDialogComponent } from './components/profile-edit-dialog/pro
     UsersComponent,
     UserDetailComponent,
     PostsComponent,
-    PostDetailComponent,
     HomeComponent,
     PageNotFoundComponent,
     RegisterComponent,

@@ -27,13 +27,15 @@ export class ProfileComponent implements OnInit {
   showComments: boolean[] = [];
   loadPosts: boolean = true;
   loadComments: boolean[] = [];
-  loadDelete: boolean[] = []; // Aggiungi questa variabile
+  loadDelete: boolean[] = [];
   loadingDelete: boolean = false;
   commentForm!: NgForm; 
   creatingPost: boolean = false;
   newPost: { title: string, body: string } = { title: '', body: '' };
   loadingCreatingComment:boolean = false;
-  loadingDeletingComment:boolean = false;
+
+
+  
 
   constructor(private user: UserService, private auth: AuthService, private postService: PostService,private dialog: MatDialog, private router:Router) {}
 
@@ -80,12 +82,6 @@ export class ProfileComponent implements OnInit {
       }
     });
 }
-
-
-  /*update() {
-    //this.auth.setStatus();
-    //this.status = this.auth.getStatus()!;
-  }*/
 
   toggleComments(index: number) {
     this.showComments[index] = !this.showComments[index];
@@ -150,7 +146,7 @@ export class ProfileComponent implements OnInit {
 
   
 
-  //DELETE POST
+  //DELETE USER
     delete(): void {
       const dialogRef = this.dialog.open(ConfirmDeleteDialogComponent, {
         width: '300px',

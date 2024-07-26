@@ -5,7 +5,6 @@ import { LoginComponent } from './components/login/login.component';
 import { UsersComponent } from './components/users/users.component';
 import { UserDetailComponent } from './components/user-detail/user-detail.component';
 import { PostsComponent } from './components/posts/posts.component';
-import { PostDetailComponent } from './components/post-detail/post-detail.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { ProfileComponent } from './components/profile/profile.component';
 //guard
@@ -24,7 +23,6 @@ export const routes: Routes = [
       {path: 'users', component: UsersComponent },
       {path: 'users/:id', component: UserDetailComponent },
       {path: 'posts', component: PostsComponent },
-      {path: 'posts/:id', component: PostDetailComponent },
       {path: 'profile', component: ProfileComponent}
     ] 
   },

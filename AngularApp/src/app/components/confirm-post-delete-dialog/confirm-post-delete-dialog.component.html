@@ -1,0 +1,13 @@
+    <div class="container">
+        <h2 mat-dialog-title>Confirm Deletion</h2>
+    <mat-dialog-content *ngIf="!loading">
+    <p>Do you want to delete the post titled "{{ data.title }}"?</p>
+    </mat-dialog-content>
+    <mat-dialog-actions *ngIf="!loading">
+    <button mat-button color="primary" (click)="onNoClick()">No</button>
+    <button mat-button color="warn" (click)="onYesClick()">Yes</button>
+    </mat-dialog-actions>
+    </div>
+
+
+    

@@ -10,6 +10,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ProfileEditDialogComponent } from '../profile-edit-dialog/profile-edit-dialog.component';
 import { Router } from '@angular/router';
 import { ConfirmDeleteDialogComponent } from '../confirm-delete-dialog/confirm-delete-dialog.component'; // Importa il dialogo di conferma
+import { ConfirmDialogComponent } from '../confirm-post-delete-dialog/confirm-post-delete-dialog.component';
 
 @Component({
   selector: 'app-profile',
@@ -31,6 +32,7 @@ export class ProfileComponent implements OnInit {
   loadingDelete: boolean = false;
   commentForm!: NgForm; 
   creatingPost: boolean = false;
+  creatingNewPost:boolean = false;
   newPost: { title: string, body: string } = { title: '', body: '' };
   loadingCreatingComment:boolean = false;
 
@@ -120,15 +122,10 @@ export class ProfileComponent implements OnInit {
     this.creatingPost = true;
   }
 
-  deletePost(id: number, index: number) {
-    this.loadDelete[index] = true;
-    this.postService.deletePost(id).subscribe(data => {
-      this.loadDelete[index] = false;
-      this.loadUserPosts(); // Carica i post nuovamente dopo la cancellazione
-    });
-  }
+ 
 
   submitNewPost(form: NgForm) {
+    this.creatingNewPost = true;
 
     const newPost: Post = {
       user_id: this.auth.getId(),
@@ -137,6 +134,7 @@ export class ProfileComponent implements OnInit {
     };
 
     this.postService.addUserPost(newPost).subscribe( (data: Post) => {
+      this.creatingNewPost = false;
       this.posts.unshift(data);// Carica i post nuovamente dopo la creazione di un nuovo post
       this.creatingPost = false;
       form.reset();
@@ -161,7 +159,23 @@ export class ProfileComponent implements OnInit {
         }
       });
     }
-  
+
+    deletePost(post: Post, index: number) {
+      const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+        width: '250px',
+        data: { title: post.title }
+      });
+    
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) { // Se l'utente conferma l'eliminazione
+          this.loadDelete[index] = true;
+          this.postService.deletePost(post.id!).subscribe(() => {
+            this.loadDelete[index] = false;
+            this.loadUserPosts(); // Carica i post nuovamente dopo la cancellazione
+          });
+        }
+      });
+    }
   
 
   cancelNewPost() {

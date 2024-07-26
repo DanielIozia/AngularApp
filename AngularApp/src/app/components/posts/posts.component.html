@@ -1,35 +1,84 @@
+<!-- POST SECTION -->
+<div class="posts-section" *ngIf="!isLoading">
 
-    <section>
-        <!-- Icona di caricamento -->
-    <div *ngIf="isLoading" class="loading-container">
-        <div class="spinner-border text-primary" role="status">
-        <span class="visually-hidden">Loading...</span>
-        </div>
+    <div *ngIf="!creatingPost" style="margin-bottom:3%;">
+        <h2 *ngIf="posts.length != 0" class="post-title">Posts</h2>
+        <button (click)="createPost()" class="create-post-button">
+        <span class="icon-container">
+            <mat-icon>add</mat-icon>
+        </span>
+        Create new post
+        </button>
     </div>
-    
-    <div class="card-container" >
-        <div class="row">
-        <div class="col-lg-3 col-md-4 col-sm-12" *ngFor="let p of posts">
-            <mat-card class="example-card" appearance="outlined">
-            <mat-card-header>
-                <mat-card-title>{{p.title}}</mat-card-title>
-            </mat-card-header>
-            <mat-card-content >
-                <div class="text">
-                <h3>ID: {{p.id}}</h3>
-                <h3>User ID: {{p.user_id}}</h3>
-                <p>{{p.body}}</p>
+    <div *ngIf="creatingPost" class="new-post-card">
+        <form #newPostForm="ngForm" (ngSubmit)="submitNewPost(newPostForm)">
+        <h2>Create New Post</h2>
+        <mat-form-field appearance="fill">
+            <mat-label>Title</mat-label>
+            <input matInput type="text" name="title" required ngModel />
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Text</mat-label>
+            <textarea matInput name="body" required ngModel></textarea>
+        </mat-form-field>
+        <div class="new-post-actions">
+            <button mat-button type="button" color="warn" (click)="cancelNewPost()">
+            Cancel
+            </button>
+            <button
+            mat-flat-button
+            color="primary"
+            [disabled]="!newPostForm.valid"
+            type="submit"
+            >
+            Create
+            </button>
+        </div>
+        </form>
+    </div>
+    <div *ngIf="posts.length != 0">
+
+        <div *ngFor="let post of posts; let i = index" class="post-card" [ngClass]="{'border-green': post.user_id === id}">
+            <h2>{{ post.title }}</h2>
+            <p>{{ post.body }}</p>
+            <div class="container" style="display: flex; justify-content: space-between">
+                <button class="toggle-comments-btn" (click)="toggleComments(i)">
+                {{ showComments[i] ? "Hide Comments" : "Show Comments" }}
+                </button>
+                <span class="delete" role="button">
+                <mat-icon (click)="deletePost(post, i)" *ngIf="!loadDelete[i] && id == post.user_id">delete</mat-icon>
+                <div *ngIf="loadDelete[i]" class="spinner-piccolo"></div>
+                </span>
+            </div>
+            <!-- COMMENT SECTION -->
+            <div class="comments-section" *ngIf="showComments[i]">
+                <h4>Comments</h4>
+                <div *ngIf="loadComments[i]" class="spinner"></div>
+                <div *ngIf="!loadComments[i] && post.comments && post.comments.length > 0; else noComments">
+                    <div *ngFor="let comment of post.comments" class="comment-card">
+                        <p><strong>{{ comment.name }}</strong></p>
+                        <p>{{ comment.body }}</p>
+                    </div>
                 </div>
-
-            </mat-card-content>
-            <mat-card-footer class="mat-card-footer">
-                <mat-chip-set aria-label="footer">
-                <mat-chip>view comment</mat-chip>
-                </mat-chip-set>
-            </mat-card-footer>
-            </mat-card>
+                <ng-template #noComments>
+                <p *ngIf="!loadComments[i]">No comments available.</p>
+                </ng-template>
+                <form class="add-comment-section" *ngIf="!loadComments[i]" #commentForm="ngForm" (ngSubmit)="addComment(commentForm, post.id!)">
+                <textarea matInput type="text" name="comment" required ngModel placeholder="Add a comment"></textarea>
+                <button mat-flat-button color="primary" [disabled]="!commentForm.valid" type="submit">
+                    <span *ngIf="!loadingCreatingComment">Add Comment</span>
+                    <span *ngIf="loadingCreatingComment">Adding Comment...</span>
+                </button>
+                </form>
+            </div>
+            <!-- END COMMENT SECTION -->
         </div>
+        
+        
+        <div *ngIf="posts.length == 0">
+            <h1>
+                NO POST
+            </h1>
         </div>
     </div>
-    </section>
-    
+

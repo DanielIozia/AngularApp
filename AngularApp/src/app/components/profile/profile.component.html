@@ -35,7 +35,7 @@
             {{ showComments[i] ? "Hide Comments" : "Show Comments" }}
             </button>
             <span class="delete" role="button">
-            <mat-icon (click)="deletePost(post.id!, i)" *ngIf="!loadDelete[i]"
+            <mat-icon (click)="deletePost(post, i)" *ngIf="!loadDelete[i]"
                 >delete</mat-icon
             >
             <div *ngIf="loadDelete[i]" class="spinner-piccolo"></div>
@@ -122,7 +122,8 @@
             [disabled]="!newPostForm.valid"
             type="submit"
             >
-            Create
+            <span *ngIf="!creatingNewPost">Create</span>
+            <span *ngIf="creatingNewPost">Creating...</span>
             </button>
         </div>
         </form>

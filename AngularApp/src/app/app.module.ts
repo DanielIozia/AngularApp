@@ -62,6 +62,7 @@ import { ConfirmDeleteDialogComponent } from './components/confirm-delete-dialog
 
 import { MatDialogModule } from '@angular/material/dialog';
 import { ProfileEditDialogComponent } from './components/profile-edit-dialog/profile-edit-dialog.component';
+import { ConfirmDialogComponent } from './components/confirm-post-delete-dialog/confirm-post-delete-dialog.component';
 
 
 
@@ -79,6 +80,7 @@ import { ProfileEditDialogComponent } from './components/profile-edit-dialog/pro
     ProfileComponent,
     ConfirmDeleteDialogComponent,
     ProfileEditDialogComponent,
+    ConfirmDialogComponent,
   ],
   imports: [
     BrowserModule,

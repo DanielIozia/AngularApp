@@ -1,15 +1,28 @@
 <!-- POST SECTION -->
+ <!-- Filtro per ricerca post -->
+ <form class="filter-form" *ngIf="!isLoading">
+    <mat-form-field appearance="fill">
+        <mat-label>Filter by Title</mat-label>
+        <input matInput [(ngModel)]="filterValue" name="filter" (input)="applyFilter()" placeholder="Type a title">
+    </mat-form-field>
+    <!-- Bottone per pulire il filtro -->
+    <button mat-icon-button matSuffix aria-label="Clear" class="clear-button" (click)="clearFilter()">
+        <mat-icon>close</mat-icon>
+    </button>
+</form>
+
 <div class="posts-section" *ngIf="!isLoading">
 
     <div *ngIf="!creatingPost" style="margin-bottom:3%;">
-        <h2 *ngIf="posts.length != 0" class="post-title">Posts</h2>
-        <button (click)="createPost()" class="create-post-button">
+        <h2 *ngIf="filteredPosts.length != 0" class="post-title">Posts</h2>
+        <button (click)="createPost()" *ngIf="filteredPosts.length != 0" class="create-post-button">
         <span class="icon-container">
             <mat-icon>add</mat-icon>
         </span>
         Create new post
         </button>
     </div>
+   
     <div *ngIf="creatingPost" class="new-post-card">
         <form #newPostForm="ngForm" (ngSubmit)="submitNewPost(newPostForm)">
         <h2>Create New Post</h2>
@@ -31,14 +44,17 @@
             [disabled]="!newPostForm.valid"
             type="submit"
             >
-            Create
+            <span *ngIf="!creatingNewPost">Create</span>
+            <span *ngIf="creatingNewPost">Creating...</span>
             </button>
+            
         </div>
+            <mat-error class="text-error" style="margin-top:20px; text-align:center;" *ngIf="!showtextError">{{textError}}</mat-error>
         </form>
     </div>
-    <div *ngIf="posts.length != 0">
+    <div *ngIf="filteredPosts.length != 0">
 
-        <div *ngFor="let post of posts; let i = index" class="post-card" [ngClass]="{'border-green': post.user_id === id}">
+        <div *ngFor="let post of filteredPosts; let i = index" class="post-card" [ngClass]="{'border-green': post.user_id === id}">
             <h2>{{ post.title }}</h2>
             <p>{{ post.body }}</p>
             <div class="container" style="display: flex; justify-content: space-between">
@@ -75,10 +91,12 @@
         </div>
         
         
-        <div *ngIf="posts.length == 0">
-            <h1>
-                NO POST
-            </h1>
-        </div>
+        
     </div>
 
+    <span *ngIf="filteredPosts.length == 0">
+        <h1 class="no-posts-message">
+            No posts available. Check back later!
+        </h1>
+    </span>
+    

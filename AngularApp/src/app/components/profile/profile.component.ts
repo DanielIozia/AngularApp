@@ -11,6 +11,7 @@ import { ProfileEditDialogComponent } from '../profile-edit-dialog/profile-edit-
 import { Router } from '@angular/router';
 import { ConfirmDeleteDialogComponent } from '../confirm-delete-dialog/confirm-delete-dialog.component'; // Importa il dialogo di conferma
 import { ConfirmDialogComponent } from '../confirm-post-delete-dialog/confirm-post-delete-dialog.component';
+import { error } from 'console';
 
 @Component({
   selector: 'app-profile',
@@ -35,6 +36,8 @@ export class ProfileComponent implements OnInit {
   creatingNewPost:boolean = false;
   newPost: { title: string, body: string } = { title: '', body: '' };
   loadingCreatingComment:boolean = false;
+  textError:string = '';
+  showtextError:boolean = false;
 
 
   
@@ -134,11 +137,17 @@ export class ProfileComponent implements OnInit {
     };
 
     this.postService.addUserPost(newPost).subscribe( (data: Post) => {
+      this.showtextError = false;
       this.creatingNewPost = false;
       this.posts.unshift(data);// Carica i post nuovamente dopo la creazione di un nuovo post
       this.creatingPost = false;
       form.reset();
       this.loadUserPosts();   
+    },error => {
+      this.creatingNewPost = false;
+      this.showtextError = true;
+      form.reset();
+      this.textError = "post update error";
     });
   }
 

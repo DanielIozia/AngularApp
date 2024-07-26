@@ -119,7 +119,8 @@ section {
   .card-actions {
     display: flex;
     justify-content: flex-end;
-    align-items: center;
+    align-items: end;
+    
 
     .delete {
       color: navy;
@@ -131,6 +132,7 @@ section {
 
       mat-icon {
         font-size: 20px;
+
       }
     }
   }
@@ -202,4 +204,19 @@ section {
       max-width: 85px;
     }
   }
+}
+
+
+.no-users-message {
+  text-align: center;
+  margin:0 auto;
+  width:50%;
+  color: #555;
+  font-size: 1.5em;
+  margin-top: 20px;
+  font-weight: 400;
+  background: #f0f0f0;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }

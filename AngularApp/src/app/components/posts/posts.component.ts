@@ -29,6 +29,12 @@ export class PostsComponent implements OnInit {
   commentForm!: NgForm; 
   creatingPost: boolean = false;
   showComments: boolean[] = [];
+  creatingNewPost:boolean = false;
+  showtextError:boolean = false;
+  textError:string = '';
+  //ricerca
+  filterValue: string = '';
+  filteredPosts:Post[] = [];
 
 
 
@@ -37,6 +43,7 @@ export class PostsComponent implements OnInit {
   ngOnInit(): void {
     this.postService.getPosts().subscribe( (data: Post[]) => {
       this.posts = data;
+      this.filteredPosts = data;
       this.isLoading = false; // Disattiva il caricamento una volta ottenuti i dati
     });
   }
@@ -97,6 +104,7 @@ export class PostsComponent implements OnInit {
     this.postService.getPosts().subscribe( (data: Post[]) => {
       this.loadPosts = false;
       this.posts = data;
+      this.filteredPosts = data;
       this.showComments = new Array(data.length).fill(false);
       this.loadComments = new Array(data.length).fill(false);
       this.loadDelete = new Array(data.length).fill(false);
@@ -118,6 +126,7 @@ export class PostsComponent implements OnInit {
   }
 
   submitNewPost(form: NgForm) {
+    this.creatingNewPost = true;
 
     const newPost: Post = {
       user_id: this.auth.getId(),
@@ -126,11 +135,30 @@ export class PostsComponent implements OnInit {
     };
 
     this.postService.addUserPost(newPost).subscribe( (data: Post) => {
+      this.creatingNewPost = false;
       this.posts.unshift(data);// Carica i post nuovamente dopo la creazione di un nuovo post
       this.creatingPost = false;
       form.reset();
       this.loadUserPosts();   
+    }, error => {
+      this.creatingNewPost = false;
+      this.showtextError = true;
+      form.reset();
+      this.textError = "post update error"
     });
+  }
+
+  //form di ricerca
+  applyFilter() {
+    this.filteredPosts = this.posts.filter(post =>
+      post.title.toLowerCase().includes(this.filterValue.toLowerCase())
+    );
+    console.log(this.filteredPosts);
+  }
+
+  clearFilter() {
+    this.filterValue = '';
+    this.filteredPosts = this.posts;
   }
 
   

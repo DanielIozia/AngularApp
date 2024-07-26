@@ -1,3 +1,5 @@
+ 
+ 
 <section [ngClass]="{'section-small': usersPerPage === 10}">
   <!-- Icona di caricamento -->
   <div *ngIf="isLoading" class="loading-container">
@@ -19,6 +21,13 @@
         <mat-icon>close</mat-icon>
       </button>
     </form>
+
+    <span *ngIf="filteredUsers.length == 0">
+      <h1 class="no-users-message">
+          No users available. Check back later!
+      </h1>
+    </span>
+  
 
     <!-- Cards utenti -->
     
@@ -63,4 +72,8 @@
     </mat-form-field>
   </div>
 </div>
+
+
+
+
 

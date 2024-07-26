@@ -36,7 +36,7 @@ export class UsersComponent implements OnInit {
   }
 
   goToProfile(){
-    this,this.router.navigate(['/home/profile']);
+    this.router.navigate(['/home/profile']);
   }
 
   ngOnInit(): void {

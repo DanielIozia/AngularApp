@@ -77,7 +77,7 @@
                     </div>
                 </div>
                 <ng-template #noComments>
-                <p *ngIf="!loadComments[i]">No comments available.</p>
+                <p *ngIf="!loadComments[i]"></p>
                 </ng-template>
                 <form class="add-comment-section" *ngIf="!loadComments[i]" #commentForm="ngForm" (ngSubmit)="addComment(commentForm, post.id!)">
                 <textarea matInput type="text" name="comment" required ngModel placeholder="Add a comment"></textarea>
@@ -89,6 +89,27 @@
             </div>
             <!-- END COMMENT SECTION -->
         </div>
+
+        <!-- Paginatore -->
+<div class="pagination-controls" id="paginator" *ngIf="!isLoading && filterValue == ''">
+    <div class="paginator">
+      <button (click)="previousPage()" [disabled]="primaPagina"> < </button>
+      <span>Page </span> {{ currentPage }}
+      <button (click)="nextPage()" [disabled]="!oltre"> > </button>
+    </div>
+    <div class="posts-per-page-selector">
+      <mat-form-field>
+        <mat-label>Posts</mat-label>
+        <mat-select [(value)]="postsPerPage" (selectionChange)="onPostsPerPageChange($event)">
+          <mat-option *ngFor="let option of postsPerPageOptions" [value]="option">{{ option }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+  
+  <div class="spinner-container" *ngIf="isLoading">
+    <div class="spinner"></div>
+  </div>
         
         
         
@@ -99,4 +120,8 @@
             No posts available. Check back later!
         </h1>
     </span>
+
+    <button class="scroll-to-bottom-btn" (click)="scrollToBottom()">
+        <mat-icon>arrow_downward</mat-icon>
+      </button>
     

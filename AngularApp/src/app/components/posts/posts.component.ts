@@ -18,34 +18,52 @@ import { ConfirmDialogComponent } from '../confirm-post-delete-dialog/confirm-po
 export class PostsComponent implements OnInit {
 
   id = this.auth.getId();
-  
   posts: Post[] = [];
-  isLoading: boolean = true; // Variabile per gestire lo stato di caricamento
-  loadingCreatingComment:boolean = false;
-  loadComments:boolean[] = [];
+  filteredPosts: Post[] = [];
+  isLoading: boolean = true; 
+  loadingCreatingComment: boolean = false;
+  loadComments: boolean[] = [];
   loadDelete: boolean[] = [];
-  loadPosts: boolean = true;
+  loadPostss: boolean = true;
   loadingDelete: boolean = false;
   commentForm!: NgForm; 
   creatingPost: boolean = false;
   showComments: boolean[] = [];
-  creatingNewPost:boolean = false;
-  showtextError:boolean = false;
-  textError:string = '';
-  //ricerca
+  creatingNewPost: boolean = false;
+  showtextError: boolean = false;
+  textError: string = '';
   filterValue: string = '';
-  filteredPosts:Post[] = [];
+  currentPage: number = 1;
+  oltre: boolean = true;
+  primaPagina: boolean = true;
+  postsPerPage: number = 10;
+  postsPerPageOptions: number[] = [10, 25, 50, 75, 100];
 
 
+  
 
-  constructor(private postService: PostService, private user:UserService, private auth:AuthService, private dialog:MatDialog) { }
+  constructor(private postService: PostService, private auth: AuthService, private dialog: MatDialog) {
+    this.currentPage = 1;
+    this.primaPagina = true;
+  }
 
   ngOnInit(): void {
-    this.postService.getPosts().subscribe( (data: Post[]) => {
-      this.posts = data;
-      this.filteredPosts = data;
-      this.isLoading = false; // Disattiva il caricamento una volta ottenuti i dati
-    });
+    this.loadPosts();
+  }
+
+  public loadPosts() {
+    this.isLoading = true;
+    this.postService.getPosts(this.currentPage, this.postsPerPage).subscribe(
+      (data: Post[]) => {
+        this.posts = data;
+        this.filteredPosts = data;
+        this.isLoading = false;
+      },
+      error => {
+        console.error('Errore durante il caricamento dei post:', error);
+        this.isLoading = false;
+      }
+    );
   }
 
 
@@ -102,7 +120,7 @@ export class PostsComponent implements OnInit {
 
   loadUserPosts(): void {
     this.postService.getPosts().subscribe( (data: Post[]) => {
-      this.loadPosts = false;
+      this.loadPostss = false;
       this.posts = data;
       this.filteredPosts = data;
       this.showComments = new Array(data.length).fill(false);
@@ -161,6 +179,56 @@ export class PostsComponent implements OnInit {
     this.filteredPosts = this.posts;
   }
 
+  previousPage() {
+    this.clearFilter();
+    if (this.currentPage == 2) {
+      this.primaPagina = true;
+    }
+    if (this.currentPage != 1) {
+      this.currentPage--;
+      if (!this.oltre) {
+        this.oltre = true;
+      }
+      this.loadPosts();
+    } else {
+      this.primaPagina = false;
+    }
+  }
+
+  nextPage() {
+    this.clearFilter();
+    this.postService.getPosts(this.currentPage + 1, this.postsPerPage).subscribe((data: Post[]) => {
+      if (data.length != 0) {
+        this.primaPagina = false;
+        this.oltre = true;
+        this.posts = data;
+        this.currentPage++;
+        this.filteredPosts = data;
+        this.isLoading = false;
+      } else {
+        this.oltre = false;
+      }
+    });
+  }
+
+  onPostsPerPageChange(event: any) {
+    this.postsPerPage = event.value;
+    this.currentPage = 1;
+    this.loadPosts();
+  }
+
+ 
+
+  scrollToBottom() {
+    console.log('Scroll to paginator triggered');
+    const paginatorElement = document.getElementById('paginator');
+    if (paginatorElement) {
+        paginatorElement.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+        });
+    }
+}
   
    
 }

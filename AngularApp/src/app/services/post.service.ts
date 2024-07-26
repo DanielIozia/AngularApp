@@ -21,9 +21,13 @@ export class PostService {
 
   constructor(private http:HttpClient, private auth:AuthService){}
 
+  /*
+   
+ 
+  */
 
-  getPosts():Observable<Post[]>{
-    return this.http.get<Post[]>(`${this.BASE_URL}${this.POSTS_SEGMENT}${this.access_token}${this.auth.getToken()}`);
+  getPosts(page:number = 1, postsPerPage:number = 10):Observable<Post[]>{
+    return this.http.get<Post[]>(`${this.BASE_URL}${this.POSTS_SEGMENT}${this.access_token}${this.auth.getToken()}&page=${page}&per_page=${postsPerPage}`);
   }
 
    // /public/v2/posts/6940392/comments

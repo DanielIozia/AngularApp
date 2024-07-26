@@ -1,5 +1,13 @@
 <h1 class="register-title">Register</h1>
 <form class="form-container" #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm)">
+
+   <!-- Indicatore di caricamento -->
+   <div *ngIf="isLoading" class="loading-container">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
   <p>To get your access token you must first authenticate on the <a href="https://gorest.co.in/" target="_blank">GoRest platform</a></p>
 
   <mat-form-field>
@@ -52,8 +60,8 @@
   </mat-form-field>
 
 
-  <button mat-flat-button color="primary" type="submit" [disabled]="!registerForm.valid">Submit</button>
-  <button mat-flat-button color="accent" [routerLink]="['/login']">Login</button>
+  <button mat-flat-button color="primary" type="submit" [disabled]="!registerForm.valid || isLoading">Submit</button>
+  <button mat-flat-button color="accent" [routerLink]="['/login']" [disabled]="isLoading">Login</button>
 </form>
 
 

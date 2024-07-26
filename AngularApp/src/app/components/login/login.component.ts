@@ -17,7 +17,7 @@ export class LoginComponent{
   errorMessage: string | null = null;
   errorMessageEmail: string | null = null;
   users: User[] = [];
-  isLoading: boolean = false; // Aggiungi questa variabile
+  isLoading: boolean = false; 
   email: string | null = null;
 
 

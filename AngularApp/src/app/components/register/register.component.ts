@@ -14,6 +14,7 @@ export class RegisterComponent implements OnInit {
   users: User[] = [];
   tokenError: string | null = null;
   emailError: string | null = null;
+  isLoading: boolean = false; 
 
   constructor(
     private auth:AuthService,
@@ -24,13 +25,16 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {}
 
   onSubmit(form: NgForm): void {
+    this.isLoading = true;
     const { name, email, gender, status, token } = form.value;
 
     this.resetErrors();
+    
     const newUser: User = { name, email, gender, status };
 
     this.userService.createUser(newUser, token).subscribe(
       (response:User) => {
+        this.isLoading = false;
         this.auth.login(token,email,response.id!.toString(),response.gender!,response.status,response.name);
         this.router.navigate(['/home/users']);
       },
@@ -43,20 +47,8 @@ export class RegisterComponent implements OnInit {
     this.emailError = null;
   }
 
-  private updateLocalStorage(user: User): void {
-    const users = JSON.parse(localStorage.getItem('users') || '[]');
-    users.push(user);
-    localStorage.setItem('users', JSON.stringify(users.id));
-  }
-
-  private loadUsersAfterCreation(): void {
-    this.userService.getUsers(this.auth.getToken()).subscribe(
-      (data: User[]) => this.users = data,
-      error => console.error('Error fetching users after creation:', error)
-    );
-  }
-
   private handleError(error: any, form: NgForm): void {
+    this.isLoading = false;
     if (error.status === 401) {
       // Gestione dell'errore di token non valido
       this.tokenError = 'Invalid Token';

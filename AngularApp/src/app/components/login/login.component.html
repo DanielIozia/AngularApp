@@ -22,6 +22,6 @@
         <mat-error *ngIf="showErrorMessage">{{ errorMessage }}</mat-error>
     </mat-form-field>
     
-    <button mat-flat-button color="primary" type="submit" [disabled]="!loginForm.valid">Submit</button>
-    <button mat-flat-button color="accent" [routerLink]="['/register']">SignUp</button>
+    <button mat-flat-button color="primary" type="submit" [disabled]="!loginForm.valid || isLoading">Submit</button>
+    <button mat-flat-button color="accent" [routerLink]="['/register']" [disabled]="isLoading">SignUp</button>
 </form>

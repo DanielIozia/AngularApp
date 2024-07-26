@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { ProfileEditDialogComponent } from './profile-edit-dialog.component';
 
 describe('ProfileEditDialogComponent', () => {
@@ -21,3 +20,4 @@ describe('ProfileEditDialogComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+

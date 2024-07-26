@@ -107,33 +107,65 @@ table {
   display: inline-block;
 }
 
-
-
 .pagination-controls {
   display: flex;
+  align-items: center;
   justify-content: center;
-  margin-top: 20px;
+  margin-top: 10px;
 
-  button {
-    margin: 0 5px;
-    padding: 5px 10px;
-    border: none;
-    background-color: #007bff;
-    color: white;
-    cursor: pointer;
-    border-radius: 4px;
+  .paginator {
+    display: flex;
+    align-items: center;
 
-    &:disabled {
-      background-color: #c0c0c0;
-      cursor: not-allowed;
+    button {
+      margin: 0 5px;
+      padding: 5px 10px;
+      border: none;
+      background-color: #007bff;
+      color: white;
+      cursor: pointer;
+      border-radius: 4px;
+  
+      &:disabled {
+        background-color: #c0c0c0;
+        cursor: not-allowed;
+      }
     }
   }
 
-  span {
-    margin: 0 10px;
-    align-self: center;
+
+  .select-users-per-page {
+    margin-top: 10px;
+    margin-left:10px;
+    display: flex;
+    align-items: center;
+    max-width: 100px;
+
+    mat-form-field {
+      margin:0;
+      
+
+      .mat-form-field-wrapper {
+        padding-bottom: 0;
+      }
+
+      .mat-form-field-flex {
+        padding-bottom: 0;
+      }
+
+      .mat-form-field-underline {
+        display: none;
+      }
+
+      .mat-select {
+        font-size: 14px;
+      }
+    }
   }
 }
+
+
+
 
 
 .delete{

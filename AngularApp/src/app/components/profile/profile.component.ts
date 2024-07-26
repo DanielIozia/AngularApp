@@ -17,6 +17,7 @@ import { ConfirmDeleteDialogComponent } from '../confirm-delete-dialog/confirm-d
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
+
   id: number = this.auth.getId();
   email: string = this.auth.getEmail()!;
   name: string = this.auth.getName()!;
@@ -28,9 +29,11 @@ export class ProfileComponent implements OnInit {
   loadComments: boolean[] = [];
   loadDelete: boolean[] = []; // Aggiungi questa variabile
   loadingDelete: boolean = false;
-  commentForm!: NgForm;
+  commentForm!: NgForm; 
   creatingPost: boolean = false;
   newPost: { title: string, body: string } = { title: '', body: '' };
+  loadingCreatingComment:boolean = false;
+  loadingDeletingComment:boolean = false;
 
   constructor(private user: UserService, private auth: AuthService, private postService: PostService,private dialog: MatDialog, private router:Router) {}
 
@@ -56,17 +59,18 @@ export class ProfileComponent implements OnInit {
 
   update() {
     const dialogRef = this.dialog.open(ProfileEditDialogComponent, {
-      width: '300px',
+      width: '40%',
       data: { name: this.name, email: this.email, gender: this.gender, status: this.status }
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result:User) => {
       if (result) {
         this.name = result.name;
         this.email = result.email;
         this.gender = result.gender;
         this.status = result.status;
-        // Puoi aggiungere una chiamata al servizio utente per aggiornare le informazioni nel backend
+        //aggiorno il local storage 
+        this.auth.login(this.auth.getToken()!,this.email,this.auth.getId().toString(),this.gender,this.status,this.name);
       }
     });
   }
@@ -89,6 +93,7 @@ export class ProfileComponent implements OnInit {
   }
 
   addComment(form: NgForm, id_post: number) {
+    this.loadingCreatingComment = true;
     let comment: Comment = {
       id: this.auth.getId(),
       userId: this.auth.getId(),
@@ -99,6 +104,7 @@ export class ProfileComponent implements OnInit {
     }
 
     this.postService.addPostComment(id_post, comment).subscribe((data: Comment) => {
+      this.loadingCreatingComment = false;
       const postIndex = this.posts.findIndex(post => post.id === id_post);
       if (postIndex !== -1) {
         this.posts[postIndex].comments?.push(data);
@@ -135,13 +141,9 @@ export class ProfileComponent implements OnInit {
     });
   }
 
-  /*delete(){
-    this.user.deleteUser(this.auth.getId()).subscribe( () => {
-      this.auth.logout();
-      this.router.navigate(['/login']);
-    })
-  }*/
+  
 
+  //DELETE POST
     delete(): void {
       const dialogRef = this.dialog.open(ConfirmDeleteDialogComponent, {
         width: '300px',

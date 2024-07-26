@@ -65,16 +65,14 @@ export class PostService {
     return this.http.delete(`${this.BASE_URL}${this.POSTS_SEGMENT}/${id_post}${this.access_token}${this.auth.getToken()}`,{headers})
   }
 
+  
 
 
-  addPost(url:string,post:Post):Observable<Post>{
-    return this.http.post<Post>(url,post);
-  }
+
+  
 
 
-  addComment(url:string,postId: number, comment: Comment): Observable<Comment> {
-    return this.http.post<Comment>(`${url}/${postId}/comments`, comment);
-  }
+ 
 
  
 

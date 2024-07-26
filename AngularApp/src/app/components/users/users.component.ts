@@ -16,14 +16,17 @@ import { ConfirmDeleteDialogComponent } from '../confirm-delete-dialog/confirm-d
 export class UsersComponent implements OnInit {
   users: User[] = [];
   filteredUsers: User[] = [];
-  displayedColumns: string[] = ['name', 'email', 'status','delete'];
+  displayedColumns: string[] = ['index','name', 'email', 'status','delete'];
   filterValue: string = '';
   isLoading: boolean = true;
-  currentPage: number = 1; // Pagina corrente
+  currentPage: number = 1; 
   oltre:boolean = true;
   primaPagina:boolean;
   deletingUserId: number | null = null;
   userID:number = this.auth.getId();
+  usersPerPage: number = 10; // initial value user per page
+  usersPerPageOptions: number[] = [10, 25, 50, 75, 100];
+
 
 
 
@@ -57,9 +60,10 @@ export class UsersComponent implements OnInit {
     return this.router.navigate([`/home/users/${id}`]);
   }
 
+
   private loadUsers() {
     this.isLoading = true;
-    this.userService.getUsers(this.auth.getToken(), this.currentPage).subscribe(
+    this.userService.getUsers(this.auth.getToken(), this.currentPage, this.usersPerPage).subscribe(
       (data: User[]) => {
         this.users = data;
         this.filteredUsers = data;
@@ -72,46 +76,52 @@ export class UsersComponent implements OnInit {
     );
   }
   
+  
 
   previousPage() {
     this.clearFilter();
-    if(this.currentPage == 2){
+    if (this.currentPage == 2) {
       this.primaPagina = true;
     }
     if (this.currentPage != 1) {
       const token = localStorage.getItem('authToken');
       this.currentPage--;
-      if(!this.oltre){
+      if (!this.oltre) {
         this.oltre = true;
       }
-      this.userService.getUsers(token, this.currentPage).subscribe ( (data:User[]) => {
+      this.userService.getUsers(token, this.currentPage, this.usersPerPage).subscribe((data: User[]) => {
         this.users = data;
         this.filteredUsers = data;
         this.isLoading = false;
-    })
-    }
-    else{
+      });
+    } else {
       this.primaPagina = false;
     }
   }
+  
 
   nextPage() {
     this.clearFilter();
     const token = localStorage.getItem('authToken');
-    this.userService.getUsers(token, this.currentPage+1).subscribe ( (data:User[]) => {
-      if(data.length != 0){
+    this.userService.getUsers(token, this.currentPage + 1, this.usersPerPage).subscribe((data: User[]) => {
+      if (data.length != 0) {
         this.primaPagina = false;
         this.oltre = true;
         this.users = data;
         this.currentPage++;
         this.filteredUsers = data;
         this.isLoading = false;
-        }
-        else
-        this.oltre = false; 
-    })
+      } else {
+        this.oltre = false;
+      }
+    });
   }
-
+  //funzione per gestire il cambiamento del numero di utenti per pagina
+  onUsersPerPageChange(event: any) {
+    this.usersPerPage = event.value;
+    this.currentPage = 1; // Reimposta alla prima pagina quando cambia il numero di utenti per pagina
+    this.loadUsers();
+  }
 
   deleteUser(id: number, name: string) {
     const dialogRef = this.dialog.open(ConfirmDeleteDialogComponent, {

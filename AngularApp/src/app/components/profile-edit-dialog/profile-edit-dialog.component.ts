@@ -12,6 +12,7 @@ import { UserService } from '../../services/user.service';
 export class ProfileEditDialogComponent {
   showErrorMessage: boolean = false;
   errorMessage: string | null = null;
+  loading:boolean = false;
 
   constructor(
     public dialogRef: MatDialogRef<ProfileEditDialogComponent>,
@@ -24,6 +25,7 @@ export class ProfileEditDialogComponent {
   }
 
   onUpdate(form: NgForm): void {
+    this.loading = true;
     this.errorMessage = null;
 
     let updatedUser: User = {
@@ -39,10 +41,12 @@ export class ProfileEditDialogComponent {
       this.showErrorMessage = false;
       this.userService.updateUser(updatedUser).subscribe(
         (data: User) => {
+          this.loading = false;
           console.log("Dati ricevuti: ", data);
           this.dialogRef.close(form.value);
         },
         error => {
+            this.loading = false;
             this.showErrorMessage = true;
             this.resetFormControl(form, 'email');
             console.log("Mostra messaggio di errore: ", this.showErrorMessage);

@@ -59,21 +59,28 @@ export class ProfileComponent implements OnInit {
 
   update() {
     const dialogRef = this.dialog.open(ProfileEditDialogComponent, {
-      width: '40%',
-      data: { name: this.name, email: this.email, gender: this.gender, status: this.status }
+      width: '80%',  // Imposta la larghezza a una percentuale più grande
+      maxWidth: '600px', // Imposta una larghezza massima per evitare che il dialogo diventi troppo largo
+      data: { 
+        name: this.name, 
+        email: this.email, 
+        gender: this.gender, 
+        status: this.status 
+      }
     });
 
-    dialogRef.afterClosed().subscribe((result:User) => {
+    dialogRef.afterClosed().subscribe((result: User) => {
       if (result) {
         this.name = result.name;
         this.email = result.email;
         this.gender = result.gender;
         this.status = result.status;
-        //aggiorno il local storage 
-        this.auth.login(this.auth.getToken()!,this.email,this.auth.getId().toString(),this.gender,this.status,this.name);
+        // Aggiorno il local storage 
+        this.auth.login(this.auth.getToken()!, this.email, this.auth.getId().toString(), this.gender, this.status, this.name);
       }
     });
-  }
+}
+
 
   /*update() {
     //this.auth.setStatus();

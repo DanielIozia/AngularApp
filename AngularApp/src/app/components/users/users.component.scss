@@ -1,110 +1,129 @@
-section{
-    padding:40px;
+section {
+  padding: 20px; /* Ridotto il padding per schermi più piccoli */
 }
 
-table {
-    width: 100%;
-  }
-  .user-row:hover {
-    background-color: #f1f1f1; // Cambia questo colore secondo le tue preferenze
-    cursor: pointer;
-  }
-
-
-  .containers {
-    margin-top:1%;
-    display: table;
-  }
-  
-  .example-button-row {
-    display: table-cell;
-    max-width: 600px;
-  }
-  
-  .example-button-row .mat-mdc-button-base {
-    margin: 8px 8px 8px 0;
-  }
-  
-  .example-flex-container {
-    display: flex;
-    justify-content: flex-start;
-    flex-wrap: wrap;
-  }
-  
-  .example-button-container {
-    display: flex;
-    justify-content: center;
-    width: 120px;
-  }
-
-  /* users.component.scss */
 .loading-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  height:50vh;
+  height: 50vh;
   width: 100%;
 }
 
 .filter-form {
   display: flex;
   align-items: center;
-  gap: 8px; /* Spazio tra il campo input e l'icona */
-
-
-.clear-button {
-  z-index: 1;
-
-  &:hover {
-    mat-icon {
-      color: #ff6666; // Cambia colore al passaggio del mouse
-    }
-  }
-}
+  gap: 8px; /* Spazio tra il campo input e il bottone clear */
+  max-width: 100%;
+   /* Assicura che il form non superi la larghezza del contenitore */
 
   mat-form-field {
-    
-    flex: 0.5; /* Fa sì che il campo input occupi tutto lo spazio disponibile */
-    margin-right: 8px; /* Spazio tra il campo input e l'icona */
+    flex: 1; /* Occupa tutto lo spazio disponibile tranne quello per il bottone */
+    margin: 0; /* Rimuove margini extra */
+    max-width: 40%; /* Imposta una larghezza massima per il campo di input */
   }
 
-  mat-icon {
-    cursor: pointer;
-    font-size:x-large; /* Cambia il colore dell'icona se necessario */
+  .clear-button {
+    margin: 0;
+    background-color: transparent; /* Rimuove il colore di sfondo predefinito */
+    border: none; /* Rimuove il bordo predefinito */
+    padding: 8px; /* Aggiunge un po' di spazio attorno all'icona */
+
+    mat-icon {
+      font-size: 24px; /* Dimensiona l'icona per essere ben visibile */
+    }
+    
+    &:hover {
+      background-color: #f1f1f1; /* Cambia colore al passaggio del mouse */
+    }
   }
 
   @media (max-width: 600px) {
-    flex-direction: column;
-    align-items: stretch;
-
+    
     mat-form-field {
-      margin-right: 0;
-      margin-bottom: 8px; /* Spazio tra il campo input e l'icona */
+      margin-bottom: 8px; /* Spazio tra il campo input e il bottone clear */
+      max-width: 80%; /* Assicura che il campo input occupi tutto lo spazio disponibile */
     }
 
-    mat-icon {
-      align-self: flex-end;
+    .clear-button {
+      margin-bottom:10%;
+      align-self: flex-end; /* Allinea il bottone a destra */
     }
   }
 }
 
-
-
-.green-dot {
-  height: 15px;
-  width: 15px;
-  background-color: green;
-  border-radius: 50%;
-  display: inline-block;
-  
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center; /* Centra le card orizzontalmente */
 }
 
-.red-dot {
-  height: 15px;
-  width: 15px;
-  background-color: red;
-  border-radius: 50%;
-  display: inline-block;
+.card {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 300px;
+  padding: 16px;
+  cursor: pointer;
+  transition: transform 0.2s;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+
+  &.highlight-card {
+    border: 2px solid #4caf50;
+  }
+
+  .card-content {
+    h3 {
+      margin: 0;
+      font-size: 1.2em;
+    }
+
+    p {
+      margin: 8px 0;
+    }
+
+    .green-dot,
+    .red-dot {
+      margin-left:5px;
+      height: 15px;
+      width: 15px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .green-dot {
+      background-color: rgb(41, 229, 51);
+    }
+
+    .red-dot {
+      background-color: rgba(234, 19, 19, 0.877);
+    }
+  }
+
+  .card-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    .delete {
+      color: navy;
+      margin-left: 8px;
+
+      &:hover {
+        color: red;
+      }
+
+      mat-icon {
+        font-size: 20px;
+      }
+    }
+  }
 }
 
 .pagination-controls {
@@ -125,7 +144,7 @@ table {
       color: white;
       cursor: pointer;
       border-radius: 4px;
-  
+
       &:disabled {
         background-color: #c0c0c0;
         cursor: not-allowed;
@@ -133,17 +152,15 @@ table {
     }
   }
 
-
   .select-users-per-page {
     margin-top: 10px;
-    margin-left:10px;
+    margin-left: 10px;
     display: flex;
     align-items: center;
-    max-width: 100px;
+    max-width: 120px;
 
     mat-form-field {
-      margin:0;
-      
+      margin: 0;
 
       .mat-form-field-wrapper {
         padding-bottom: 0;
@@ -161,36 +178,10 @@ table {
         font-size: 14px;
       }
     }
+
+    @media (max-width: 600px) {
+    
+      max-width: 85px;
+    }
   }
-}
-
-
-
-
-
-.delete{
-  color:navy;
-
-  &:hover{
-    color:red;
-  }
-}
-
-.user-table {
-  .highlight-row {
-    background-color: #e9fecd; // Colore di sfondo leggermente più scuro per la riga
-  }
-}
-
-// Altri stili della tabella
-.user-table .mat-header-cell {
-  font-weight: bold;
-}
-
-.user-table .mat-cell {
-  padding: 16px;
-}
-
-.user-table .user-row {
-  cursor: pointer;
 }

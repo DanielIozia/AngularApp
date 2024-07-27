@@ -1,0 +1,6 @@
+[build]
+  command = "npm install -g @angular/cli && npm install && ng build"
+  publish = "dist/angular-app"
+
+[build.environment]
+  NODE_VERSION = "16"

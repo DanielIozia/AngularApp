@@ -9,6 +9,7 @@ export class AuthService {
 
   constructor() {
     const token = localStorage.getItem('authToken');
+    this.isLoggedIn = false;
   }
 
   login(token: string, email:string, id:string,gender:string,status:string,name:string) {
@@ -19,9 +20,11 @@ export class AuthService {
     localStorage.setItem('status', status)
     localStorage.setItem('name', name)
     this.isLoggedIn = true;
+    console.log("LOGGATO");
   }
 
   logout() {
+    console.log("QUIT");
     localStorage.clear();
     this.isLoggedIn = false;
   }

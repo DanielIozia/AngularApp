@@ -8,8 +8,8 @@
   import { Comment } from '../../interfaces/Comment-interface';
   import { NgForm } from '@angular/forms';
 import { AuthService } from '../../services/auth/auth.service';
-import { ConfirmDeleteDialogComponent } from '../confirm-delete-dialog/confirm-delete-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+
 
 
   @Component({
@@ -17,6 +17,7 @@ import { MatDialog } from '@angular/material/dialog';
     templateUrl: './user-detail.component.html',
     styleUrls: ['./user-detail.component.scss']
   })
+  
   export class UserDetailComponent implements OnInit {
     user: User | null = null;
     posts: Post[] = [];

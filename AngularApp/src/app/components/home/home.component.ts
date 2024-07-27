@@ -2,7 +2,8 @@ import { Component, Output, EventEmitter, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth/auth.service';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
-import { MatSidenav } from '@angular/material/sidenav';
+
+
 
 
 @Component({
@@ -19,7 +20,6 @@ export class HomeComponent implements OnInit {
   }
 
   navigateToLogin(): void {
-    
     this.auth.logout();
     this.router.navigate(['/login']);
   }

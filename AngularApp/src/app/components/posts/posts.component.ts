@@ -1,14 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { PostService } from '../../services/post.service';
 import { Post } from '../../interfaces/Post-interface';
-import { UserService } from '../../services/user.service';
-import { User } from '../../interfaces/User-interface';
 import { NgForm } from '@angular/forms';
 import { AuthService } from '../../services/auth/auth.service';
 import { Comment } from '../../interfaces/Comment-interface';
 import { MatDialog } from '@angular/material/dialog';
-import { ConfirmDialogComponent } from '../confirm-post-delete-dialog/confirm-post-delete-dialog.component';
-
+import { ConfirmDialogComponent } from '../../components/confirm-post-delete-dialog/confirm-post-delete-dialog.component';
 
 @Component({
   selector: 'app-posts',
@@ -35,7 +32,7 @@ export class PostsComponent implements OnInit {
   filterValue: string = '';
   currentPage: number = 1;
   oltre: boolean = true;
-  primaPagina: boolean = true;
+  primaPagina: boolean;
   postsPerPage: number = 10;
   postsPerPageOptions: number[] = [10, 25, 50, 75, 100];
 
@@ -48,6 +45,7 @@ export class PostsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.primaPagina = true;
     this.loadPosts();
   }
 

@@ -5,8 +5,7 @@ import { User } from '../../interfaces/User-interface';
 import { AuthService } from '../../services/auth/auth.service';
 //componente di dialogo (delete confirm)
 import { MatDialog } from '@angular/material/dialog';
-import { ConfirmDeleteDialogComponent } from '../confirm-delete-dialog/confirm-delete-dialog.component';
-
+import { ConfirmDeleteDialogComponent } from '../../components/confirm-delete-dialog/confirm-delete-dialog.component';
 
 @Component({
   selector: 'app-users',
@@ -16,26 +15,23 @@ import { ConfirmDeleteDialogComponent } from '../confirm-delete-dialog/confirm-d
 export class UsersComponent implements OnInit {
   users: User[] = [];
   filteredUsers: User[] = [];
-  displayedColumns: string[] = ['index','name', 'email', 'status','delete'];
+  displayedColumns: string[] = ['index', 'name', 'email', 'status', 'delete'];
   filterValue: string = '';
   isLoading: boolean = true;
   currentPage: number = 1; 
-  oltre:boolean = true;
-  primaPagina:boolean;
+  oltre: boolean = true;
+  primaPagina: boolean;
   deletingUserId: number | null = null;
-  userID:number = this.auth.getId();
+  userID: number = this.auth.getId();
   usersPerPage: number = 10; // initial value user per page
   usersPerPageOptions: number[] = [10, 25, 50, 75, 100];
 
-
-
-
-  constructor(private userService: UserService, private router: Router, private auth:AuthService, public dialog: MatDialog) {
+  constructor(private userService: UserService, private router: Router, private auth: AuthService, public dialog: MatDialog) {
     this.currentPage = 1;
     this.primaPagina = true;
   }
 
-  goToProfile(){
+  goToProfile() {
     this.router.navigate(['/home/profile']);
   }
 
@@ -55,11 +51,9 @@ export class UsersComponent implements OnInit {
     this.filteredUsers = this.users;
   }
 
-
   goToDetail(id: number) {
     return this.router.navigate([`/home/users/${id}`]);
   }
-
 
   private loadUsers() {
     this.isLoading = true;
@@ -75,8 +69,6 @@ export class UsersComponent implements OnInit {
       }
     );
   }
-  
-  
 
   previousPage() {
     this.clearFilter();
@@ -98,7 +90,6 @@ export class UsersComponent implements OnInit {
       this.primaPagina = false;
     }
   }
-  
 
   nextPage() {
     this.clearFilter();
@@ -116,7 +107,8 @@ export class UsersComponent implements OnInit {
       }
     });
   }
-  //funzione per gestire il cambiamento del numero di utenti per pagina
+
+  // funzione per gestire il cambiamento del numero di utenti per pagina
   onUsersPerPageChange(event: any) {
     this.usersPerPage = event.value;
     this.currentPage = 1; // Reimposta alla prima pagina quando cambia il numero di utenti per pagina
@@ -128,7 +120,7 @@ export class UsersComponent implements OnInit {
       width: '250px',
       data: { name }
     });
-  
+
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.deletingUserId = id;
@@ -144,5 +136,5 @@ export class UsersComponent implements OnInit {
         );
       }
     });
-  } 
+  }
 }

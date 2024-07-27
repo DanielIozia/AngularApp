@@ -8,6 +8,8 @@ import { User } from '../interfaces/User-interface';
 import { Post } from '../interfaces/Post-interface';
 import { AuthService } from './auth/auth.service';
 
+import { MatFormFieldControl } from '@angular/material/form-field';
+
 
 @Injectable({
   providedIn: 'root'

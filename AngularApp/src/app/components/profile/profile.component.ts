@@ -7,11 +7,15 @@ import { Post } from '../../interfaces/Post-interface';
 import { Comment } from '../../interfaces/Comment-interface';
 import { NgForm } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { ProfileEditDialogComponent } from '../profile-edit-dialog/profile-edit-dialog.component';
+import { ProfileEditDialogComponent } from '../../components/profile-edit-dialog/profile-edit-dialog.component';
 import { Router } from '@angular/router';
-import { ConfirmDeleteDialogComponent } from '../confirm-delete-dialog/confirm-delete-dialog.component'; // Importa il dialogo di conferma
-import { ConfirmDialogComponent } from '../confirm-post-delete-dialog/confirm-post-delete-dialog.component';
+import { ConfirmDeleteDialogComponent } from '../../components/confirm-delete-dialog/confirm-delete-dialog.component';
+import { ConfirmDialogComponent } from '../../components/confirm-post-delete-dialog/confirm-post-delete-dialog.component';
 import { error } from 'console';
+
+
+
+
 
 @Component({
   selector: 'app-profile',
@@ -38,6 +42,7 @@ export class ProfileComponent implements OnInit {
   loadingCreatingComment:boolean = false;
   textError:string = '';
   showtextError:boolean = false;
+  
 
 
   

@@ -20,10 +20,10 @@ export const routes: Routes = [
   {path: 'home', component:HomeComponent, canActivate:[authGuard],
     children:[
       {path: '', redirectTo: 'users', pathMatch:'full' },
-      {path: 'users', component: UsersComponent },
-      {path: 'users/:id', component: UserDetailComponent },
+      {path: 'users', component: UsersComponent,  },
+      {path: 'users/:id', component: UserDetailComponent,  },
       {path: 'posts', component: PostsComponent },
-      {path: 'profile', component: ProfileComponent}
+      {path: 'profile', component: ProfileComponent, }
     ] 
   },
   {path: '404', component: PageNotFoundComponent },

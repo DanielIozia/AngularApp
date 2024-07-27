@@ -51,8 +51,7 @@ $small-button-font-size: 0.875rem;
   display: flex;
   flex-direction: column;
   gap: 16px;
-  max-width: 100%;
-  width:75%;
+  width:40%;
   margin: 0 auto;
   padding: 16px;
   background-color: #f5f5f5;
@@ -85,8 +84,7 @@ $small-button-font-size: 0.875rem;
           display: flex;
           flex-direction: column;
           gap: 16px;
-          max-width: 100%;
-          width:50%;
+          width:40%;
           margin: 0 auto;
           padding: 16px;
           background-color: #f5f5f5;
@@ -115,6 +113,7 @@ $small-button-font-size: 0.875rem;
             mat-form-field {
                 width: 100%;
             }
+           
         }
         
         h1 {
@@ -191,7 +190,168 @@ $small-button-font-size: 0.875rem;
             .register-title {
                 font-size: 2rem;
             }
-        
+            $primary-color: #007bff;
+            $secondary-color: #6c757d;
+            $link-color: #17a2b8;
+            $link-hover-color: darken($link-color, 10%);
+            $font-family: 'Arial, sans-serif';
+            $padding: 1rem;
+            
+            .form-container {
+              margin-top: 3% !important;
+              display: flex;
+              flex-direction: column;
+              gap: 16px;
+              max-width: 80%;
+              margin: 0 auto;
+              padding: 16px;
+              background-color: #f5f5f5;
+              border-radius: 8px;
+              box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            
+                p {
+                    margin:0 auto;
+                    width: 80%;
+                    text-align: center;
+                    font-family: $font-family;
+                    font-size: 1rem;
+                    color: $secondary-color;
+                    padding: $padding;
+                    line-height: 1.5;
+            
+                    a {
+                        color: $link-color;
+                        text-decoration: none;
+            
+                        &:hover {
+                            color: $link-hover-color;
+                            text-decoration: underline;
+                        }
+                    }
+                }
+            
+                mat-form-field {
+                    width: 100%;
+                }
+            }
+            
+            h1 {
+                margin-top: 3%;
+                text-align: center;
+            }
+            
+            .custom-paragraph {
+                margin: 16px 0;
+                font-size: 16px;
+                color: #555;
+                text-align: center;
+            }
+            
+            body {
+                background-color: orange;
+            }
+            
+            .register-title {
+                font-family: 'Arial', sans-serif;
+                font-size: 2.5rem;
+                font-weight: bold;
+                text-align: center;
+                margin-top: 5%;
+                color: $primary-color;
+                margin-bottom: 20px;
+            }
+            
+            .error-message, .error-message-email {
+                color: red;
+                margin-top: 10px;
+            }
+            
+            .loading-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-top: 20px;
+            }
+            
+            .spinner-border {
+                width: 3rem;
+                height: 3rem;
+                border-width: 0.25em;
+                border-style: solid;
+                border-color: currentColor transparent transparent transparent;
+                border-radius: 50%;
+                animation: spinner-border 0.75s linear infinite;
+            
+                &.text-primary {
+                    color: #0d6efd; // Puoi personalizzare il colore primario
+                }
+            }
+            
+            .visually-hidden {
+                position: absolute;
+                width: 1px;
+                height: 1px;
+                padding: 0;
+                margin: -1px;
+                overflow: hidden;
+                clip: rect(0, 0, 0, 0);
+                border: 0;
+            }
+            
+            @keyframes spinner-border {
+                to {
+                    transform: rotate(360deg);
+                }
+            }
+            
+            /* Media Queries per la Responsività */
+            @media (max-width: 768px) {
+                .register-title {
+                    font-size: 2rem;
+                }
+            
+                .form-container {
+                  max-width:80%;
+                  padding: 12px;
+                    
+                }
+            
+                .spinner-border {
+                    width: 2.5rem;
+                    height: 2.5rem;
+                }
+            }
+            
+            @media (max-width: 480px) {
+                .register-title {
+                    font-size: 1.5rem;
+                    margin-top: 2%;
+                }
+            
+                .form-container {
+                  width:70% !important;
+                    padding: 8px;
+                }
+            
+                .spinner-border {
+                    width: 2rem;
+                    height: 2rem;
+                }
+            
+                p {
+                    font-size: 0.875rem;
+                    padding: 0.5rem;
+                }
+            
+                .error-message, .error-message-email {
+                    font-size: 0.875rem;
+                }
+            
+                button {
+                    font-size: 0.875rem;
+                }
+            }
+            
             .form-container {
               max-width:80%;
               padding: 12px;
@@ -211,7 +371,7 @@ $small-button-font-size: 0.875rem;
             }
         
             .form-container {
-                width:90%;
+                width:70% !important;
                 padding: 8px;
             }
         
@@ -305,6 +465,7 @@ button {
   }
 
   .form-container {
+    width:70% !important;
     padding: $mobile-padding;
   }
 

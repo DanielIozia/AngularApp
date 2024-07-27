@@ -1,67 +1,67 @@
-<h1 class="register-title">Register</h1>
-<form class="form-container" #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm)">
+    <h1 class="register-title">Register</h1>
+    <form class="form-container" #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm)">
 
-   <!-- Indicatore di caricamento -->
-   <div *ngIf="isLoading" class="loading-container">
-    <div class="spinner-border text-primary" role="status">
-      <span class="visually-hidden">Loading...</span>
-    </div>
-  </div>
+      <!-- Indicatore di caricamento -->
+      <div *ngIf="isLoading" class="loading-container">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
 
-  <p>To get your access token you must first authenticate on the <a href="https://gorest.co.in/" target="_blank">GoRest platform</a></p>
+      <p>To get your access token you must first authenticate on the <a href="https://gorest.co.in/" target="_blank">GoRest platform</a></p>
 
-  <mat-form-field>
-    <mat-label>Name</mat-label>
-    <input matInput type="text" name="name" required ngModel placeholder="Name"/>
-  </mat-form-field>
+      <mat-form-field>
+        <mat-label>Name</mat-label>
+        <input matInput type="text" name="name" required ngModel placeholder="Name"/>
+      </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>Email</mat-label>
-    <input 
-      matInput 
-      type="email" 
-      name="email" 
-      required 
-      ngModel 
-      placeholder="Email"
-      #email="ngModel"
-      [ngClass]="{'invalid': email.invalid && (email.dirty || email.touched)}"
-    />
-    <mat-error *ngIf="emailError">{{ emailError }}</mat-error>
-  </mat-form-field>
+      <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input 
+          matInput 
+          type="email" 
+          name="email" 
+          required 
+          ngModel 
+          placeholder="Email"
+          #email="ngModel"
+          [ngClass]="{'invalid': email.invalid && (email.dirty || email.touched)}"
+        />
+        <mat-error *ngIf="emailError">{{ emailError }}</mat-error>
+      </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>Gender</mat-label>
-    <mat-select name="gender" required ngModel>
-      <mat-option value="male">Male</mat-option>
-      <mat-option value="female">Female</mat-option>
-    </mat-select>
-  </mat-form-field>
+      <mat-form-field>
+        <mat-label>Gender</mat-label>
+        <mat-select name="gender" required ngModel>
+          <mat-option value="male">Male</mat-option>
+          <mat-option value="female">Female</mat-option>
+        </mat-select>
+      </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>Status</mat-label>
-    <mat-select name="status" required ngModel>
-      <mat-option value="active">Active</mat-option>
-      <mat-option value="inactive">Inactive</mat-option>
-    </mat-select>
-  </mat-form-field>
+      <mat-form-field>
+        <mat-label>Status</mat-label>
+        <mat-select name="status" required ngModel>
+          <mat-option value="active">Active</mat-option>
+          <mat-option value="inactive">Inactive</mat-option>
+        </mat-select>
+      </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>Token</mat-label>
-    <input 
-      matInput 
-      type="text" 
-      name="token" 
-      required 
-      ngModel 
-      placeholder="Token"
-    />
-    <mat-error *ngIf="tokenError">{{ tokenError }}</mat-error>
-  </mat-form-field>
-
-
-  <button mat-flat-button color="primary" type="submit" [disabled]="!registerForm.valid || isLoading">Submit</button>
-  <button mat-flat-button color="accent" [routerLink]="['/login']" [disabled]="isLoading">Login</button>
-</form>
+      <mat-form-field>
+        <mat-label>Token</mat-label>
+        <input 
+          matInput 
+          type="text" 
+          name="token" 
+          required 
+          ngModel 
+          placeholder="Token"
+        />
+        <mat-error *ngIf="tokenError">{{ tokenError }}</mat-error>
+      </mat-form-field>
 
 
+      <button mat-flat-button color="primary" type="submit" [disabled]="!registerForm.valid || isLoading">Submit</button>
+      <button mat-flat-button color="accent" [routerLink]="['/login']" [disabled]="isLoading">Login</button>
+    </form>
+
+    

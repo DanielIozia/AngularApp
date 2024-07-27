@@ -1,3 +1,4 @@
+
 <h1 class="register-title">Login</h1>
 <form class="form-container" #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
     <!-- Indicatore di caricamento -->
@@ -25,3 +26,4 @@
     <button mat-flat-button color="primary" type="submit" [disabled]="!loginForm.valid || isLoading">Submit</button>
     <button mat-flat-button color="accent" [routerLink]="['/register']" [disabled]="isLoading">SignUp</button>
 </form>
+

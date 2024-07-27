@@ -1,11 +1,27 @@
 <mat-sidenav-container class="example-container">
   <mat-sidenav #sidenav mode="side" class="side-nav">
     <mat-list role="list">
-      <mat-list-item role="listitem" routerLink="profile" [routerLinkActive]="'active'" class="list">
-        <mat-icon>account_circle</mat-icon>
-      </mat-list-item>
-      <mat-list-item role="listitem" routerLink="users" [routerLinkActive]="'active'" class="list">Users</mat-list-item>
-      <mat-list-item role="listitem" routerLink="posts" [routerLinkActive]="'active'" class="list">Posts</mat-list-item>
+      <div class="container-list">
+        <div>
+          <mat-list-item role="listitem" routerLink="profile" [routerLinkActive]="'active'" class="list">
+            <mat-icon>account_circle</mat-icon>
+            
+          </mat-list-item>
+          <mat-list-item role="listitem" routerLink="users" [routerLinkActive]="'active'" class="list">
+            <span>Users</span>
+          </mat-list-item>
+          <mat-list-item role="listitem" routerLink="posts" [routerLinkActive]="'active'" class="list">
+            <span>Posts</span>
+          </mat-list-item>
+        </div>
+        <div>
+          <mat-list-item role="listitem">
+            <button mat-icon-button class="example-icon favorite-icon" aria-label="Logout button" (click)="navigateToLogin()">
+              <mat-icon>logout</mat-icon> 
+            </button>
+          </mat-list-item>
+        </div>
+      </div>
     </mat-list>
   </mat-sidenav>
   <mat-sidenav-content>
@@ -17,9 +33,6 @@
         UrbanConnect
       </h3>
       <span class="example-spacer"></span>
-      <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon" (click)="navigateToLogin()">
-        <mat-icon>logout</mat-icon> 
-      </button>
     </mat-toolbar>
     <router-outlet></router-outlet>
   </mat-sidenav-content>

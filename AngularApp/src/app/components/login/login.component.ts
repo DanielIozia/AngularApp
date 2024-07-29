@@ -20,6 +20,10 @@ export class LoginComponent{
   isLoading: boolean = false; 
   email: string | null = null;
 
+  emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+ 
+
 
   constructor(
     private authService: AuthService,
@@ -30,28 +34,23 @@ export class LoginComponent{
     this.showErrorMessageEmail = false;
   }
 
-  validateEmail(emailInput: any): void {
-    this.showErrorMessageEmail = false;
 
-    // Simple email validation regex
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (emailInput.value && !emailPattern.test(emailInput.value)) {
-      this.errorMessageEmail = 'L\'email non è valida';
-      this.showErrorMessageEmail = true;
-    } else {
-      this.errorMessageEmail = '';
-    }
-
-    // Trigger Angular validation
-    emailInput.control.markAsTouched();
-    emailInput.control.updateValueAndValidity();
-  }
 
   
   
   onSubmit(form: NgForm): void {
     const token = form.value.token;
     const email = form.value.email;
+
+    // Controlla la validità dell'email prima di procedere
+  if (!this.isValidEmail(email)) {
+    this.isLoading = false; // Imposta lo stato di caricamento a false
+    this.showErrorMessageEmail = true; // Mostra il messaggio di errore dell'email
+    this.errorMessageEmail = "Invalid email"; // Messaggio di errore personalizzato
+    console.error(this.errorMessageEmail); // Log dell'errore
+    this.resetFormControl(form, 'email'); // Resetta il controllo del modulo 'email'
+    return; // Esce dalla funzione
+  }
   
     if (form.valid) {
       this.isLoading = true; // Imposta lo stato di caricamento a true
@@ -90,7 +89,11 @@ export class LoginComponent{
       this.errorMessage = "Invalid Form";
     }
   }
-  
+
+ 
+  isValidEmail(email: string): boolean {
+    return this.emailRegex.test(email);
+  }
 
   checkUser(token: string, email: string, index: number = 1, limit: number = 100): Promise<boolean> {
     return new Promise((resolve, reject) => {

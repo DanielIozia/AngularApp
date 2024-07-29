@@ -3,6 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { NgForm } from '@angular/forms';
 import { User } from '../../interfaces/User-interface';
 import { UserService } from '../../services/user.service';
+import { error } from 'console';
 
 @Component({
   selector: 'app-profile-edit-dialog',
@@ -13,6 +14,13 @@ export class ProfileEditDialogComponent {
   showErrorMessage: boolean = false;
   errorMessage: string | null = null;
   loading:boolean = false;
+
+
+  emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  isValidEmail(email: string): boolean {
+    return this.emailRegex.test(email);
+  }
 
   constructor(
     public dialogRef: MatDialogRef<ProfileEditDialogComponent>,
@@ -27,35 +35,44 @@ export class ProfileEditDialogComponent {
   onUpdate(form: NgForm): void {
     this.loading = true;
     this.errorMessage = null;
-
+  
     let updatedUser: User = {
       name: form.value.name,
       gender: form.value.gender,
       email: form.value.email,
       status: form.value.status
     };
-
-    console.log("Nuovo utente: ", updatedUser);
-
+  
+    if (!this.isValidEmail(updatedUser.email)) {
+      this.loading = false; // Ferma il caricamento
+      this.showErrorMessage = true; // Mostra il messaggio di errore
+      this.errorMessage = 'Invalid Email'; // Messaggio di errore personalizzato
+      console.error(this.errorMessage);
+      return; // Esci dalla funzione
+    }
+  
     if (form.valid) {
       this.showErrorMessage = false;
       this.userService.updateUser(updatedUser).subscribe(
         (data: User) => {
           this.loading = false;
-          console.log("Dati ricevuti: ", data);
           this.dialogRef.close(form.value);
         },
         error => {
-            this.loading = false;
-            this.showErrorMessage = true;
-            this.resetFormControl(form, 'email');
-            console.log("Mostra messaggio di errore: ", this.showErrorMessage);
-            this.errorMessage = 'Email has already been taken or is invalid';
-            console.log("Errore da mostrare: ", this.errorMessage);
+          this.loading = false;
+          this.showErrorMessage = true;
+          this.resetFormControl(form, 'email');
+          this.errorMessage = 'Email già in uso o non valida';
         }
       );
+    } else {
+      this.loading = false;
+      this.showErrorMessage = true;
+      this.errorMessage = 'Il modulo non è valido';
+      console.error(this.errorMessage);
     }
   }
+  
 
   private resetFormControl(form: NgForm, controlName: string): void {
     if (form.controls[controlName]) {

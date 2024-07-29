@@ -38,6 +38,7 @@ export class ProfileComponent implements OnInit {
   loadingCreatingComment:boolean = false;
   textError:string = '';
   showtextError:boolean = false;
+
   
 
 
@@ -77,12 +78,15 @@ export class ProfileComponent implements OnInit {
       }
     });
 
+    
+
     dialogRef.afterClosed().subscribe((result: User) => {
       if (result) {
         this.name = result.name;
         this.email = result.email;
         this.gender = result.gender;
         this.status = result.status;
+
         // Aggiorno il local storage 
         this.auth.login(this.auth.getToken()!, this.email, this.auth.getId().toString(), this.gender, this.status, this.name);
       }

@@ -32,7 +32,7 @@ export class RegisterComponent implements OnInit {
     
     const newUser: User = { name, email, gender, status };
 
-    this.userService.createUser(newUser, token).subscribe(
+    this.userService.createUser(newUser,token).subscribe(
       (response:User) => {
         this.isLoading = false;
         this.auth.login(token,email,response.id!.toString(),response.gender!,response.status,response.name);

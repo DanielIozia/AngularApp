@@ -44,7 +44,7 @@ export class UserService {
     return this.http.get<User[]>(`${this.BASE_URL}${this.USER_SEGMENT}${this.access_token+token}&page=${page}&per_page=${userPerPage}`);
   }
 
-  createUser(user: User, token: string): Observable<User> {
+  createUser(user: User, token:string): Observable<User> {
 
     const headers = new HttpHeaders({
       'Authentication': `Bearer ${token}`,

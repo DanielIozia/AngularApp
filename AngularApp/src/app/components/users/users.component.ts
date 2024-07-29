@@ -6,6 +6,7 @@ import { AuthService } from '../../services/auth/auth.service';
 //componente di dialogo (delete confirm)
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDeleteDialogComponent } from '../../components/confirm-delete-dialog/confirm-delete-dialog.component';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-users',
@@ -25,6 +26,77 @@ export class UsersComponent implements OnInit {
   userID: number = this.auth.getId();
   usersPerPage: number = 10; // initial value user per page
   usersPerPageOptions: number[] = [10, 25, 50, 75, 100];
+
+  //new user
+  creatingNewUser:boolean = false;
+  creatingUser:boolean = false;
+  showtextError:boolean = false;
+  textError:string = '';
+  emailError:string | null = null;
+  
+
+  createUser(){
+    this.creatingUser = true;
+  }
+
+  cancelNewUser(){
+    this.creatingUser = false;
+  }
+
+  submitNewUserPost(form:NgForm){
+    this.creatingNewUser = true;
+
+    const newUser:User = {
+      name: form.value.name,
+      email: form.value.email,
+      gender: form.value.gender,
+      status: form.value.status
+    };
+
+    this.userService.createUser(newUser,this.auth.getToken()!).subscribe( (u:User) => {
+      this.creatingNewUser = false;
+      this.creatingUser = false;
+      form.reset();
+      this.loadUsers();
+    }, error => {
+      this.handleError(error,form);
+    })
+
+  
+
+
+  }
+
+  private handleError(error: any, form: NgForm): void {
+    this.isLoading = false;
+    this.creatingNewUser = false;
+    
+    if (error.status === 422) {
+      // Supponiamo che il corpo dell'errore sia un array di oggetti con i campi "field" e "message"
+      const errorMessages = error.error as { field: string; message: string }[];
+      
+      // Itera attraverso il array di messaggi di errore
+      errorMessages.forEach(err => {
+        if (err.field === 'email') {
+          this.emailError = "Email " + err.message; // Imposta il messaggio di errore per l'email
+          this.resetFormControl(form, 'email');
+        }
+        // Puoi aggiungere altre logiche per gestire altri campi se necessario
+      });
+    } else {
+      // Gestione di altri tipi di errori
+      console.error('Error creating user:', error);
+    }
+  }
+
+  private resetFormControl(form: NgForm, controlName: string): void {
+    if (form.controls[controlName]) {
+      form.controls[controlName].reset();
+    }
+  }
+
+  
+  
 
   constructor(private userService: UserService, private router: Router, private auth: AuthService, public dialog: MatDialog) {
     this.currentPage = 1;
@@ -56,6 +128,7 @@ export class UsersComponent implements OnInit {
   }
 
   private loadUsers() {
+    
     this.isLoading = true;
     this.userService.getUsers(this.auth.getToken(), this.currentPage, this.usersPerPage).subscribe(
       (data: User[]) => {

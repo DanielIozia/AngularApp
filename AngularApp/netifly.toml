@@ -5,3 +5,12 @@
 
 [build.environment]
   NODE_VERSION = "16"
+
+
+[images]
+  remote_images = ["https://my-images.com/.*", "https://animals.more-images.com/[bcr]at/.*"]
+
+  [[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

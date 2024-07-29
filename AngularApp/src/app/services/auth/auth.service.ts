@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class AuthService {
-  isLoggedIn = false;
+  isLoggedIn:boolean;
   
 
   constructor() {
@@ -20,11 +20,9 @@ export class AuthService {
     localStorage.setItem('status', status)
     localStorage.setItem('name', name)
     this.isLoggedIn = true;
-    console.log("LOGGATO");
   }
 
   logout() {
-    console.log("QUIT");
     localStorage.clear();
     this.isLoggedIn = false;
   }

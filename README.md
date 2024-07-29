@@ -104,6 +104,8 @@ Per selezionare il numero di utenti da visualizzare per pagina:
 
 ## Pagina Dettaglio Utente
 
+Per visualizzare la pagina dettaglio utente bisogna cliccare sulla card dell'utente specifico. 
+Se si clicca sull'utente col bordo verde, si viene reindirizzati al Profilo personale, perchè, quest'ultimo, è l'utente con cui siamo loggati. 
 La pagina dettaglio utente permette di vedere i dettagli di un utente, quali:
 
 - **ID**: L'identificatore univoco dell'utente.
@@ -124,9 +126,10 @@ Oltre ai dettagli dell'utente, la pagina mostra tutti i post relativi a quell'ut
 Se l'utente non ha pubblicato alcun post, verrà visualizzato un messaggio indicante che quell'utente non ha pubblicato nessun post:
 `{User name} has not published any posts!`
 
-Questa funzionalità permette agli utenti di esplorare i dettagli degli altri utenti e interagire con i loro post attraverso i commenti, migliorando l'interazione e la partecipazione all'interno della piattaforma UrbanConnect.
-
 ## Profilo
+Si accede alla pagina del profilo in due modi: 
+ - **Sidebar**: Si apre la sidebar e si preme il bottone "Profile"
+ - **Pagina utenti:** Nella pagina utenti bisogna premere l'utente la cui card ha il bordo verde.
 
 Nella pagina del profilo puoi visualizzare i dettagli dell'account con cui sei loggato, che includono:
 

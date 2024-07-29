@@ -1,7 +1,9 @@
 [build]
-  command = "npm install -g @angular/cli && npm install && ng build"
+  command = "ng build"
   publish = "dist/angular-app"
 
+[[redirect]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
 
-[build.environment]
-  NODE_VERSION = "16"

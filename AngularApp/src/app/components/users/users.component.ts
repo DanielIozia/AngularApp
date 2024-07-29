@@ -127,7 +127,7 @@ export class UsersComponent implements OnInit {
     return this.router.navigate([`/home/users/${id}`]);
   }
 
-  private loadUsers() {
+  loadUsers() {
     
     this.isLoading = true;
     this.userService.getUsers(this.auth.getToken(), this.currentPage, this.usersPerPage).subscribe(

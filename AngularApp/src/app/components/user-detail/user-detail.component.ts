@@ -1,6 +1,6 @@
   // user-detail.component.ts/
   import { Component, OnInit } from '@angular/core';
-  import { ActivatedRoute, Router } from '@angular/router';
+  import { ActivatedRoute } from '@angular/router';
   import { UserService } from '../../services/user.service';
   import { PostService } from '../../services/post.service';
   import { User } from '../../interfaces/User-interface';
@@ -8,9 +8,6 @@
   import { Comment } from '../../interfaces/Comment-interface';
   import { NgForm } from '@angular/forms';
 import { AuthService } from '../../services/auth/auth.service';
-import { MatDialog } from '@angular/material/dialog';
-
-
 
   @Component({
     selector: 'app-user-detail',
@@ -32,9 +29,6 @@ import { MatDialog } from '@angular/material/dialog';
     loadingCreatingComment:boolean = false;
     commentForm!: NgForm; 
     loadingPosts:boolean = false;
-
-    
-
 
     constructor(
       private route: ActivatedRoute,
@@ -79,9 +73,6 @@ import { MatDialog } from '@angular/material/dialog';
       });
     }
 
-   
-    
-    
 
     addComment(form: NgForm, id_post: number) {
       this.loadingCreatingComment = true;

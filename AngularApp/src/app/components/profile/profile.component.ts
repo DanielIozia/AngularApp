@@ -11,10 +11,6 @@ import { ProfileEditDialogComponent } from '../../components/profile-edit-dialog
 import { Router } from '@angular/router';
 import { ConfirmDeleteDialogComponent } from '../../components/confirm-delete-dialog/confirm-delete-dialog.component';
 import { ConfirmDialogComponent } from '../../components/confirm-post-delete-dialog/confirm-post-delete-dialog.component';
-import { error } from 'console';
-
-
-
 
 
 @Component({

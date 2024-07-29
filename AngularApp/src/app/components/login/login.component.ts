@@ -128,8 +128,6 @@ export class LoginComponent{
       form.controls[controlName].reset();
     }
   }
-
-
 }
 
 

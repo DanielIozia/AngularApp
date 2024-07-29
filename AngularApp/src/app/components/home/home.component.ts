@@ -2,6 +2,8 @@ import { Component, Output, EventEmitter, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth/auth.service';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { LogoutDialogComponent } from '../logout-dialog/logout-dialog.component';
 
 
 
@@ -14,14 +16,14 @@ import { NgForm } from '@angular/forms';
 export class HomeComponent implements OnInit {
   numberForm!: NgForm;
 
-  constructor(private auth: AuthService, private router: Router) {}
+  constructor(private auth: AuthService, private router: Router, private dialog:MatDialog) {}
 
   ngOnInit(): void {
   }
 
   navigateToLogin(): void {
-    this.auth.logout();
-    this.router.navigate(['/login']);
+    const dialogRef = this.dialog.open(LogoutDialogComponent, {
+      width: '250px',
+    });
   }
-
 }

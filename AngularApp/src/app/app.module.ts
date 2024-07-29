@@ -37,6 +37,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { UserService } from './services/user.service'; 
 import { AuthService } from './services/auth/auth.service';
 import { PostService } from './services/post.service';
+import { LogoutDialogComponent } from './components/logout-dialog/logout-dialog.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { PostService } from './services/post.service';
     PageNotFoundComponent,
     ConfirmDeleteDialogComponent,
     ProfileEditDialogComponent,
+    LogoutDialogComponent,
   ],
   imports: [
     BrowserModule,

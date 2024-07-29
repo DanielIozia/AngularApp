@@ -1,0 +1,14 @@
+<div class="container">
+    <h2 mat-dialog-title>Confirm Logout</h2>
+    <mat-dialog-content *ngIf="!loading">
+      <p>Do you want to logout ?</p>
+    </mat-dialog-content>
+    <mat-dialog-content *ngIf="loading">
+      <p><strong>Processing logout...</strong></p>
+    </mat-dialog-content>
+    <div *ngIf="loading" class="spinner"></div>
+    <mat-dialog-actions *ngIf="!loading">
+      <button mat-button (click)="onNoClick()" color="primary">No</button>
+      <button mat-button (click)="onYesClick()" color="warn">Yes</button>
+    </mat-dialog-actions>
+</div>

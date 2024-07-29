@@ -115,7 +115,7 @@
                 <span class="visually-hidden">Deleting...</span>
               </div>
             </ng-container>
-            <ng-template #deleteIcon>
+            <ng-template #deleteIcon >
               <span class="delete" (click)="user.id !== userID ? deleteUser(user.id!, user.name) : null">
                 <mat-icon *ngIf="user.id !== userID">delete</mat-icon>
               </span>

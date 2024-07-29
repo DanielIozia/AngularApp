@@ -31,6 +31,7 @@ import { MatDialog } from '@angular/material/dialog';
     loadComments: boolean[] = [];
     loadingCreatingComment:boolean = false;
     commentForm!: NgForm; 
+    loadingPosts:boolean = false;
 
     
 
@@ -40,8 +41,6 @@ import { MatDialog } from '@angular/material/dialog';
       private userService: UserService,
       private postService: PostService,
       private auth:AuthService,
-      private router:Router,
-      private dialog: MatDialog
     ) {}
 
     ngOnInit(): void {
@@ -58,6 +57,7 @@ import { MatDialog } from '@angular/material/dialog';
     }
 
     loadUserPosts(id:number): void {
+      this.loadPosts = true;
       this.userService.getUserPosts(id).subscribe( (data: Post[]) => {
         this.loadPosts = false;
         this.posts = data;

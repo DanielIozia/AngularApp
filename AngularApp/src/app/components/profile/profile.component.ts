@@ -162,15 +162,18 @@ export class ProfileComponent implements OnInit {
     delete(): void {
       const dialogRef = this.dialog.open(ConfirmDeleteDialogComponent, {
         width: '300px',
-        data: { name: this.name } // Passa i dati necessari al dialogo
+        data: { name: this.name, id:this.auth.getId() } // Passa i dati necessari al dialogo
       });
   
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
-          // Questo viene eseguito solo se la conferma è stata data e l'utente è stato eliminato
-          this.auth.logout(); // Esegui il logout dell'utente
-          this.router.navigate(['/login']); // Reindirizza alla pagina di login
+          console.log("Profilo eliminato con successo");
         }
+        else{
+          console.log("Profilo personale non eliminato");
+        }
+      }, error => {
+        console.log("Errore nell'eliminazione del profilo personale");
       });
     }
 

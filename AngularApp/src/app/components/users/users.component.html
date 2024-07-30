@@ -1,58 +1,56 @@
 <section [ngClass]="{'section-small': usersPerPage === 10 && !creatingUser}">
-    <!-- Icona di caricamento -->
-    <div *ngIf="isLoading" class="loading-container">
-      <div class="spinner-border text-primary" role="status">
-        <span class="visually-hidden">Loading...</span>
-      </div>
+  <!-- Icona di caricamento -->
+  <div *ngIf="isLoading" class="loading-container">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
     </div>
-  
-    <!-- Contenuto visibile solo quando il caricamento è completato -->
-    <div *ngIf="!isLoading">
-      <!-- Filtro per ricerca utente -->
-      <form class="filter-form">
-        <mat-form-field appearance="fill">
-          <mat-label>Filter by Name or Email</mat-label>
-          <input matInput [(ngModel)]="filterValue" name="filter" (input)="applyFilter()" placeholder="Type a name or email">
-        </mat-form-field>
-        <!-- Bottone per pulire il filtro -->
-        <button mat-icon-button matSuffix aria-label="Clear" class="clear-button" (click)="clearFilter()">
-          <mat-icon>close</mat-icon>
-        </button>
-      </form>
-  
-      <span *ngIf="filteredUsers.length == 0">
-        <h1 class="no-users-message">
-            No users available. Check back later!
-        </h1>
-      </span>
+  </div>
 
-      <div *ngIf="!creatingUser" style="margin-bottom:3%;">
-        <button (click)="createUser()" *ngIf="filteredUsers.length != 0" class="create-user-button">
+  <!-- Contenuto visibile solo quando il caricamento è completato -->
+  <div *ngIf="!isLoading">
+    <!-- Filtro per ricerca utente -->
+    <form class="filter-form">
+      <mat-form-field appearance="fill">
+        <mat-label>Filter by Name or Email</mat-label>
+        <input matInput [(ngModel)]="filterValue" name="filter" (input)="applyFilter()" placeholder="Type a name or email">
+      </mat-form-field>
+      <!-- Bottone per pulire il filtro -->
+      <button mat-icon-button matSuffix aria-label="Clear" class="clear-button" (click)="clearFilter()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </form>
+
+    <span *ngIf="filteredUsers.length == 0">
+      <h1 class="no-users-message">
+        No users available. Check back later!
+      </h1>
+    </span>
+
+    <div *ngIf="!creatingUser" style="margin-bottom:3%;">
+      <button (click)="createUser()" *ngIf="filteredUsers.length != 0" class="create-user-button">
         <span class="icon-container">
-            <mat-icon>add</mat-icon>
+          <mat-icon>add</mat-icon>
         </span>
         Create new User
-        </button>
+      </button>
     </div>
 
     <div *ngIf="creatingUser" class="new-post-card">
-
-
       <form class="newUser" #newUserForm="ngForm" (ngSubmit)="submitNewUserPost(newUserForm)" *ngIf="creatingUser">
         <h2>Create New User</h2>
-  
+
         <!-- Indicatore di caricamento -->
         <div *ngIf="creatingNewUser" class="loading-container">
           <div class="spinner-border text-primary" role="status">
             <span class="visually-hidden">Loading...</span>
           </div>
         </div>
-  
+
         <mat-form-field>
           <mat-label>Name</mat-label>
           <input matInput type="text" name="name" required ngModel placeholder="Name"/>
         </mat-form-field>
-  
+
         <mat-form-field>
           <mat-label>Email</mat-label>
           <input 
@@ -67,7 +65,7 @@
           />
           <mat-error *ngIf="emailError">{{ emailError }}</mat-error>
         </mat-form-field>
-  
+
         <mat-form-field>
           <mat-label>Gender</mat-label>
           <mat-select name="gender" required ngModel>
@@ -75,7 +73,7 @@
             <mat-option value="female">Female</mat-option>
           </mat-select>
         </mat-form-field>
-  
+
         <mat-form-field>
           <mat-label>Status</mat-label>
           <mat-select name="status" required ngModel>
@@ -83,68 +81,62 @@
             <mat-option value="inactive">Inactive</mat-option>
           </mat-select>
         </mat-form-field>
-  
+
         <div class="new-post-actions">
           <button mat-button type="button" color="warn" (click)="cancelNewUser()">
-          Cancel
+            Cancel
           </button>
           <button
-          mat-flat-button
-          color="primary"
-          [disabled]="!newUserForm.valid"
-          type="submit"
+            mat-flat-button
+            color="primary"
+            [disabled]="!newUserForm.valid"
+            type="submit"
           >
-          <span>Create</span>
+            <span>Create</span>
           </button>
-          
-      </div>
-  
+        </div>
       </form>
     </div>
-  
-      <!-- Cards utenti -->
-      <div class="cards-container">
-        <div *ngFor="let user of filteredUsers; let i = index" class="card" [ngClass]="{'highlight-card': user.id === userID}">
-          <div class="card-content" (click)="user.id === userID ? goToProfile() : goToDetail(user.id!)">
-            <h3>{{i + 1}}. {{user.name}} <span [ngClass]="{'green-dot': user.status === 'active', 'red-dot': user.status === 'inactive'}"></span> </h3> 
-            <p><strong>Email:</strong> {{user.email}} </p>
-          </div>
-          <div class="card-actions">
-            <ng-container *ngIf="deletingUserId === user.id; else deleteIcon" (click)="user.id === userID ? goToProfile() : goToDetail(user.id!)">
-              <div class="spinner-border text-primary" role="status" style="width: 1rem; height: 1rem;">
-                <span class="visually-hidden">Deleting...</span>
-              </div>
-            </ng-container>
-            <ng-template #deleteIcon >
-              <span class="delete" (click)="user.id !== userID ? deleteUser(user.id!, user.name) : null">
-                <mat-icon *ngIf="user.id !== userID">delete</mat-icon>
-              </span>
-            </ng-template>
-          </div>
+
+    <!-- Cards utenti -->
+    <div class="cards-container">
+      <div *ngFor="let user of filteredUsers; let i = index" class="card" [ngClass]="{'highlight-card': user.id === userID}">
+        <div class="card-content" (click)="user.id === userID ? goToProfile() : goToDetail(user.id!)">
+          <h3>{{i + 1}}. {{user.name}} <span [ngClass]="{'green-dot': user.status === 'active', 'red-dot': user.status === 'inactive'}"></span> </h3> 
+          <p><strong>Email:</strong> {{user.email}} </p>
+        </div>
+        <div class="card-actions">
+          <ng-container *ngIf="deletingUserId === user.id; else deleteIcon" (click)="user.id === userID ? goToProfile() : goToDetail(user.id!)">
+            <div class="spinner-border text-primary" role="status" style="width: 1rem; height: 1rem;">
+              <span class="visually-hidden">Deleting...</span>
+            </div>
+          </ng-container>
+          <ng-template #deleteIcon>
+            <span class="delete" (click)="user.id !== userID ? deleteUser(user.id!, user.name) : null">
+              <mat-icon *ngIf="user.id !== userID">delete</mat-icon>
+            </span>
+          </ng-template>
         </div>
       </div>
     </div>
-  </section>
-  
-  
+  </div>
+</section>
 
-
-  <!-- Paginatore -->
-  <div class="pagination-controls" *ngIf="!isLoading && filterValue == ''">
-    <div class="paginator">
-      <button (click)="previousPage()" [disabled]="primaPagina"> < </button> <!-- back -->
-      <span>Page </span> {{ currentPage }}
-      <button (click)="nextPage()" [disabled]="!oltre"> > </button> <!-- next -->
-    </div>
-    
-    <div class="select-users-per-page">
-      <!-- Selezionatore per il numero di utenti da mostrare -->
-      <mat-form-field appearance="fill">
-        <mat-label>user</mat-label>
-        <mat-select [(ngModel)]="usersPerPage" (selectionChange)="onUsersPerPageChange($event)">
-          <mat-option *ngFor="let option of usersPerPageOptions" [value]="option">{{option}}</mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
+<!-- Paginatore -->
+<div class="pagination-controls" *ngIf="!isLoading && filterValue == ''">
+  <div class="paginator">
+    <button (click)="previousPage()" [disabled]="primaPagina"> < </button> <!-- back -->
+    <span>Page </span> {{ currentPage }}
+    <button (click)="nextPage()" [disabled]="!oltre"> > </button> <!-- next -->
   </div>
   
+  <div class="select-users-per-page">
+    <!-- Selezionatore per il numero di utenti da mostrare -->
+    <mat-form-field appearance="fill">
+      <mat-label>user</mat-label>
+      <mat-select [(ngModel)]="usersPerPage" (selectionChange)="onUsersPerPageChange($event)">
+        <mat-option *ngFor="let option of usersPerPageOptions" [value]="option">{{option}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</div>

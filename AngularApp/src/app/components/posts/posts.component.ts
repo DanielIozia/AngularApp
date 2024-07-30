@@ -220,7 +220,6 @@ export class PostsComponent implements OnInit {
  
 
   scrollToBottom() {
-    console.log('Scroll to paginator triggered');
     const paginatorElement = document.getElementById('paginator');
     if (paginatorElement) {
         paginatorElement.scrollIntoView({

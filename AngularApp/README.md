@@ -225,6 +225,77 @@ Quando premuto il bottone di Logout, viene aperta una componente di dialogo che 
 Per autenticarti, segui le istruzioni nella pagina di login per ottenere il token di accesso dalla piattaforma [GoRest](https://gorest.co.in/).
 
 
+## API Endpoints
+
+L'applicazione si interfaccia con l'API di GoRest per fornire funzionalità di gestione degli utenti e dei post. Di seguito sono elencati gli endpoints principali forniti dai servizi `UserService` e `PostService`:
+### Autenticazione
+
+- **Registra un nuovo utente:**
+  - Metodo: `POST`
+  - Endpoint: `/v2/users`
+  - Descrizione: Registra un nuovo utente.
+
+### Profilo Utente
+
+- **Trova tutti gli utenti:**
+
+  - Metodo: `GET`
+  - Endpoint: `/v2/users`
+  - Descrizione: Ottiene le informazioni di tutti gli utenti.
+
+- **Elimina un utente:**
+
+  - Metodo: `DELETE`
+  - Endpoint: `/v2/users/:userId`
+  - Descrizione: Cancella un utente dato il suo ID.
+
+- **Modifica il profilo utente:**
+  - Metodo: `PUT`
+  - Endpoint: `/v2/users/:userId`
+  - Descrizione: Modifica il profilo di un utente.
+
+### Post
+
+- **Trova tutti i post:**
+
+  - Metodo: `GET`
+  - Endpoint: `/v2/posts`
+  - Descrizione: Ottiene le informazioni di tutti i post.
+
+- **Trova i post di un utente:**
+
+  - Metodo: `GET`
+  - Endpoint: `/v2/users/:userId/posts`
+  - Descrizione: Ottiene i post di un utente dato il suo ID.
+
+- **Aggiungi un nuovo post:**
+
+  - Metodo: `POST`
+  - Endpoint: `/v2/users/:userId/posts`
+  - Descrizione: Aggiunge un nuovo post per un utente specifico.
+
+- **Commenta un post:**
+
+  - Metodo: `POST`
+  - Endpoint: `/v2/posts/:postId/comments`
+  - Descrizione: Aggiunge un commento a un post.
+
+- **Leggi i commenti di un post:**
+  - Metodo: `GET`
+  - Endpoint: `/v2/posts/:postId/comments`
+  - Descrizione: Ottiene i commenti di un post dato il suo ID.
+
+Questo progetto è stato generato con la versione 17. [Angular CLI](https://github.com/angular/angular-cli)
+
+
+
+
+
+
+
+
+
+
 
 
 

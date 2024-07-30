@@ -1,12 +1,8 @@
-/* Contenitore principale del dialogo */
-
 $color-title: rgb(33, 100, 121);
 $color-name:rgb(0, 145, 255);
 
 .container{
-
 max-height:50vh;
-
 
 mat-dialog-container {
   padding: 16px;
@@ -31,6 +27,11 @@ mat-dialog-title {
   font-weight: 500;
   margin-bottom: 16px;
   color: #333;
+}
+
+.error-message {
+  color: red;
+  font-weight: bold;
 }
 
 /* Contenuto del dialogo */

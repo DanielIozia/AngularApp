@@ -32,6 +32,7 @@
     showtextError: boolean = false;
     textError: string = '';
     emailError: string | null = null;
+    emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     constructor(
       private userService: UserService, 
@@ -65,6 +66,10 @@
 
     goToDetail(id: number) {
       this.router.navigate([`/home/users/${id}`]);
+    }
+
+    isValidEmail(email: string): boolean {
+      return this.emailRegex.test(email);
     }
 
     loadUsers() {
@@ -152,14 +157,26 @@
         status: form.value.status
       };
 
-      this.userService.createUser(newUser, this.auth.getToken()!).subscribe((u: User) => {
+      //aggiungere qui il controllo dell'email
+      if(this.isValidEmail(newUser.email)){
+        this.userService.createUser(newUser, this.auth.getToken()!).subscribe((u: User) => {
+          this.creatingNewUser = false;
+          this.creatingUser = false;
+          form.reset();
+          this.loadUsers();
+        }, error => {
+          this.handleError(error, form);
+        });
+      }
+      else{
         this.creatingNewUser = false;
-        this.creatingUser = false;
-        form.reset();
-        this.loadUsers();
-      }, error => {
-        this.handleError(error, form);
-      });
+        console.log("SONO QUI DENTRO")
+        this.emailError = "Email is invalid"
+        this.resetFormControl(form, 'email');
+        return;
+      }
+
+      
     }
 
     private handleError(error: any, form: NgForm): void {

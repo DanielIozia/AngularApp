@@ -51,14 +51,6 @@ export class AuthService {
     return localStorage.getItem('status');
   }
 
-  setStatus(){
-    if(this.getStatus() == "active"){
-      localStorage.setItem('status', "inactive");
-    }
-    else{
-      localStorage.setItem('status', "active");
-    }
-    return this.getStatus();
-  }
+  
   
 }

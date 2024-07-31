@@ -2,11 +2,11 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // Material
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatFormFieldControl, MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
@@ -38,6 +38,7 @@ import { UserService } from './services/user.service';
 import { AuthService } from './services/auth/auth.service';
 import { PostService } from './services/post.service';
 import { LogoutDialogComponent } from './components/logout-dialog/logout-dialog.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { LogoutDialogComponent } from './components/logout-dialog/logout-dialog.
     ConfirmDeleteDialogComponent,
     ProfileEditDialogComponent,
     LogoutDialogComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -56,10 +58,10 @@ import { LogoutDialogComponent } from './components/logout-dialog/logout-dialog.
     ReactiveFormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    AppRoutingModule,
 
     // Material
     MatFormFieldModule,
+    
     MatInputModule,
     MatButtonModule,
     MatSelectModule,
@@ -73,11 +75,17 @@ import { LogoutDialogComponent } from './components/logout-dialog/logout-dialog.
     MatProgressBarModule,
     MatChipsModule,
     MatDialogModule,
+    //Rotte
+    RouterModule,
+    AppRoutingModule,
   ],
   providers: [
     AuthService,
     UserService,
     PostService,
+    HttpClientModule,
+    HttpClient,
+
   ],
   bootstrap: [AppComponent]
 })

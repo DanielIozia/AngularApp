@@ -15,6 +15,7 @@ import { MatSidenavContainer } from '@angular/material/sidenav';
 import { MatToolbar } from '@angular/material/toolbar';
 import { MatSidenav, MatSidenavContent } from '@angular/material/sidenav';
 import { MatButton } from '@angular/material/button';
+import { MatFormField } from '@angular/material/form-field';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { MatButton } from '@angular/material/button';
     MatToolbar,
     MatSidenav,
     MatSidenavContent,
-    MatButton
+    MatButton,
+    MatFormField,
   ]
 })
 export class UsersModule { }

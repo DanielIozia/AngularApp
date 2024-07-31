@@ -1,34 +1,37 @@
-import { inject } from '@angular/core';
-import { CanActivateFn, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { Injectable } from '@angular/core';
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { AuthService } from './auth.service';
-import { Router } from '@angular/router';
 import { UserService } from '../user.service';
 import { User } from '../../interfaces/User-interface';
+import { Observable, of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 
-export const authGuard: CanActivateFn = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
-  
-  const authService = inject(AuthService);
-  const router = inject(Router)
-  const userService = inject(UserService)
+@Injectable({
+  providedIn: 'root',
+})
+export class AuthGuard implements CanActivate {
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private userService: UserService
+  ) {}
 
-  if(authService.getToken() == null){
-    router.navigate(['/login']);
-    return false;
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
+    if (this.authService.getToken() == null) {
+      this.router.navigate(['/login']);
+      return of(false);
+    } else {
+      return this.userService.getUserById(this.authService.getId()).pipe(
+        map((user: User) => true),
+        catchError((error) => {
+          if (error.status == 401) {
+            console.log("Token non valido");
+            this.router.navigate(['/login']);
+            localStorage.clear();
+          }
+          return of(false);
+        })
+      );
+    }
   }
-  else{
-    userService.getUserById(authService.getId()).subscribe( (user:User) => {
-      return true;
-    }, (error) => {
-      if(error.status == 401){
-        console.log("Token non valido");
-        router.navigate(['/login']);
-        localStorage.clear();
-        return false;
-      }
-      else{
-        return false;
-      }
-    })
-  }
-  return true;
-};
+}

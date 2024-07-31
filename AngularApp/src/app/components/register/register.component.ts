@@ -47,7 +47,7 @@ export class RegisterComponent implements OnInit {
     this.emailError = null;
   }
 
-  private handleError(error: any, form: NgForm): void {
+  handleError(error: any, form: NgForm): void {
     this.isLoading = false;
     if (error.status === 401) {
       // Gestione dell'errore di token non valido
@@ -57,14 +57,18 @@ export class RegisterComponent implements OnInit {
       // Supponiamo che il corpo dell'errore sia un array di oggetti con i campi "field" e "message"
       const errorMessages = error.error as { field: string; message: string }[];
       
-      // Itera attraverso il array di messaggi di errore
-      errorMessages.forEach(err => {
-        if (err.field === 'email') {
-          this.emailError = "Email " + err.message; // Imposta il messaggio di errore per l'email
-          this.resetFormControl(form, 'email');
-        }
-        // Puoi aggiungere altre logiche per gestire altri campi se necessario
-      });
+      if (Array.isArray(errorMessages)) {
+        // Itera attraverso il array di messaggi di errore
+        errorMessages.forEach(err => {
+          if (err.field === 'email') {
+            this.emailError = "Email " + err.message; // Imposta il messaggio di errore per l'email
+            this.resetFormControl(form, 'email');
+          }
+          // Puoi aggiungere altre logiche per gestire altri campi se necessario
+        });
+      } else {
+        console.error('Unexpected error format:', error);
+      }
     } else {
       // Gestione di altri tipi di errori
       console.error('Error creating user:', error);
@@ -73,7 +77,7 @@ export class RegisterComponent implements OnInit {
   
 
   private resetFormControl(form: NgForm, controlName: string): void {
-    if (form.controls[controlName]) {
+    if (form.controls && form.controls[controlName]) {
       form.controls[controlName].reset();
     }
   }

@@ -5,6 +5,8 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AuthService } from '../../services/auth/auth.service';
 import { Router } from '@angular/router';
 
+
+
 @Component({
   selector: 'app-logout-dialog',
   templateUrl: './logout-dialog.component.html',
@@ -28,9 +30,12 @@ export class LogoutDialogComponent {
 
   onYesClick(): void {
     this.loading = true;
-    this.auth.logout();
-    this.router.navigate(['/login']);
-    this.dialogRef.close(true);
-    this.loading = false;
-  }
+    setTimeout(() => {
+        this.auth.logout();
+        this.router.navigate(['/login']);
+        this.dialogRef.close(true);
+        this.loading = false;
+    }, 0);
+}
+
 }

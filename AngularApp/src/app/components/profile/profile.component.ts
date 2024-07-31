@@ -93,17 +93,37 @@ export class ProfileComponent implements OnInit {
     });
 }
 
-  toggleComments(index: number) {
-    this.showComments[index] = !this.showComments[index];
-    // Verifica che 'comments' sia definito
-    if (this.showComments[index] && (!this.posts[index].comments || this.posts[index].comments!.length! === 0)) {
-      this.loadComments[index] = true;
-      this.postService.getPostComments(this.posts[index].id!).subscribe((comments: Comment[]) => {
-        this.loadComments[index] = false;
-        this.posts[index].comments = comments;
-      });
+ 
+
+toggleComments(index: number) {
+  if (!this.posts || !this.posts[index]) {
+    return;
+  }
+  
+  const post = this.posts[index];
+  this.showComments[index] = !this.showComments[index];
+  if (this.showComments[index] && !this.loadComments[index]) {
+    this.loadComments[index] = true;
+    
+    if (post.id) {
+      this.postService.getPostComments(post.id).subscribe(
+        comments => {
+          post.comments = comments;
+          this.loadComments[index] = false;
+        },
+        error => {
+          console.error('Error loading comments', error);
+          this.loadComments[index] = false;
+        }
+      );
     }
   }
+}
+
+
+  
+
+  
 
   addComment(form: NgForm, id_post: number) {
     this.loadingCreatingComment = true;
@@ -114,17 +134,24 @@ export class ProfileComponent implements OnInit {
       email: this.auth.getEmail()!,
       body: form.value.comment,
       postId: id_post,
-    }
-
-    this.postService.addPostComment(id_post, comment).subscribe((data: Comment) => {
-      this.loadingCreatingComment = false;
-      const postIndex = this.posts.findIndex(post => post.id === id_post);
-      if (postIndex !== -1) {
-        this.posts[postIndex].comments?.push(data);
+    };
+  
+    this.postService.addPostComment(id_post, comment).subscribe(
+      (data: Comment) => {
+        this.loadingCreatingComment = false;
+        const postIndex = this.posts.findIndex(post => post.id === id_post);
+        if (postIndex !== -1) {
+          this.posts[postIndex].comments?.push(data);
+        }
+        form.reset();
+      },
+      error => {
+        this.loadingCreatingComment = false;
+        this.textError = 'post update error';
       }
-      form.reset();
-    });
+    );
   }
+  
 
   createPost() {
     this.creatingPost = true;
@@ -177,18 +204,22 @@ export class ProfileComponent implements OnInit {
       });
     }
 
+    
+
     deletePost(post: Post, index: number) {
-      const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      const dialogRef = this.dialog.open(ConfirmDialogComponent,{
         width: '250px',
         data: { title: post.title }
       });
     
       dialogRef.afterClosed().subscribe(result => {
-        if (result) { // Se l'utente conferma l'eliminazione
-          this.loadDelete[index] = true;
+        if (result) {
           this.postService.deletePost(post.id!).subscribe(() => {
+            // Rimuovi il post dall'array
+            this.posts.splice(index, 1);
             this.loadDelete[index] = false;
-            this.loadUserPosts(); // Carica i post nuovamente dopo la cancellazione
+          }, error => {
+            console.error('Errore durante l\'eliminazione del post:', error);
           });
         }
       });

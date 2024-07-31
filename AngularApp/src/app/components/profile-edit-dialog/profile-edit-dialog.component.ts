@@ -3,7 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { NgForm } from '@angular/forms';
 import { User } from '../../interfaces/User-interface';
 import { UserService } from '../../services/user.service';
-import { error } from 'console';
+
 
 @Component({
   selector: 'app-profile-edit-dialog',
@@ -44,11 +44,11 @@ export class ProfileEditDialogComponent {
     };
   
     if (!this.isValidEmail(updatedUser.email)) {
-      this.loading = false; // Ferma il caricamento
-      this.showErrorMessage = true; // Mostra il messaggio di errore
-      this.errorMessage = 'Invalid Email'; // Messaggio di errore personalizzato
+      this.loading = false;
+      this.showErrorMessage = true;
+      this.errorMessage = 'Invalid Email';
       console.error(this.errorMessage);
-      return; // Esci dalla funzione
+      return;
     }
   
     if (form.valid) {
@@ -74,7 +74,7 @@ export class ProfileEditDialogComponent {
   }
   
 
-  private resetFormControl(form: NgForm, controlName: string): void {
+  resetFormControl(form: NgForm, controlName: string): void {
     if (form.controls[controlName]) {
       form.controls[controlName].reset();
     }

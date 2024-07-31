@@ -27,12 +27,14 @@ export class ConfirmDeleteDialogComponent {
     this.dialogRef.close();
   }
 
+  
+
   onYesClick(): void {
     this.loading = true;
-    const logged_user:boolean = (this.data.id == this.authService.getId()) ? true : false;
+    const logged_user: boolean = (this.data.id === this.authService.getId());
     this.userService.deleteUser(this.data.id).subscribe(() => {
       this.loading = false;
-      if(logged_user){
+      if (logged_user) {
         this.authService.logout(); // Esegui il logout dell'utente
         this.router.navigate(['/login']); // Reindirizza alla pagina di login
       }
@@ -44,4 +46,5 @@ export class ConfirmDeleteDialogComponent {
       this.dialogRef.close(false);
     });
   }
+  
 }

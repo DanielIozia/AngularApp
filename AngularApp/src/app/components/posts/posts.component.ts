@@ -75,14 +75,19 @@ export class PostsComponent implements OnInit {
       body: form.value.comment,
       postId: id_post,
     }
-
-    this.postService.addPostComment(id_post, comment).subscribe((data: Comment) => {
-      this.loadingCreatingComment = false;
-      const postIndex = this.posts.findIndex(post => post.id === id_post);
-      if (postIndex !== -1) {
-        this.posts[postIndex].comments?.push(data);
+  
+    this.postService.addPostComment(id_post, comment).subscribe({
+      next: (data: Comment) => {
+        this.loadingCreatingComment = false;
+        const postIndex = this.posts.findIndex(post => post.id === id_post);
+        if (postIndex !== -1) {
+          this.posts[postIndex].comments?.push(data);
+        }
+        form.reset();
+      },
+      error: () => {
+        this.loadingCreatingComment = false; // Imposta su false anche in caso di errore
       }
-      form.reset();
     });
   }
   
@@ -104,10 +109,23 @@ export class PostsComponent implements OnInit {
     });
   }
 
+  
   toggleComments(index: number) {
+    // Assicurati che `showComments` sia inizializzato e abbia la lunghezza sufficiente
+    if (!this.showComments) {
+      this.showComments = [];
+    }
+    
+    // Inizializza `showComments` per l'indice se non esiste
+    if (typeof this.showComments[index] === 'undefined') {
+      this.showComments[index] = false;
+    }
+  
+    // Toggle `showComments` per l'indice
     this.showComments[index] = !this.showComments[index];
-    // Verifica che 'comments' sia definito
-    if (this.showComments[index] && (!this.posts[index].comments || this.posts[index].comments!.length! === 0)) {
+    
+    // Verifica che `posts` e `posts[index]` siano definiti
+    if (this.showComments[index] && this.posts && this.posts[index] && (!this.posts[index]!.comments || this.posts[index]!.comments!.length === 0)) {
       this.loadComments[index] = true;
       this.postService.getPostComments(this.posts[index].id!).subscribe((comments: Comment[]) => {
         this.loadComments[index] = false;
@@ -210,6 +228,7 @@ export class PostsComponent implements OnInit {
       }
     });
   }
+  
 
   onPostsPerPageChange(event: any) {
     this.postsPerPage = event.value;

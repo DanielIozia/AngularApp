@@ -149,35 +149,32 @@
 
     submitNewUserPost(form: NgForm) {
       this.creatingNewUser = true;
-
+    
       const newUser: User = {
         name: form.value.name,
         email: form.value.email,
         gender: form.value.gender,
         status: form.value.status
       };
-
-      //aggiungere qui il controllo dell'email
-      if(this.isValidEmail(newUser.email)){
-        this.userService.createUser(newUser, this.auth.getToken()!).subscribe((u: User) => {
+    
+      if (this.isValidEmail(newUser.email)) {
+        this.userService.createUser(newUser, this.auth.getToken()!).subscribe(() => {
           this.creatingNewUser = false;
-          this.creatingUser = false;
           form.reset();
           this.loadUsers();
         }, error => {
-          this.handleError(error, form);
+          this.creatingNewUser = false;
+          this.emailError = 'Email is invalid';
+          this.resetFormControl(form, 'email');
         });
-      }
-      else{
+      } else {
         this.creatingNewUser = false;
-        console.log("SONO QUI DENTRO")
-        this.emailError = "Email is invalid"
+        this.emailError = 'Email is invalid';
         this.resetFormControl(form, 'email');
         return;
       }
-
-      
     }
+    
 
     private handleError(error: any, form: NgForm): void {
       this.isLoading = false;
@@ -196,28 +193,30 @@
       }
     }
 
-    private resetFormControl(form: NgForm, controlName: string): void {
+    public resetFormControl(form: NgForm, controlName: string) {
       if (form.controls[controlName]) {
+        form.controls[controlName].setErrors({ invalidEmail: true });
         form.controls[controlName].reset();
       }
     }
 
-    // Funzione per eliminare l'utente
     deleteUser(id: number, name: string): void {
       const dialogRef = this.dialog.open(ConfirmDeleteDialogComponent, {
         width: '300px',
         data: { name: name, id: id }
       });
-
+    
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
+          console.log("utente elimnato con successo")
+          this.isLoading = true; // Imposta isLoading su true prima di avviare la chiamata al servizio
           this.loadUsers();
-          console.log(`L'utente ${name} è stato eliminato con successo`);
         } else {
           console.log(`L'utente ${name} non è stato eliminato`);
+          this.isLoading = false; // Imposta isLoading su false in caso di errore
+            console.log("Errore nell'eliminazione");
         }
-      }, error => {
-        console.log("Errore nell'eliminazione:", error);
       });
     }
   }
+    

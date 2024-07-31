@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ProfileComponent } from '../../components/profile/profile.component';
 import { ProfileRoutingModule } from './profile-routing.module';
 import { MatIcon } from '@angular/material/icon';
-import { MatError, MatFormField, MatFormFieldControl, MatLabel } from '@angular/material/form-field';
+import { MatError, MatFormField, MatLabel } from '@angular/material/form-field';
 
 import { FormsModule } from '@angular/forms';
 import { MatList, MatListItem } from '@angular/material/list';
@@ -19,7 +19,7 @@ import { MatSelectModule } from '@angular/material/select';
 
 import { MatDividerModule } from '@angular/material/divider';
 import { MatCardModule } from '@angular/material/card';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -42,6 +42,8 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
     MatSidenav,
     MatSidenavContent,
     MatButtonModule,
+    MatFormFieldModule,
+    MatSelectModule,
 
     //prova
     MatDialogModule,

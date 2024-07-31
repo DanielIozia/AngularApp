@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component} from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuthService } from '../../services/auth/auth.service';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { User } from '../../interfaces/User-interface';
+
+
 
 @Component({
   selector: 'app-login',
@@ -22,8 +24,6 @@ export class LoginComponent{
 
   emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
- 
-
 
   constructor(
     private authService: AuthService,
@@ -33,9 +33,6 @@ export class LoginComponent{
     this.showErrorMessage = false;
     this.showErrorMessageEmail = false;
   }
-
-
-
   
   
   onSubmit(form: NgForm): void {
@@ -101,15 +98,19 @@ export class LoginComponent{
         (data: User[]) => {
           for (let u of data) {
             if (u.email === email) {
-              // Email trovata, eseguo il login
-              u.status = "active";
-              this.authService.login(token,email,(u.id)!.toString(),u.gender!,u.status,u.name);   
-              resolve(true);
-              return;
+              if (u.id) {
+                u.status = "active";
+                this.authService.login(token, email, u.id.toString(), u.gender ?? '', u.status, u.name);
+                resolve(true);
+                return;
+              } else {
+                // Se u.id è undefined, risolvi con false
+                resolve(false);
+                return;
+              }
             }
           }
           if (data.length === 0) {
-            // Nessun utente trovato nella richiesta corrente, interrompi la ricerca
             resolve(false);
             return;
           }
@@ -122,6 +123,7 @@ export class LoginComponent{
       );
     });
   }
+  
 
   private resetFormControl(form: NgForm, controlName: string): void {
     if (form.controls[controlName]) {

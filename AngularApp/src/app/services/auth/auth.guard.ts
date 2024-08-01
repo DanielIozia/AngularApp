@@ -17,10 +17,15 @@ export class AuthGuard implements CanActivate {
   ) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
+
+    
     if (this.authService.getToken() == null) {
       this.router.navigate(['/login']);
       return of(false);
-    } else {
+    } 
+
+    else {
+      //se è stato fatto l'accesso, ho un id nel localStorage e quindi eseguo l'accesso (ritorna true)
       return this.userService.getUserById(this.authService.getId()).pipe(
         map((user: User) => true),
         catchError((error) => {

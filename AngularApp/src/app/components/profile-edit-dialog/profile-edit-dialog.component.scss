@@ -1,4 +1,4 @@
-// Stile per il titolo del dialogo
+/* Stile per il titolo del dialogo */
 h1[mat-dialog-title] {
   text-align: center;
   font-size: 24px;
@@ -6,26 +6,28 @@ h1[mat-dialog-title] {
   margin-bottom: 20px;
 
   @media (max-width: 768px) {
-    font-size: 20px; // Ridotto per schermi più piccoli
+    font-size: 20px; /* Ridotto per schermi più piccoli */
   }
 
   @media (max-width: 480px) {
-    font-size: 18px; // Ulteriormente ridotto per schermi molto piccoli
+    font-size: 18px; /* Ulteriormente ridotto per schermi molto piccoli */
   }
 }
 
-// Stile per il contenuto del dialogo
+/* Stile per il contenuto del dialogo */
 div[mat-dialog-content] {
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
+  padding: 8%; /* Aggiunta della distanza interna */
 
   form {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%; // Imposta a 100% per schermi più piccoli
+    width: 100%; /* Imposta a 100% per schermi più piccoli */
+    max-width: 600px; /* Imposta una larghezza massima per il modulo */
 
     mat-form-field {
       width: 100%;
@@ -35,27 +37,31 @@ div[mat-dialog-content] {
         color: red;
         font-size: 12px;
       }
+
+      input, mat-select {
+        font-size: 14px; /* Ridotto il font per i campi di input e select */
+      }
     }
   }
 
   @media (max-width: 768px) {
     form {
-      width: 90%; // Ridotto per schermi più piccoli
+      width: 90%; /* Ridotto per schermi più piccoli */
     }
   }
 
   @media (max-width: 480px) {
     form {
-      width: 95%; // Ulteriormente ridotto per schermi molto piccoli
+      width: 95%; /* Ulteriormente ridotto per schermi molto piccoli */
     }
 
     mat-form-field {
-      margin-bottom: 15px; // Ridotto per schermi più piccoli
+      margin-bottom: 15px; /* Ridotto per schermi più piccoli */
     }
   }
 }
 
-// Stile per le azioni del dialogo
+/* Stile per le azioni del dialogo */
 div[mat-dialog-actions] {
   display: flex;
   justify-content: center;
@@ -65,45 +71,17 @@ div[mat-dialog-actions] {
     margin: 0 10px;
 
     @media (max-width: 768px) {
-      margin: 0 5px; // Ridotto per schermi più piccoli
+      margin: 0 5px; /* Ridotto per schermi più piccoli */
     }
 
     @media (max-width: 480px) {
-      font-size: 0.875rem; // Ridotto per schermi molto piccoli
-      padding: 6px 12px; // Ridotto per schermi molto piccoli
+      font-size: 0.875rem; /* Ridotto per schermi molto piccoli */
+      padding: 6px 12px; /* Ridotto per schermi molto piccoli */
     }
   }
 }
 
-// Correzione per l'errore del titolo duplicato e ripetuto
-h1[mat-dialog-title] {
-  @media (max-width: 768px) {
-    font-size: 20px;
-  }
-
-  @media (max-width: 480px) {
-    font-size: 18px;
-  }
-}
-
-// Correzione per il contenuto del dialogo duplicato
-div[mat-dialog-content] {
-  @media (max-width: 768px) {
-    form {
-      width: 90%;
-    }
-  }
-
-  @media (max-width: 480px) {
-    form {
-      width: 95%;
-    }
-
-    mat-form-field {
-      margin-bottom: 15px;
-    }
-  }
-}
+/* Stile per il loader */
 .loading-container {
   display: flex;
   justify-content: center;
@@ -121,7 +99,7 @@ div[mat-dialog-content] {
   animation: spinner-border 0.75s linear infinite;
 
   &.text-primary {
-    color: #0d6efd; // Puoi personalizzare il colore primario
+    color: #0d6efd; /* Puoi personalizzare il colore primario */
   }
 }
 

@@ -1,4 +1,5 @@
 <h1 mat-dialog-title *ngIf="!loading">Update Profile</h1>
+
 <!-- Spinner-->
 <div *ngIf="loading" class="loading-container">
   <div class="spinner-border text-primary" role="status">
@@ -7,24 +8,27 @@
 </div>
 
 <div mat-dialog-content>
-  <form #profileForm="ngForm">
-    <mat-form-field>
+  <form #profileForm="ngForm" class="profile-form">
+    <mat-form-field appearance="fill" class="full-width-form-field">
       <mat-label>Name</mat-label>
       <input matInput type="text" name="name" [(ngModel)]="data.name" required>
     </mat-form-field>
-    <mat-form-field>
-      <mat-label *ngIf="!showErrorMessage">Email</mat-label>
+
+    <mat-form-field appearance="fill" class="full-width-form-field">
+      <mat-label>Email</mat-label>
       <input matInput type="email" name="email" [(ngModel)]="data.email" required>
-      <mat-label class="mat-label-error" *ngIf="showErrorMessage">{{ errorMessage }}</mat-label>
+      <mat-error *ngIf="showErrorMessage">{{ errorMessage }}</mat-error>
     </mat-form-field>
-    <mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width-form-field">
       <mat-label>Gender</mat-label>
       <mat-select name="gender" required [(ngModel)]="data.gender">
         <mat-option value="male">Male</mat-option>
         <mat-option value="female">Female</mat-option>
       </mat-select>
     </mat-form-field>
-    <mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width-form-field">
       <mat-label>Status</mat-label>
       <mat-select name="status" required [(ngModel)]="data.status">
         <mat-option value="active">Active</mat-option>
@@ -32,11 +36,11 @@
       </mat-select>
     </mat-form-field>
     
-    
+    <div mat-dialog-actions class="dialog-actions">
+      <button mat-button (click)="onCancel()" [disabled]="loading">Cancel</button>
+      <button mat-button color="primary" [disabled]="!profileForm.valid || loading" (click)="onUpdate(profileForm)">Update</button>
+    </div>
   </form>
 </div>
 
-<div mat-dialog-actions>
-  <button mat-button (click)="onCancel()" [disabled]="loading">Cancel</button>
-  <button mat-button color="primary" [disabled]="!profileForm.valid || loading" (click)="onUpdate(profileForm)">Update</button>
-</div>
+

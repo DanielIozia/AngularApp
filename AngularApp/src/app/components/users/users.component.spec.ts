@@ -210,40 +210,24 @@ describe('UsersComponent', () => {
     });
   });
 
-  it('should delete user', fakeAsync(() => {
-    const userId = 1;
-    const userName = 'John Doe';
-  
-    // Simula l'apertura del dialogo e chiusura con risultato positivo
-    const dialogRef = {
-      afterClosed: () => of(true) // Simula conferma dell'eliminazione
-    };
+  it('should open the confirm delete dialog and delete the user on confirmation', () => {
+    const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(true), close: null });
+    spyOn(dialog, 'open').and.returnValue(dialogRefSpyObj);
 
-    const mockUser:User={
-      id:userId,
-      email:'test@test.it',
-      name:userName,
-      gender:'male',
-      status:'active'
-    }
-  
-    // Simula la risposta del servizio deleteUser
-    spyOn(dialog, 'open').and.returnValue(dialogRef as any);
-    const deleteUserSpy = spyOn(userService, 'deleteUser').and.returnValue(of(mockUser));
-    spyOn(component, 'loadUsers').and.callThrough();
-  
-    // Chiama il metodo deleteUser
-    component.deleteUser(userId, userName);
-  
-    tick(); // Avanza il tempo per completare le operazioni asincrone
-  
-    // Verifica che deleteUser del servizio sia stato chiamato con il parametro corretto
-    expect(deleteUserSpy).toHaveBeenCalledWith(userId);
-    // Verifica che loadUsers sia stato chiamato
-    expect(component.loadUsers).toHaveBeenCalled();
-    // Verifica che isLoading sia impostato su false
-    expect(component.isLoading).toBeFalse();
-  }));
+    const loadUsersSpy = spyOn(component, 'loadUsers');
+
+    component.deleteUser(1, 'Test User');
+
+    expect(dialog.open).toHaveBeenCalledWith(ConfirmDeleteDialogComponent, {
+      width: '300px',
+      data: { name: 'Test User', id: 1 }
+    });
+
+    dialogRefSpyObj.afterClosed().subscribe( (result:any) => {
+      expect(result).toBe(true);
+      expect(loadUsersSpy).toHaveBeenCalled();
+    });
+  });
   
 
   it('should handle error during user deletion', fakeAsync(() => {

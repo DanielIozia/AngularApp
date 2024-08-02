@@ -5,7 +5,7 @@ section {
       height: 80vh; /* Imposta altezza a 80vh quando la classe è attiva */
     }
     // Gestisci altezza per schermi piccoli
-    @media (max-width: 1450px) {
+    @media (max-width: 1600px) {
       &.section-small {
         height: auto; /* Resetta l'altezza a auto per schermi piccoli */
         padding-bottom: 60px;
